@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- ===== FORM GRID 2 CỘT ===== -->
 <div class="hehun-form-grid" id="formGrid">
   <div class="hehun-form-side">
-    <div class="hehun-side-badge">Người Tra · Nam</div>
+    <div class="hehun-side-badge" id="badge-m">Người Tra · Nam</div>
     <div class="ftn-form-card">
       <span class="ftn-form-corner tl"></span><span class="ftn-form-corner tr"></span><span class="ftn-form-corner bl"></span><span class="ftn-form-corner br"></span>
       <h2 class="ftn-form-title">Thông Tin Người Tra</h2>
@@ -262,10 +262,10 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="hehun-form-cross" aria-hidden="true">合</div>
 
   <div class="hehun-form-side">
-    <div class="hehun-side-badge alt">Người Gái · Nữ</div>
+    <div class="hehun-side-badge alt" id="badge-f">Đối Phương · Nữ</div>
     <div class="ftn-form-card">
       <span class="ftn-form-corner tl"></span><span class="ftn-form-corner tr"></span><span class="ftn-form-corner bl"></span><span class="ftn-form-corner br"></span>
-      <h2 class="ftn-form-title">Thông Tin Người Gái</h2>
+      <h2 class="ftn-form-title">Thông Tin Đối Phương</h2>
       <div class="ftn-reassure"><span>Bát Tự</span><span>Tử Vi</span><span>Không rõ giờ vẫn lập được</span></div>
       <div class="ftn-cal-tabs" id="cal-tabs-f">
         <button type="button" class="ftn-cal-tab active">Dương lịch<span class="sub">Công lịch</span></button>
@@ -358,14 +358,23 @@ var NAYIN=['Hải Trung Kim','Lô Trung Hỏa','Đại Lâm Mộc','Lộ Bàng T
   }
 })();
 
+function gLabel(g){ return g==='nam' ? 'Nam' : 'Nữ'; }
+function updateBadges(){
+  var gm=document.querySelector('#gender-m .active'), gf=document.querySelector('#gender-f .active');
+  var bm=document.getElementById('badge-m'), bf=document.getElementById('badge-f');
+  if(bm&&gm) bm.textContent='Người Tra · '+gLabel(gm.dataset.g);
+  if(bf&&gf) bf.textContent='Đối Phương · '+gLabel(gf.dataset.g);
+}
 document.querySelectorAll('.ftn-gender-pick').forEach(function(c){
   c.querySelectorAll('button').forEach(function(b){
     b.addEventListener('click',function(){
       c.querySelectorAll('button').forEach(function(x){x.classList.remove('active')});
       this.classList.add('active');
+      updateBadges();
     });
   });
 });
+updateBadges();
 
 document.querySelectorAll('.ftn-cal-tabs').forEach(function(t){
   t.querySelectorAll('button').forEach(function(b){
@@ -393,6 +402,13 @@ function calcDp(y,m,d){var a=Math.floor((14-m)/12),yr=y+4800-a,mo=m+12*a-3;var j
 function calcHp(ds,h){var hb=Math.floor((h+1)/2)%12;if(h===23||h===0)hb=0;return{stem:((ds%5)*2+hb)%10,branch:hb};}
 function calcMp(y,m,d){var yp=calcYp(y,m,d);var td=[5,19,4,20,6,21,6,23,7,23,7,23,7,22,7,23,8,23,8,23,7,22,7,22];var ti=(m-1)*2;ti+=(d>=td[ti])?1:0;if(ti>=24)ti-=24;return{stem:(((yp.stem%5)*2+ti)%10+10)%10,branch:ti};}
 function getSS(ds,os){var d=(os-ds+10)%10,y=(ds%2===os%2)?0:1;return(d*2+y)%10;}
+// Nạp Âm: NAYIN có 30 mục (mỗi nạp âm gồm 2 can chi). Tính chỉ số lục thập hoa giáp
+// từ (can,chi) rồi chia 2. Công thức cũ (stem*6+branch)%60 sai → undefined.
+function nayinOf(stem,branch){
+  var k=((((stem-branch)/2)%6)+6)%6;     // can & chi luôn cùng tính chẵn/lẻ ở hoa giáp hợp lệ
+  var jiazi=((stem+10*k)%60+60)%60;       // 0..59
+  return NAYIN[Math.floor(jiazi/2)] || '—';
+}
 function genR(name,gender,y,m,d,h){
   var yp=calcYp(y,m,d),mp=calcMp(y,m,d),dp=calcDp(y,m,d),hp=calcHp(dp.stem,h);
   var ps=[yp,mp,dp,hp],dm=dp,wc={Mộc:0,Hỏa:0,Thổ:0,Kim:0,Thủy:0};
@@ -410,9 +426,9 @@ function hopHon(){
   var fR=genR('',(f.gender==='nam'?'male':'female'),f.year,f.month,f.day,f.hour);
   document.getElementById('resultGrid').classList.add('show');
   document.getElementById('chartFemale').style.display='';
-  renderBazi('chartMale',mR,'Người Tra · Nam');
-  renderBazi('chartFemale',fR,'Người Gái · Nữ');
-  renderHeHon(mR,fR);
+  renderBazi('chartMale',mR,'Người Tra · '+gLabel(m.gender));
+  renderBazi('chartFemale',fR,'Đối Phương · '+gLabel(f.gender));
+  renderHeHon(mR,fR,m.gender,f.gender);
 }
 
 function renderBazi(id,r,label){
@@ -422,7 +438,7 @@ function renderBazi(id,r,label){
     var dmf=(i===2),si=getSS(dm.stem,ps[i].stem);
     h+='<div class="ftn2-bz-pillar'+(dmf?' is-day':'')+'"><div class="ftn2-bz-label">'+pn[i]+'</div><div class="ftn2-bz-tenstar'+(dmf?' is-self':'')+'">'+SHISHEN_CN[si]+' '+SHISHEN[si]+'</div><div class="ftn2-bz-gan" style="color:'+WX_COLORS[WX[ps[i].stem]]+'">'+HS_CN[ps[i].stem]+'<span class="yy">'+WX_CN[ps[i].stem]+'</span></div><div class="ftn2-bz-hidden">';
     HIDDEN[ps[i].branch].forEach(function(hs){var hi=HS.indexOf(hs);h+='<div class="ftn2-bz-hidden-row"><span class="ftn2-bz-hh-stem" style="color:'+WX_COLORS[WX[hi]]+'">'+HS_CN[hi]+'</span><span class="ftn2-bz-hh-star">'+SHISHEN[getSS(dm.stem,hi)]+'</span></div>';});
-    h+='</div><div class="ftn2-bz-zhi" style="color:'+WX_COLORS[EB_WX[ps[i].branch]]+'">'+EB_CN[ps[i].branch]+'</div><div class="ftn2-bz-meta"><span><span class="k">納音</span><span class="v">'+NAYIN[(ps[i].stem*6+ps[i].branch)%60]+'</span></span></div></div>';
+    h+='</div><div class="ftn2-bz-zhi" style="color:'+WX_COLORS[EB_WX[ps[i].branch]]+'">'+EB_CN[ps[i].branch]+'</div><div class="ftn2-bz-meta"><span><span class="k">納音</span><span class="v">'+nayinOf(ps[i].stem,ps[i].branch)+'</span></span></div></div>';
   }
   h+='</div>';
   var wc=r.wuxingCount,mx=Math.max(wc.Mộc||1,wc.Hỏa||1,wc.Thổ||1,wc.Kim||1,wc.Thủy||1),cn={Mộc:'木',Hỏa:'火',Thổ:'土',Kim:'金',Thủy:'水'};
@@ -432,7 +448,7 @@ function renderBazi(id,r,label){
   document.getElementById(id).innerHTML=h;
 }
 
-function renderHeHon(m,f){
+function renderHeHon(m,f,gM,gF){
   var dmM=m.pillars[2],dmF=f.pillars[2],base=65;
   var gs=0,gm=0;for(var i=0;i<4;i++){for(var j=0;j<4;j++){if(m.pillars[i].stem===f.pillars[j].stem)gm++;}}gs=Math.min(10,gm);
   var bs=0,hc=0,bh=[{a:0,b:1},{a:2,b:11},{a:3,b:10},{a:4,b:9},{a:5,b:8},{a:6,b:7}];
@@ -443,7 +459,7 @@ function renderHeHon(m,f){
   var ss=0;for(var i=0;i<4;i++){var sM=getSS(dmM.stem,m.pillars[i].stem),sF=getSS(dmF.stem,f.pillars[i].stem),sd=Math.abs(sM-sF);if(sd<=2)ss+=2;else if(sd<=5)ss+=1;}ss=Math.min(10,ss);
   var t=Math.round((base+gs+bs+ws+cs+ss)/1.2);if(t>100)t=100;if(t<0)t=0;
   var band,color;if(t>=85){band='Thượng Hôn';color='#4a6741';}else if(t>=70){band='Trung Hôn';color='#8b6914';}else if(t>=50){band='Hạ Hôn';color='#9e3020';}else{band='Bất Lợi';color='#5a0000';}
-  var h='<div class="hehun-free"><div class="hehun-free-head"><div class="hehun-free-num">1</div><div class="hehun-free-title">Tổng Điểm Hôn Nhân</div><div class="hehun-free-tag">Bát Tự</div></div><div class="hehun-score-row"><div class="hehun-score-dial" style="border-color:'+color+'"><div class="hehun-score-num" style="color:'+color+'">'+t+'</div><div class="hehun-score-unit">/ 100</div></div><div class="hehun-score-side"><div class="hehun-score-label">Phân hạng</div><div class="hehun-score-band" style="color:'+color+'">'+band+'</div><p class="hehun-score-verdict">Người trai mệnh <b>'+WX[dmM.stem]+'</b> · Người gái mệnh <b>'+WX[dmF.stem]+'</b></p></div></div>';
+  var h='<div class="hehun-free"><div class="hehun-free-head"><div class="hehun-free-num">1</div><div class="hehun-free-title">Tổng Điểm Hôn Nhân</div><div class="hehun-free-tag">Bát Tự</div></div><div class="hehun-score-row"><div class="hehun-score-dial" style="border-color:'+color+'"><div class="hehun-score-num" style="color:'+color+'">'+t+'</div><div class="hehun-score-unit">/ 100</div></div><div class="hehun-score-side"><div class="hehun-score-label">Phân hạng</div><div class="hehun-score-band" style="color:'+color+'">'+band+'</div><p class="hehun-score-verdict">Người Tra ('+gLabel(gM)+') mệnh <b>'+WX[dmM.stem]+'</b> · Đối Phương ('+gLabel(gF)+') mệnh <b>'+WX[dmF.stem]+'</b></p></div></div>';
   h+='<div class="hehun-free-sec"><div class="hehun-free-sec-tag">CHI TIẾT ĐIỂM</div><div class="hehun-comp-list">';
   var its=[{l:'Thiên Can',s:gs},{l:'Địa Chi',s:bs},{l:'Ngũ Hành',s:ws},{l:'Tương Sinh',s:cs>0?10:cs<0?0:5},{l:'Thập Thần',s:ss}];
   its.forEach(function(it){var p=it.s/10*100;h+='<div class="hehun-comp-row"><div class="hehun-comp-label">'+it.l+'<span class="hehun-comp-weight">10%</span></div><div class="hehun-comp-bar"><div class="hehun-comp-fill" style="width:'+p+'%;background:'+(p>=60?color:'var(--ink-4)')+'"></div></div><div class="hehun-comp-score" style="color:'+color+'">'+it.s+'</div></div>';});
