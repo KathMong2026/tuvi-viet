@@ -1142,6 +1142,12 @@ function renderTuvi(r, zw){
   tv+='</div>';
 
   document.getElementById('tuviOut').innerHTML=tv;
+  // Luận giải bằng AI (Edge Function luan-giai + DeepSeek)
+  window.__lastTuvi = { r: r, zw: zw };
+  document.getElementById('tuviOut').insertAdjacentHTML('beforeend',
+    '<div class="ai-luan" style="margin-top:20px;border-top:1px solid var(--line);padding-top:16px">'
+    + '<button type="button" id="btnLuanAI" onclick="luanGiaiAI()" style="padding:11px 22px;font-family:inherit;font-size:14px;font-weight:600;color:#fff;background:var(--seal);border:none;border-radius:6px;cursor:pointer">✨ Luận giải bằng AI</button>'
+    + '<div id="aiLuanOut" style="margin-top:14px"></div></div>');
   // Add save button for Tuvi
   if (typeof HCD !== 'undefined' && HCD.member) {
     HCD.member.renderSaveButton('#tuviOut', function() {
@@ -1159,6 +1165,42 @@ function renderTuvi(r, zw){
       };
     });
   }
+}
+
+// ==============================
+// LUẬN GIẢI BẰNG AI (Edge Function luan-giai)
+// ==============================
+function renderLuanText(t){
+  var esc=String(t).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});
+  esc=esc.replace(/^\s*#{1,4}\s*(.+)$/gm,'<h4 style="color:var(--seal);margin:15px 0 4px">$1</h4>');
+  esc=esc.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  var html=esc.split(/\n{2,}/).map(function(b){b=b.trim();if(!b)return '';if(b.indexOf('<h4')===0)return b;return '<p style="margin:8px 0;line-height:1.85">'+b.replace(/\n/g,'<br>')+'</p>';}).join('');
+  return html;
+}
+function luanGiaiAI(){
+  var box=document.getElementById('aiLuanOut'), btn=document.getElementById('btnLuanAI');
+  var data=window.__lastTuvi;
+  if(!data||!data.zw){ if(box) box.textContent='Chưa có lá số. Hãy lập mệnh bàn trước.'; return; }
+  if(!(window.HCD&&HCD.supabase)){ box.textContent='Lỗi: chưa nạp Supabase.'; return; }
+  var zw=data.zw, r=data.r, names=HCZ.getCungNames();
+  var palaces=zw.palaces.map(function(p,i){
+    return {
+      cung:(p.cungName||names[i]||''),
+      branch:(p.branch||''),
+      chinh:(p.chinhTinh||[]).map(function(s){return {name:s.name,sang:(s.brightness||''),hoa:(s.hoa||'')};}),
+      phu:(p.phuTinh||[]).map(function(s){return s.name;})
+    };
+  });
+  var payload={meta:{gioiTinh:(r.gender==='male'?'Nam':'Nữ'),cuc:(zw.cucName||''),menhBranch:(zw.menhCung>=0?HC.EB[zw.menhCung]:'')},palaces:palaces};
+  btn.disabled=true; var old=btn.textContent; btn.textContent='Đang luận giải… (10-30s)';
+  box.innerHTML='<p class="muted">AI đang phân tích lá số, vui lòng đợi…</p>';
+  HCD.supabase.functions.invoke('luan-giai',{body:payload}).then(function(res){
+    btn.disabled=false; btn.textContent=old;
+    if(res.error){ box.innerHTML='<p style="color:var(--seal)">Lỗi gọi luận giải: '+((res.error&&res.error.message)||res.error)+'</p>'; return; }
+    var d=res.data||{};
+    if(d.error){ box.innerHTML='<p style="color:var(--seal)">'+d.error+'</p>'; return; }
+    box.innerHTML='<div class="ai-luan-text">'+renderLuanText(d.text||'(không có nội dung)')+'</div>';
+  }).catch(function(e){ btn.disabled=false; btn.textContent=old; box.innerHTML='<p style="color:var(--seal)">Lỗi: '+(e.message||e)+'</p>'; });
 }
 
 // ==============================
