@@ -1196,7 +1196,14 @@ function luanGiaiAI(){
   box.innerHTML='<p class="muted">AI đang phân tích lá số, vui lòng đợi…</p>';
   HCD.supabase.functions.invoke('luan-giai',{body:payload}).then(function(res){
     btn.disabled=false; btn.textContent=old;
-    if(res.error){ box.innerHTML='<p style="color:var(--seal)">Lỗi gọi luận giải: '+((res.error&&res.error.message)||res.error)+'</p>'; return; }
+    if(res.error){
+      var msg=((res.error&&res.error.message)||String(res.error));
+      var ctx=res.error&&res.error.context;
+      if(ctx&&typeof ctx.text==='function'){
+        ctx.text().then(function(t){var m=msg;try{var jj=JSON.parse(t);if(jj&&jj.error)m=jj.error;}catch(_){}box.innerHTML='<p style="color:var(--seal)">Lỗi luận giải: '+m+'</p>';});
+      } else { box.innerHTML='<p style="color:var(--seal)">Lỗi luận giải: '+msg+'</p>'; }
+      return;
+    }
     var d=res.data||{};
     if(d.error){ box.innerHTML='<p style="color:var(--seal)">'+d.error+'</p>'; return; }
     box.innerHTML='<div class="ai-luan-text">'+renderLuanText(d.text||'(không có nội dung)')+'</div>';
