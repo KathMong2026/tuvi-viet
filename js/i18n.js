@@ -110,7 +110,46 @@ var I18N = (function() {
     'login.btn.backToLogin': { vi: '← Quay lại đăng nhập', zh: '← 返回登入' },
     'login.btn.createAccount': { vi: 'Tạo Tài Khoản', zh: '建立帳戶' },
     'login.confirmPassword': { vi: 'Xác nhận mật khẩu', zh: '確認密碼' },
-    'login.pwMismatch': { vi: 'Mật khẩu xác nhận không khớp.', zh: '確認密碼不一致。' }
+    'login.pwMismatch': { vi: 'Mật khẩu xác nhận không khớp.', zh: '確認密碼不一致。' },
+    'profile.btn.save': { vi: 'Lưu thông tin', zh: '儲存資料' },
+    'profile.btn.logout': { vi: 'Đăng Xuất', zh: '登出' }
   };
 
-  // ── API �
+  // ── API ──
+  function t(key) {
+    var entry = dict[key];
+    if (!entry) return key;
+    if (entry[currentLang] != null) return entry[currentLang];
+    if (entry.vi != null) return entry.vi;
+    return key;
+  }
+
+  function apply(root) {
+    var scope = root || document;
+    var nodes = scope.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      var key = el.getAttribute('data-i18n');
+      if (!key || !dict[key]) continue;
+      var val = t(key);
+      var tag = el.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') {
+        el.setAttribute('placeholder', val);
+      } else {
+        el.textContent = val;
+      }
+    }
+    try {
+      document.documentElement.setAttribute('lang', currentLang === 'zh' ? 'zh' : 'vi');
+    } catch (e) {}
+  }
+
+  function setLang(lang) {
+    currentLang = (lang === 'zh') ? 'zh' : 'vi';
+    try { localStorage.setItem('hcd-lang', currentLang); } catch (e) {}
+  }
+
+  function getLang() { return currentLang; }
+
+  return { t: t, apply: apply, setLang: setLang, getLang: getLang, dict: dict };
+})();

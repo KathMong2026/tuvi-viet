@@ -8,7 +8,8 @@
  *   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
  *   <script src="js/supabase.js"></script>
  *
- * Bảng dùng: tuvi_profiles, tuvi_horoscopes
+ * Bảng dùng (dùng chung project với shop, tiền tố tuvi_):
+ *   tuvi_profiles, tuvi_horoscopes
  */
 (function (global) {
   'use strict';
@@ -189,7 +190,17 @@
         if (!p || !p.birthYear) return false;
         function set(id, val) {
           if (!id || val === undefined || val === null || val === '') return;
-          var el = document.querySelector(id); if (el) el.value = val;
+          var el = document.querySelector(id); if (!el) return;
+          // Với <select>: chỉ gán nếu giá trị khớp một option (tránh để select rỗng
+          // khi kinh độ hồ sơ không trùng option, gây NaN khi tính lá số).
+          if (el.tagName === 'SELECT') {
+            var ok = false;
+            for (var i = 0; i < el.options.length; i++) {
+              if (el.options[i].value === String(val)) { ok = true; break; }
+            }
+            if (!ok) return;
+          }
+          el.value = val;
         }
         set(yId, p.birthYear); set(mId, p.birthMonth); set(dId, p.birthDay);
         set(hId, p.birthHour); set(gId, p.gender); set(locId, p.longitude);
