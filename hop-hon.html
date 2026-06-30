@@ -325,6 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="fhan">合 婚 · 八 字 · 紫 微 · 配 偶 合 婚</div>
 </footer>
 <script src="js/huyenco-bundle.js"></script>
+<script src="js/lunar.min.js"></script>
 <script>
 var HS=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
 var HS_CN=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
@@ -397,10 +398,12 @@ function switchLang(lang){
   }
 }
 
-function calcYp(y,m,d){var by=(m<2||(m===2&&d<4))?y-1:y;var o=by-4;return{stem:(o%10+10)%10,branch:(o%12+12)%12};}
-function calcDp(y,m,d){var a=Math.floor((14-m)/12),yr=y+4800-a,mo=m+12*a-3;var jdn=d+Math.floor((153*mo+2)/5)+365*yr+Math.floor(yr/4)-Math.floor(yr/100)+Math.floor(yr/400)-32045;var diff=jdn-2451545;return{stem:((diff%10+6)%10+10)%10,branch:((diff%12+4)%12+12)%12};}
-function calcHp(ds,h){var hb=Math.floor((h+1)/2)%12;if(h===23||h===0)hb=0;return{stem:((ds%5)*2+hb)%10,branch:hb};}
-function calcMp(y,m,d){var yp=calcYp(y,m,d);var td=[5,19,4,20,6,21,6,23,7,23,7,23,7,22,7,23,8,23,8,23,7,22,7,22];var ti=(m-1)*2;ti+=(d>=td[ti])?1:0;if(ti>=24)ti-=24;return{stem:(((yp.stem%5)*2+ti)%10+10)%10,branch:ti};}
+// Tứ trụ tính bằng lunar-typescript (chuẩn, theo tiết khí + giờ Tý). Trả chỉ số can(0-9)/chi(0-11).
+function pillarsLunar(y,m,d,h){
+  var ec=Lunar.Solar.fromYmdHms(y,m,d,(h||0),0,0).getLunar().getEightChar();
+  function gz(s){return {stem:HS_CN.indexOf(s.charAt(0)),branch:EB_CN.indexOf(s.charAt(1))};}
+  return {yp:gz(ec.getYear()),mp:gz(ec.getMonth()),dp:gz(ec.getDay()),hp:gz(ec.getTime())};
+}
 function getSS(ds,os){var d=(os-ds+10)%10,y=(ds%2===os%2)?0:1;return(d*2+y)%10;}
 // Nạp Âm: NAYIN có 30 mục (mỗi nạp âm gồm 2 can chi). Tính chỉ số lục thập hoa giáp
 // từ (can,chi) rồi chia 2. Công thức cũ (stem*6+branch)%60 sai → undefined.
@@ -410,7 +413,7 @@ function nayinOf(stem,branch){
   return NAYIN[Math.floor(jiazi/2)] || '—';
 }
 function genR(name,gender,y,m,d,h){
-  var yp=calcYp(y,m,d),mp=calcMp(y,m,d),dp=calcDp(y,m,d),hp=calcHp(dp.stem,h);
+  var P=pillarsLunar(y,m,d,h),yp=P.yp,mp=P.mp,dp=P.dp,hp=P.hp;
   var ps=[yp,mp,dp,hp],dm=dp,wc={Mộc:0,Hỏa:0,Thổ:0,Kim:0,Thủy:0};
   for(var i=0;i<4;i++){wc[WX[ps[i].stem]]++;wc[EB_WX[ps[i].branch]]++;}
   var mx='',mc=0;['Mộc','Hỏa','Thổ','Kim','Thủy'].forEach(function(w){if(wc[w]>mc){mc=wc[w];mx=w;}});
