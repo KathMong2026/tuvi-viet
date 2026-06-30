@@ -376,24 +376,107 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="card"><h4>Anh Em</h4><p>Anh chị em, họ hàng cùng thế hệ, đồng môn.</p></div>
 </div>
 
-<h3>14 Chính Tinh</h3>
-<p>Mười bốn ngôi sao chính, mỗi sao mang một tính chất riêng:</p>
-<div class="grid-2">
-<div class="card" style="border:2px solid var(--seal)"><h4 style="color:var(--seal)">Tử Vi 紫微</h4><p>Vua — quyền uy, sang trọng, địa vị. Đế tinh.</p></div>
-<div class="card"><h4>Thiên Cơ 天機</h4><p>Mưu tinh — thông minh, tính toán, hay suy nghĩ.</p></div>
-<div class="card" style="border:2px solid #9e3020"><h4 style="color:#9e3020">Thái Dương 太陽</h4><p>Mặt Trời — quang minh, hào phóng, nhưng dễ hao tán.</p></div>
-<div class="card" style="border:2px solid #b8893b"><h4 style="color:#b8893b">Vũ Khúc 武曲</h4><p>Tài tinh — cứng rắn, quyết đoán, hợp kinh doanh.</p></div>
-<div class="card"><h4>Thiên Đồng 天同</h4><p>Phúc tinh — hiền hòa, an nhàn, hưởng thụ.</p></div>
-<div class="card" style="border:2px solid #9e3020"><h4 style="color:#9e3020">Liêm Trinh 廉貞</h4><p>Thứ vua — quyền lực, uy nghiêm, dễ tranh đấu.</p></div>
-<div class="card"><h4>Thiên Phủ 天府</h4><p>Kho tàng — ổn định, bảo thủ, giỏi quản lý.</p></div>
-<div class="card" style="border:2px solid #3a5974"><h4 style="color:#3a5974">Thái Âm 太陰</h4><p>Mặt Trăng — dịu dàng, nữ tính, lãng mạn.</p></div>
-<div class="card" style="border:2px solid #9e3020"><h4 style="color:#9e3020">Tham Lang 貪狼</h4><p>Đào hoa — nghệ thuật, ham muốn, đa tài, xã giao.</p></div>
-<div class="card"><h4>Cự Môn 巨門</h4><p>Khẩu tài — ăn nói, tranh luận, dễ thị phi.</p></div>
-<div class="card"><h4>Thiên Tướng 天相</h4><p>Ấn tín — trung gian, hòa giải, giúp đỡ.</p></div>
-<div class="card" style="border:2px solid #4a6741"><h4 style="color:#4a6741">Thiên Lương 天梁</h4><p>Ân tinh — che chở, cứu giúp, từ thiện.</p></div>
-<div class="card" style="border:2px solid var(--seal)"><h4 style="color:var(--seal)">Thất Sát 七殺</h4><p>Tướng tinh — dũng mãnh, liều lĩnh, thay đổi.</p></div>
-<div class="card" style="border:2px solid #3a5974"><h4 style="color:#3a5974">Phá Quân 破軍</h4><p>Phá tinh — phá cũ xây mới, cách mạng.</p></div>
+<h3>Tra Cứu Sao Tử Vi</h3>
+<p class="muted">Toàn bộ <b>107 sao</b> (14 chính tinh, 14 trung tinh, 40 phụ tinh và các vòng sao). Gõ tên để tìm hoặc lọc theo nhóm, bấm vào sao để xem chi tiết: tính chất, sự nghiệp, tài lộc, tình duyên, sức khỏe và độ sáng 12 cung.</p>
+<style>
+.star-search{width:100%;padding:11px 14px;font-size:15px;background:var(--input);border:1px solid var(--line);border-radius:6px;color:var(--ink);margin-bottom:12px}
+.star-search:focus{outline:none;border-color:var(--seal)}
+.star-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.star-chip{padding:6px 13px;font-size:13px;font-weight:600;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink-3);cursor:pointer;transition:all .15s}
+.star-chip:hover{border-color:var(--seal)}
+.star-chip.active{background:var(--seal);color:var(--surface);border-color:var(--seal)}
+.star-status{color:var(--muted);font-size:13.5px;padding:4px 0 10px}
+.star-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.star-cell{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 13px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s}
+.star-cell:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(33,29,24,.12);border-color:var(--seal)}
+.star-cell .sc-zh{font-family:'Noto Serif TC',serif;font-size:13px;color:var(--muted)}
+.star-cell .sc-vi{font-size:16px;font-weight:700;margin-top:2px}
+.star-cell .sc-tag{display:block;margin-top:7px;font-size:11px;color:var(--faint)}
+.star-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:18px}
+.star-modal[hidden]{display:none}
+.star-modal-bg{position:absolute;inset:0;background:rgba(20,15,10,.55)}
+.star-modal-card{position:relative;max-width:640px;width:100%;max-height:86vh;overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:26px clamp(18px,4vw,30px);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.sm-close{position:absolute;top:10px;right:14px;font-size:26px;line-height:1;color:var(--muted)}
+.sm-zh{font-family:'Noto Serif TC',serif;font-size:30px;color:var(--seal);font-weight:700;line-height:1.1}
+.sm-vi{font-size:22px;font-weight:700;margin:2px 0 10px}
+.sm-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.sm-tag{font-size:12px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink-3)}
+.sm-bright{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:6px 0 16px}
+.sm-bright>div{text-align:center;font-size:11px;padding:5px 2px;border-radius:4px;background:var(--surface);border:1px solid var(--line)}
+.sm-bright .bc{font-weight:700}.sm-bright .bn{color:var(--muted)}
+.sm-sec{margin:11px 0}
+.sm-sec h5{margin:0 0 3px;font-size:12.5px;color:var(--seal);letter-spacing:.05em;text-transform:uppercase}
+.sm-sec p{margin:0;font-size:14.5px;line-height:1.75;color:var(--ink-2)}
+.sm-src{margin-top:16px;font-size:11.5px;color:var(--faint);border-top:1px solid var(--line);padding-top:10px}
+</style>
+<div class="star-tool">
+  <input id="starSearch" class="star-search" type="text" placeholder="Tìm sao... (tên Việt hoặc 漢字, vd: Tử Vi, 紫微)" autocomplete="off">
+  <div id="starFilters" class="star-filters"></div>
+  <div id="starStatus" class="star-status">Đang tải dữ liệu sao…</div>
+  <div id="starGrid" class="star-grid"></div>
 </div>
+<div id="starModal" class="star-modal" hidden><div class="star-modal-bg" data-close="1"></div><div class="star-modal-card" id="starModalCard"></div></div>
+<script>
+(function(){
+  var TYPE_LABEL={chinh_tinh:'Chính Tinh',trung_tinh:'Trung Tinh',phu_tinh:'Phụ Tinh',vong_trang_sinh:'Vòng Tràng Sinh',vong_bac_si:'Vòng Bác Sĩ',vong_tuong_tien:'Vòng Tướng Tiền',vong_tue_tien:'Vòng Tuế Tiền'};
+  var TYPE_ORDER=['chinh_tinh','trung_tinh','phu_tinh','vong_trang_sinh','vong_bac_si','vong_tuong_tien','vong_tue_tien'];
+  var MEAN_LABEL={tinh_chat:'Tính chất',tong_quan:'Tổng quan',su_nghiep:'Sự nghiệp',tai_loc:'Tài lộc',tinh_duyen:'Tình duyên',suc_khoe:'Sức khỏe',cat_hung:'Cát hung'};
+  var MEAN_ORDER=['tinh_chat','tong_quan','su_nghiep','tai_loc','tinh_duyen','suc_khoe','cat_hung'];
+  var WX={'Kim':'wx-kim','Mộc':'wx-moc','Thủy':'wx-thuy','Hỏa':'wx-hoa','Thổ':'wx-tho'};
+  var CUNG=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+  var all=[],curType='all',curQ='';
+  var elGrid=document.getElementById('starGrid'),elStatus=document.getElementById('starStatus'),
+      elFilters=document.getElementById('starFilters'),elSearch=document.getElementById('starSearch'),
+      elModal=document.getElementById('starModal'),elCard=document.getElementById('starModalCard');
+  function esc(s){return (s==null?'':String(s)).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+  function render(){
+    var q=curQ.trim().toLowerCase();
+    var list=all.filter(function(s){
+      if(curType!=='all'&&s.type!==curType)return false;
+      if(q)return (s.name||'').toLowerCase().indexOf(q)>=0||(s.chinese_name||'').toLowerCase().indexOf(q)>=0;
+      return true;
+    });
+    elStatus.textContent=list.length+' sao';
+    elGrid.innerHTML=list.map(function(s){
+      return '<div class="star-cell" data-i="'+all.indexOf(s)+'"><div class="sc-zh">'+esc(s.chinese_name)+'</div><div class="sc-vi '+(WX[s.element]||'')+'">'+esc(s.name)+'</div><span class="sc-tag">'+esc(TYPE_LABEL[s.type]||s.type)+(s.element?' · '+esc(s.element):'')+'</span></div>';
+    }).join('');
+  }
+  function openStar(s){
+    var m=s.meaning||{},h='<button class="sm-close" data-close="1">×</button>';
+    h+='<div class="sm-zh">'+esc(s.chinese_name)+'</div><div class="sm-vi '+(WX[s.element]||'')+'">'+esc(s.name)+'</div>';
+    h+='<div class="sm-tags"><span class="sm-tag">'+esc(TYPE_LABEL[s.type]||s.type)+'</span>';
+    if(s.element)h+='<span class="sm-tag">Ngũ hành: '+esc(s.element)+'</span>';
+    if(s.star_gender)h+='<span class="sm-tag">Âm Dương: '+esc(s.star_gender)+'</span>';
+    if(m.dau)h+='<span class="sm-tag">'+esc(m.dau)+'</span>';
+    h+='</div>';
+    if(s.brightness)h+='<div class="sm-bright">'+CUNG.map(function(c){return '<div><div class="bn">'+c+'</div><div class="bc">'+esc(s.brightness[c]||'—')+'</div></div>';}).join('')+'</div>';
+    MEAN_ORDER.forEach(function(k){if(m[k])h+='<div class="sm-sec"><h5>'+MEAN_LABEL[k]+'</h5><p>'+esc(m[k])+'</p></div>';});
+    if(m.nguon)h+='<div class="sm-src">Nguồn: '+esc(m.nguon)+'</div>';
+    elCard.innerHTML=h;elModal.hidden=false;
+  }
+  elGrid.addEventListener('click',function(e){var c=e.target.closest('.star-cell');if(c)openStar(all[+c.getAttribute('data-i')]);});
+  elModal.addEventListener('click',function(e){if(e.target.getAttribute('data-close'))elModal.hidden=true;});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')elModal.hidden=true;});
+  elSearch.addEventListener('input',function(){curQ=elSearch.value;render();});
+  function buildFilters(){
+    var counts={}; all.forEach(function(s){counts[s.type]=(counts[s.type]||0)+1;});
+    var chips=['<button class="star-chip active" data-t="all">Tất cả ('+all.length+')</button>'];
+    TYPE_ORDER.forEach(function(t){if(counts[t])chips.push('<button class="star-chip" data-t="'+t+'">'+TYPE_LABEL[t]+' ('+counts[t]+')</button>');});
+    elFilters.innerHTML=chips.join('');
+    elFilters.addEventListener('click',function(e){var b=e.target.closest('.star-chip');if(!b)return;curType=b.getAttribute('data-t');Array.prototype.forEach.call(elFilters.children,function(x){x.classList.toggle('active',x===b);});render();});
+  }
+  function load(){
+    if(!(window.HCD&&HCD.supabase)){elStatus.textContent='Lỗi: chưa nạp Supabase.';return;}
+    HCD.supabase.from('tuvi_stars').select('name,chinese_name,type,element,star_gender,brightness,meaning').then(function(r){
+      if(r.error){elStatus.textContent='Lỗi tải dữ liệu sao: '+r.error.message;return;}
+      var order={}; TYPE_ORDER.forEach(function(t,i){order[t]=i;});
+      all=(r.data||[]).sort(function(a,b){var d=(order[a.type]==null?9:order[a.type])-(order[b.type]==null?9:order[b.type]);return d||(a.name||'').localeCompare(b.name||'','vi');});
+      buildFilters();render();
+    });
+  }
+  if(document.readyState!=='loading')load();else document.addEventListener('DOMContentLoaded',load);
+})();
+</script>
 
 <h3>Tứ Hóa</h3>
 <div class="grid-2">
