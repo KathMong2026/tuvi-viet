@@ -151,5 +151,35 @@ var I18N = (function() {
 
   function getLang() { return currentLang; }
 
-  return { t: t, apply: apply, setLang: setLang, getLang: getLang, dict: dict };
+  // Đồng bộ trạng thái nút .lang-btn theo ngôn ngữ hiện tại
+  function syncLangButtons() {
+    var btns = document.querySelectorAll('.lang-btn');
+    for (var i = 0; i < btns.length; i++) {
+      var b = btns[i];
+      var on = b.getAttribute('data-lang') === currentLang;
+      b.classList.toggle('active', on);
+      b.style.background = on ? 'var(--seal)' : 'transparent';
+      b.style.color = on ? 'var(--surface)' : 'var(--ink-3)';
+    }
+  }
+
+  // switchLang toàn cục: mọi trang nạp i18n.js đều dùng được
+  function switchLang(lang) {
+    setLang(lang);
+    apply();
+    syncLangButtons();
+  }
+
+  // Tự áp dụng ngôn ngữ + đồng bộ nút khi tải trang
+  if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', function () {
+      apply();
+      syncLangButtons();
+    });
+  }
+
+  // Expose global (trang tự định nghĩa function switchLang sẽ tự ghi đè)
+  try { if (typeof window !== 'undefined' && !window.switchLang) window.switchLang = switchLang; } catch (e) {}
+
+  return { t: t, apply: apply, setLang: setLang, getLang: getLang, dict: dict, switchLang: switchLang };
 })();
