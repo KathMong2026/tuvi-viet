@@ -163,10 +163,133 @@ a.card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(33,29,24,.14
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
 <script>
+// ===== 64 quẻ (n, bin[top→bottom], tên, hán, luận ngắn) =====
+var HEX=[
+[1,'111111','Càn vi Thiên','乾為天','Thiên Hành Kiện · Tự cường bất tức'],[2,'000000','Khôn vi Địa','坤為地','Địa Thế Khôn · Hậu đức tải vật'],
+[3,'010001','Thủy Lôi Truân','水雷屯','Vạn vật thủy sinh · Gian nan'],[4,'100010','Sơn Thủy Mông','山水蒙','Mông muội sơ khai · Khải mông'],
+[5,'010111','Thủy Thiên Nhu','水天需','Nhu đãi thì cơ · Nhẫn nại'],[6,'111010','Thiên Thủy Tụng','天水訟','Tranh tụng · Nghi nhẫn'],
+[7,'000010','Địa Thủy Sư','地水師','Sư xuất dĩ luật · Kỷ luật'],[8,'010000','Thủy Địa Tỉ','水地比','Thân cận · Đoàn kết'],
+[9,'110111','Phong Thiên Tiểu Súc','風天小畜','Tiểu súc · Tích lũy'],[10,'111011','Thiên Trạch Lý','天澤履','Lý hổ vĩ · Cẩn thận'],
+[11,'000111','Địa Thiên Thái','地天泰','Thiên địa giao thái · Hanh thông'],[12,'111000','Thiên Địa Bĩ','天地否','Bế tắc · Bất thông'],
+[13,'111101','Thiên Hỏa Đồng Nhân','天火同人','Đồng nhân · Chí đồng đạo hợp'],[14,'101111','Hỏa Thiên Đại Hữu','火天大有','Đại hữu · Phong doanh'],
+[15,'000100','Địa Sơn Khiêm','地山謙','Khiêm tốn · Hữu công bất cư'],[16,'001000','Lôi Địa Dự','雷地豫','Dự nhạc · An hưởng'],
+[17,'011001','Trạch Lôi Tùy','澤雷隨','Tùy thì nhi động · Thuận ứng'],[18,'100110','Sơn Phong Cổ','山風蠱','Cổ hoặc · Chấn tệ khải tân'],
+[19,'000011','Địa Trạch Lâm','地澤臨','Lâm hạ · Ân uy tịnh thi'],[20,'110000','Phong Địa Quan','風地觀','Quan sát · Học tập'],
+[21,'101001','Hỏa Lôi Phệ Hạp','火雷噬嗑','Phệ hạp · Minh phạt'],[22,'100101','Sơn Hỏa Bí','山火賁','Bí sức · Văn minh'],
+[23,'100000','Sơn Địa Bác','山地剝','Bác lạc · Suy vi'],[24,'000001','Địa Lôi Phục','地雷復','Phục kiến thiên tâm · Tái sinh'],
+[25,'111001','Thiên Lôi Vô Vọng','天雷無妄','Vô vọng · Thuận tự nhiên'],[26,'100111','Sơn Thiên Đại Súc','山天大畜','Đại súc · Tích lực'],
+[27,'100001','Sơn Lôi Di','山雷頤','Di dưỡng · Tự cầu đa phúc'],[28,'011110','Trạch Phong Đại Quá','澤風大過','Đại quá · Độc lập'],
+[29,'010010','Khảm vi Thủy','坎為水','Khảm hãm · Tập hiểm'],[30,'101101','Ly vi Hỏa','離為火','Ly minh · Quang chiếu'],
+[31,'011100','Trạch Sơn Hàm','澤山咸','Hàm cảm · Tương thông'],[32,'001110','Lôi Phong Hằng','雷風恆','Hằng cửu · Bất biến'],
+[33,'111100','Thiên Sơn Độn','天山遯','Độn thế · Thoái ẩn'],[34,'001111','Lôi Thiên Đại Tráng','雷天大壯','Đại tráng · Cường thịnh'],
+[35,'101000','Hỏa Địa Tấn','火地晉','Tấn thăng · Tiến bộ'],[36,'000101','Địa Hỏa Minh Di','地火明夷','Minh di · Hối ám'],
+[37,'110101','Phong Hỏa Gia Nhân','風火家人','Gia nhân · Đoàn tụ'],[38,'101011','Hỏa Trạch Khuê','火澤睽','Khuê ly · Bất hợp'],
+[39,'010100','Thủy Sơn Kiển','水山蹇','Kiển nan · Trở trệ'],[40,'001010','Lôi Thủy Giải','雷水解','Giải trừ · Nguy nan'],
+[41,'110001','Sơn Trạch Tổn','山澤損','Tổn hạ ích thượng · Tiết chế'],[42,'100011','Phong Lôi Ích','風雷益','Ích chi · Lợi ích'],
+[43,'011111','Trạch Thiên Quải','澤天夬','Quải quyết · Quả đoán'],[44,'111110','Thiên Phong Cấu','天風姤','Cấu ngộ · Bất kỳ'],
+[45,'011000','Trạch Địa Tụy','澤地萃','Tụy tập · Quần anh'],[46,'000110','Địa Phong Thăng','地風升','Thăng tiến · Cao thăng'],
+[47,'011010','Trạch Thủy Khốn','澤水困','Khốn ách · Bất thông'],[48,'010110','Thủy Phong Tỉnh','水風井','Tỉnh dưỡng · Canh tân'],
+[49,'011101','Trạch Hỏa Cách','澤火革','Cách mệnh · Đỉnh tân'],[50,'101110','Hỏa Phong Đỉnh','火風鼎','Đỉnh lập · Canh tân'],
+[51,'001001','Chấn vi Lôi','震為雷','Chấn động · Lôi đình'],[52,'100100','Cấn vi Sơn','艮為山','Cấn chỉ · An tĩnh'],
+[53,'110100','Phong Sơn Tiệm','風山漸','Tiệm tiến · Từ từ'],[54,'001011','Lôi Trạch Quy Muội','雷澤歸妹','Quy muội · Hôn nhân'],
+[55,'101100','Lôi Hỏa Phong','雷火豐','Phong doanh · Thịnh cực'],[56,'001101','Hỏa Sơn Lữ','火山旅','Lữ hành · Vô định'],
+[57,'110110','Tốn vi Phong','巽為風','Tốn thuận · Khiêm tốn'],[58,'011011','Đoái vi Trạch','兌為澤','Đoái duyệt · Hòa lạc'],
+[59,'110010','Phong Thủy Hoán','風水渙','Hoán tán · Phân ly'],[60,'010011','Thủy Trạch Tiết','水澤節','Tiết chế · Hữu độ'],
+[61,'110011','Phong Trạch Trung Phu','風澤中孚','Trung phu · Tín thành'],[62,'001100','Lôi Sơn Tiểu Quá','雷山小過','Tiểu quá · Hữu hối'],
+[63,'010101','Thủy Hỏa Ký Tế','水火既濟','Ký tế · Thận chung'],[64,'101010','Hỏa Thủy Vị Tế','火水未濟','Vị tế · Sự nghiệp vị thành']
+];
+function hexByBin(b){for(var i=0;i<HEX.length;i++){if(HEX[i][1]===b)return HEX[i];}return null;}
+
+function setQ(t){var el=document.getElementById('questionInput');if(el){el.value=t;el.focus();}}
+
+function toggleFaq(btn){
+  var item=btn.closest('.faq-item')||btn.parentElement;
+  item.classList.toggle('open');
+  var a=item.querySelector('.faq-a');
+  if(a) a.style.display = item.classList.contains('open') ? 'block' : 'none';
+}
+
+function switchLang(lang){
+  if(typeof I18N==='undefined')return;
+  I18N.setLang(lang); I18N.apply();
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    var on=b.getAttribute('data-lang')===lang;
+    b.classList.toggle('active',on);
+    b.style.background=on?'var(--seal)':'transparent';
+    b.style.color=on?'var(--surface)':'var(--ink-3)';
+  });
+}
+
+// Gieo quẻ: 6 hào, mỗi hào tung 3 đồng (sấp=2, ngửa=3) → tổng 6/7/8/9
+function tossCoins(){
+  var btn=document.getElementById('btnToss');
+  if(btn){btn.disabled=true;btn.textContent='Đang gieo quẻ...';}
+  var lines=[]; // L1..L6 (dưới→trên): {yang,moving}
+  for(var i=0;i<6;i++){
+    var s=0; for(var c=0;c<3;c++){ s += (Math.random()<0.5?2:3); }
+    // 6 lão âm(động→dương), 7 thiếu dương, 8 thiếu âm, 9 lão dương(động→âm)
+    lines.push({ yang:(s===7||s===9), moving:(s===6||s===9), val:s });
+  }
+  // bin theo thứ tự trên→dưới: L6..L1
+  var primBin='',chgBin='';
+  for(var k=5;k>=0;k--){
+    primBin += lines[k].yang?'1':'0';
+    var changed = lines[k].moving ? !lines[k].yang : lines[k].yang;
+    chgBin += changed?'1':'0';
+  }
+  var hasMoving=lines.some(function(l){return l.moving;});
+  var prim=hexByBin(primBin), chg=hasMoving?hexByBin(chgBin):null;
+
+  // Vẽ 6 hào (trên→dưới)
+  function drawLines(arr,markMoving){
+    var h='<div class="hex-draw" style="display:flex;flex-direction:column;gap:6px;align-items:center;margin:10px 0">';
+    for(var k=5;k>=0;k--){
+      var ln=arr[k], yang=ln.yang, mv=markMoving&&ln.moving;
+      var bar = yang
+        ? '<div style="width:120px;height:12px;background:var(--seal,#9e3020);border-radius:2px"></div>'
+        : '<div style="width:120px;display:flex;justify-content:space-between"><div style="width:52px;height:12px;background:var(--seal,#9e3020);border-radius:2px"></div><div style="width:52px;height:12px;background:var(--seal,#9e3020);border-radius:2px"></div></div>';
+      h+='<div style="display:flex;align-items:center;gap:8px">'+bar+'<span style="width:14px;color:#c0392b;font-weight:700">'+(mv?'×':'')+'</span></div>';
+    }
+    return h+'</div>';
+  }
+
+  var q=(document.getElementById('questionInput')||{}).value||'';
+  setTimeout(function(){
+    var html='';
+    if(q) html+='<p style="text-align:center;color:var(--ink-3);font-style:italic;margin-bottom:6px">Sở vấn: '+q.replace(/</g,'&lt;')+'</p>';
+    html+='<div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:flex-start">';
+    html+='<div style="text-align:center"><div style="font-weight:700;color:var(--ink-2)">Quẻ Chính</div>'+drawLines(lines,true);
+    if(prim) html+='<div style="font-family:\'Noto Serif\',serif;font-size:20px;color:var(--seal,#9e3020)">'+prim[3]+'</div><div style="font-weight:700">'+prim[2]+' <span style="color:var(--ink-4)">(quẻ '+prim[0]+')</span></div><div style="color:var(--ink-3);max-width:240px">'+prim[4]+'</div>';
+    html+='</div>';
+    if(chg){
+      html+='<div style="text-align:center"><div style="font-weight:700;color:var(--ink-2)">Quẻ Biến</div>'+drawLines(lines.map(function(l){return {yang:(l.moving?!l.yang:l.yang),moving:false};}),false);
+      html+='<div style="font-family:\'Noto Serif\',serif;font-size:20px;color:var(--seal,#9e3020)">'+chg[3]+'</div><div style="font-weight:700">'+chg[2]+' <span style="color:var(--ink-4)">(quẻ '+chg[0]+')</span></div><div style="color:var(--ink-3);max-width:240px">'+chg[4]+'</div></div>';
+    }
+    html+='</div>';
+    html+='<p style="text-align:center;margin-top:14px"><a href="64-que.html" style="color:var(--seal,#9e3020);font-weight:600">Xem chi tiết 64 quẻ →</a></p>';
+    if(!hasMoving) html+='<p style="text-align:center;color:var(--ink-4);font-size:13px">Không có hào động — chỉ luận quẻ chính.</p>';
+    var rc=document.getElementById('resultContent'); if(rc) rc.innerHTML=html;
+    var rp=document.getElementById('resultPanel'); if(rp){rp.classList.remove('hide'); rp.scrollIntoView({behavior:'smooth',block:'start'});}
+    if(btn){btn.disabled=false;btn.textContent='☷ Dao Quái · Gieo Quẻ ☰';}
+  }, 450);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof HCD !== 'undefined' && HCD.member) {
     HCD.member.renderNavAuth('.kd-nav');
   }
+  if (typeof I18N !== 'undefined') {
+    I18N.apply();
+    var lang=I18N.getLang();
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      var on=b.getAttribute('data-lang')===lang;
+      b.classList.toggle('active',on);
+      b.style.background=on?'var(--seal)':'transparent';
+      b.style.color=on?'var(--surface)':'var(--ink-3)';
+    });
+  }
+  // FAQ mặc định thu gọn
+  document.querySelectorAll('.faq-item .faq-a').forEach(function(a){a.style.display='none';});
 });
 </script>
 </head>
@@ -253,4 +376,4 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="fbrand"><div class="fseal">易</div><div class="ftext">Tử Vi Việt · 易經 — Trí tuệ biến dịch phương Đông.</div></div>
     <div class="flinks"><a href="index.html" data-i18n="nav.divination">Gieo Quẻ</a><a href="bat-tu.html" data-i18n="nav.bazi">Bát Tự · Tử Vi</a><a href="hop-hon.html">Hôn Nhân</a><a href="hoang-lich.html" data-i18n="nav.huangli">Hoàng Lịch</a><a href="64-que.html" data-i18n="nav.hexagram">64 Quẻ</a></div>
   </div>
-  <div class="fhan">占 卜 · �
+  <div class="fhan">占 卜 · �
