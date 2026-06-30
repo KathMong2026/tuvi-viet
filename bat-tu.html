@@ -606,6 +606,22 @@ input,select{font-family:inherit}
   var CUC_NAMES_VN = {2:'Thủy nhị cục', 3:'Mộc tam cục', 4:'Kim tứ cục', 5:'Thổ ngũ cục', 6:'Hỏa lục cục'};
   var CUC_WX = {2:'Thủy', 3:'Mộc', 4:'Kim', 5:'Thổ', 6:'Hỏa'};
 
+  // Map tên cung của iztro (vi-VN) -> chỉ số vai trò trong CUNG_NAMES của site
+  var IZT_CUNG_ROLE = {
+    'Mệnh':0, '命宫':0,
+    'Phụ Mẫu':1, 'Cha Mẹ':1, '父母':1,
+    'Phúc Đức':2, '福德':2,
+    'Điền Trạch':3, 'Nhà Cửa':3, '田宅':3,
+    'Quan Lộc':4, 'Sự Nghiệp':4, 'Sự nghiệp':4, '官禄':4,
+    'Nô Bộc':5, 'Bạn Bè':5, '仆役':5,
+    'Thiên Di':6, 'Ra Ngoài':6, '迁移':6,
+    'Tật Ách':7, 'Sức Khỏe':7, '疾厄':7,
+    'Tài Bạch':8, 'Tiền Bạc':8, '财帛':8,
+    'Tử Nữ':9, 'Tử Tức':9, 'Con Cái':9, '子女':9,
+    'Phu Thê':10, 'Vợ Chồng':10, '夫妻':10,
+    'Huynh Đệ':11, 'Anh Em':11, '兄弟':11
+  };
+
   function calcTuViIztro(year, month, day, hourBranch, gender) {
     var g = (gender === 'male') ? '男' : '女';
     var dateStr = year + '-' + month + '-' + day;
@@ -654,7 +670,11 @@ input,select{font-family:inherit}
 
     for (var i = 0; i < 12; i++) {
       var p = astro.palaces[i];
-      var pi = p.index !== undefined ? p.index : i; // iztro palaces may be 0-based
+      // QUAN TRỌNG: index theo địa chi hệ Tý=0 (renderer + menhCung dùng hệ này),
+      // KHÔNG dùng p.index của iztro (Dần=0) — trộn 2 hệ gây lệch toàn bộ nhãn cung.
+      var pi = EB.indexOf(p.earthlyBranch);
+      if (pi < 0) pi = (p.index !== undefined ? p.index : i);
+      var roleIdx = (IZT_CUNG_ROLE[p.name] !== undefined) ? IZT_CUNG_ROLE[p.name] : -1;
 
       var chinhTinh = [];
       var phuTinh = [];
@@ -706,6 +726,9 @@ input,select{font-family:inherit}
         suiQian: suiQian,
         decadal: decadal,
         ages: ages_vn,
+        cungName: roleIdx >= 0 ? CUNG_NAMES[roleIdx] : (p.name || ''),
+        cungCN: roleIdx >= 0 ? CUNG_CN[roleIdx] : '',
+        branch: p.earthlyBranch || EB[pi],
         menh: pi === menhCung,
         than: pi === thanCung
       };
@@ -863,7 +886,9 @@ function getEffectiveLongitude() {
   if (selectedVal === 'custom') {
     return customLongitude || parseFloat(document.getElementById('fcustomLon').value) || 105.85;
   }
-  return parseFloat(selectedVal);
+  var lon = parseFloat(selectedVal);
+  // Fallback: nếu dropdown rỗng/không khớp (vd autofill set kinh độ không có trong option) → mặc định 105.85
+  return isNaN(lon) ? 105.85 : lon;
 }
 function runFortune(){
   var y=parseInt(document.getElementById('fy').value);
@@ -1067,7 +1092,8 @@ function renderBatu(r){
 function renderTuvi(r, zw){
   var names=HCZ.getCungNames(), cn=HCZ.getCungCN();
   var i18n = function(k,d){ return (typeof I18N !== 'undefined') ? I18N.t(k)||d : d; };
-  var gridOrder=[4,5,6,7,3,-1,-1,8,2,-1,-1,9,1,0,11,10];
+  // Bố cục địa bàn chuẩn (hệ Tý=0): Tỵ Ngọ Mùi Thân / Thìn _ _ Dậu / Mão _ _ Tuất / Dần Sửu Tý Hợi
+  var gridOrder=[5,6,7,8, 4,-1,-1,9, 3,-1,-1,10, 2,1,0,11];
   var tv='<div class="tuvi-note-top">'+i18n('batu.ziwei.title','Lá số Tử Vi Đẩu Số')+' — '+i18n('batu.ziwei.engine','iztro engine')+' · '+zw.cucName+'</div><div class="tuvi-grid">';
 
   for(var row=0;row<4;row++){
@@ -1076,7 +1102,7 @@ function renderTuvi(r, zw){
       if(idx===-1){
         if(row===1&&col===1){
           var dateStr = r.birth.day+'/'+r.birth.month+'/'+r.birth.year;
-          tv+='<div class="tuvi-center" style="grid-column:2/4;grid-row:2/4"><div class="c-name">'+r.name+'</div><div class="c-dob">'+dateStr+' · '+(r.gender==='male'?'Nam':'Nữ')+'</div><div class="c-div"></div><div class="c-rows"><span><span class="k">'+i18n('batu.ziwei.menh','Mệnh')+':</span> '+names[zw.menhCung]+'</span><span><span class="k">'+i18n('batu.ziwei.than','Thân')+':</span> '+names[zw.thanCung]+'</span></div><div class="c-rows"><span><span class="k">'+i18n('batu.ziwei.cuc','Cục')+':</span> '+zw.cucName+'</span><span><span class="k">'+i18n('batu.ziwei.tuvi','Tử Vi')+':</span> '+(zw.ziWeiPos>=0?HC.EB[zw.ziWeiPos]:'?')+'</span></div></div>';
+          tv+='<div class="tuvi-center" style="grid-column:2/4;grid-row:2/4"><div class="c-name">'+r.name+'</div><div class="c-dob">'+dateStr+' · '+(r.gender==='male'?'Nam':'Nữ')+'</div><div class="c-div"></div><div class="c-rows"><span><span class="k">'+i18n('batu.ziwei.menh','Mệnh')+':</span> '+(zw.menhCung>=0?HC.EB[zw.menhCung]:'?')+'</span><span><span class="k">'+i18n('batu.ziwei.than','Thân')+':</span> '+(zw.thanCung>=0?HC.EB[zw.thanCung]:'?')+'</span></div><div class="c-rows"><span><span class="k">'+i18n('batu.ziwei.cuc','Cục')+':</span> '+zw.cucName+'</span><span><span class="k">'+i18n('batu.ziwei.tuvi','Tử Vi')+':</span> '+(zw.ziWeiPos>=0?HC.EB[zw.ziWeiPos]:'?')+'</span></div></div>';
         }
         continue;
       }
@@ -1087,7 +1113,9 @@ function renderTuvi(r, zw){
       var pt=p.saoTot.concat(p.saoXau);
       // Limit displayed auxiliary stars
       var ptDisp=pt.slice(0,4).map(function(s){return s.name}).join(', ');
-      tv+='<div class="palace'+(p.menh?' menh':'')+'"><div class="ph"><span class="pn">'+names[idx]+'</span><span class="phan">'+cn[idx]+(p.menh?' 命':p.than?' 身':'')+'</span></div><div class="pstars">';
+      var pCungName = p.cungName || names[idx];
+      var pCungCN = p.cungCN || cn[idx];
+      tv+='<div class="palace'+(p.menh?' menh':'')+(p.than?' than':'')+'"><div class="ph"><span class="pn">'+pCungName+'</span><span class="phan">'+pCungCN+(p.menh?' 命':p.than?' 身':'')+'</span></div><div class="pstars">';
       ct.forEach(function(s){tv+='<div class="main">'+s+'</div>'});
       if(ptDisp)tv+='<div class="aux">'+ptDisp+'</div>';
       if(p.trangSinh)tv+='<div class="aux" style="color:#4a6741;margin-top:1px">'+p.trangSinh+'</div>';
@@ -1101,10 +1129,10 @@ function renderTuvi(r, zw){
     var pp=zw.palaces[i];
     if (!pp) continue;
     pp.chinhTinh.forEach(function(s){
-      if(s.hoa) hoaInfo.push(s.name+' Hóa '+s.hoa+' ('+names[i]+')');
+      if(s.hoa) hoaInfo.push(s.name+' Hóa '+s.hoa+' ('+(pp.cungName||names[i])+')');
     });
   }
-  tv+='<div class="tuvi-note">Mệnh: '+names[zw.menhCung]+' · Thân: '+names[zw.thanCung]+' · ';
+  tv+='<div class="tuvi-note">Mệnh tại cung '+(zw.menhCung>=0?HC.EB[zw.menhCung]:'?')+' · Thân tại cung '+(zw.thanCung>=0?HC.EB[zw.thanCung]:'?')+' · ';
   tv+='Tứ Hóa: '+hoaInfo.join(', ');
   tv+='</div>';
 
@@ -1162,7 +1190,7 @@ function renderVerdict(r, zw) {
     var pp = zw.palaces[i];
     if (!pp) continue;
      pp.chinhTinh.forEach(function(s){
-      if (s.hoa) hoaInfo.push(s.name+' Hóa '+s.hoa+' ('+HCZ.getCungNames()[i]+')');
+      if (s.hoa) hoaInfo.push(s.name+' Hóa '+s.hoa+' ('+(pp.cungName||HCZ.getCungNames()[i])+')');
     });
   }
 
