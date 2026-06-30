@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>64 Quẻ Dịch — Lục Thập Tứ Quái | Tử Vi Việt</title>
+<meta name="description" content="Tra cứu 64 quẻ dịch kinh điển — Quái giả, quải dã. Quải vật tượng dĩ kỳ nhân.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece1c5;--surface:#f6efd9;--input:#fffdf6;--ink:#211d18;--ink-2:#3f372b;--ink-3:#463d30;--ink-4:#5b4f3c;
+  --muted:#6b5d48;--faint:#a99878;--seal:#9c2a1c;--dark:#211d18;
+  --yang:#211d18;--yin:#9c2a1c;--bg-elev:#f6efd9;--fg-subtle:#a99878;--fg-muted:#6b5d48;
+  --ink-0:#211d18;--ink-1:#3f372b;--ink-2:#5b4f3c;
+  --vermilion-0:#9c2a1c;--xjt-border-strong:#a89578;--surface-card:#fbf7ef;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);
+  background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(33,29,24,.14)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal);color:var(--surface);display:flex;align-items:center;
+  justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12}
+.kd-brand .sub{font-size:11px;color:var(--seal);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,30px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.kd-nav a:hover{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-nav a.active{color:var(--seal);border-bottom-color:var(--seal)}
+
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);
+  padding:clamp(30px,4vw,46px) clamp(16px,5vw,52px);margin-top:30px}
+.kd-footer .row{max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal);color:var(--surface);display:flex;align-items:center;
+  justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-4)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}
+.kd-footer .flinks a{color:var(--ink-3)}
+.kd-footer .flinks a:hover{color:var(--seal)}
+.kd-footer .fhan{max-width:1320px;margin:18px auto 0;font-size:12px;color:var(--faint);
+  font-family:'Noto Serif TC',serif;letter-spacing:.2em}
+
+/* ===== HEX PAGE LAYOUT ===== */
+.xjt-hex-page{margin-top:48px;display:grid;grid-template-columns:1fr 280px;gap:40px;align-items:start}
+@media(max-width:900px){.xjt-hex-page{grid-template-columns:1fr}}
+
+/* ===== HEX GRID ===== */
+.xjt-hex-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+@media(max-width:680px){.xjt-hex-grid{grid-template-columns:repeat(4,1fr)}}
+
+.xjt-hex-cell{padding:14px 6px;background:var(--bg-elev);text-align:center;cursor:pointer;
+  transition:background .15s,transform .15s;display:block;text-decoration:none;color:inherit;border-radius:3px}
+.xjt-hex-cell:hover{background:#f0e7cc;transform:translateY(-2px)}
+
+/* Yang line */
+.hex-yang{position:relative;width:36px;height:3px;margin:2px 0;transition:transform .15s}
+.hex-yang div{width:100%;height:100%;background:var(--yang);border-radius:1px}
+
+/* Yin line */
+.hex-yin{position:relative;width:36px;height:3px;margin:2px 0;transition:transform .15s}
+.hex-yin div{display:flex;width:100%;height:100%;gap:5px}
+.hex-yin div span{flex:1 1 0%;background:var(--yin);border-radius:1px}
+
+.hex-label{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:700;letter-spacing:.08em;margin-top:6px;color:var(--ink-0)}
+.hex-num{font-family:'Noto Serif TC',serif;font-size:10px;color:var(--fg-subtle);letter-spacing:.2em;margin-bottom:6px}
+
+/* ===== TRY SIDE ===== */
+.xjt-hex-tryside{position:sticky;top:80px}
+@media(max-width:900px){.xjt-hex-tryside{position:static;max-width:400px;margin:0 auto}}
+
+.xjt-hex-trywrap{position:relative}
+.xjt-hex-trywrap h3{font-family:'Noto Serif',serif;font-weight:700;font-size:clamp(18px,1.6vw,20px);color:var(--ink-0);margin:0;letter-spacing:.06em;text-align:center}
+.xjt-hex-trywrap .try-eyebrow{font-family:'Noto Serif TC',serif;color:var(--vermilion-0);font-size:13px;letter-spacing:.4em;text-align:center;margin-bottom:12px}
+
+.try-frame{position:relative;padding:32px 18px;border:1px solid var(--xjt-border-strong);background:var(--surface-card);margin-top:16px}
+.try-frame::before{content:"";position:absolute;inset:4px;border:1px solid var(--xjt-border-strong);pointer-events:none}
+.try-corner{position:absolute;width:14px;height:14px;background:var(--vermilion-0)}
+.try-corner.tl{top:-2px;left:-2px}.try-corner.tr{top:-2px;right:-2px}
+.try-corner.bl{bottom:-2px;left:-2px}.try-corner.br{bottom:-2px;right:-2px}
+
+.try-inner{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.try-inner .gua-name{font-family:'Noto Serif TC',serif;font-weight:800;font-size:clamp(44px,5vw,60px);line-height:1;color:var(--ink-0);letter-spacing:.1em;text-align:center}
+.try-inner .gua-num{font-family:'Noto Serif TC',serif;font-size:20px;color:var(--vermilion-0);letter-spacing:.2em;margin-top:8px}
+
+.try-lines{margin:32px 0 16px}
+.try-lines .try-line{position:relative;width:100px;height:13px;margin:6px auto;cursor:pointer;transition:transform .15s}
+.try-lines .try-line:hover{transform:scaleX(1.05)}
+.try-lines .try-line.yang div{width:100%;height:100%;background:var(--yang);border-radius:1px}
+.try-lines .try-line.yin div{display:flex;width:100%;height:100%;gap:6px}
+.try-lines .try-line.yin div span{flex:1 1 0%;background:var(--yin);border-radius:1px}
+
+.try-trigrams{display:flex;gap:24px;font-family:'Noto Serif',serif;color:var(--ink-2);font-size:13px;letter-spacing:.15em}
+.try-hint{color:var(--fg-muted);font-family:'Noto Serif TC',serif;font-size:13px;letter-spacing:.1em;text-align:center;min-height:22px;margin-top:12px}
+.try-btn{margin-top:10px;display:inline-block;padding:8px 18px;font-size:12px;letter-spacing:.15em;color:var(--vermilion-0);border:1px solid var(--vermilion-0);border-radius:2px;font-family:'Noto Serif TC',serif;transition:background .15s,color .15s}
+.try-btn:hover{background:var(--vermilion-0);color:#fff}
+
+.try-seal{position:absolute;bottom:-6px;right:-6px;width:40px;height:40px;font-size:9px;line-height:1.1;writing-mode:vertical-rl;
+  transform:rotate(-8deg);letter-spacing:4px;font-family:'Noto Serif',serif;background:var(--seal);color:var(--surface);
+  display:flex;align-items:center;justify-content:center;border-radius:2px}
+</style>
+<script src="js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof HCD !== 'undefined' && HCD.member) {
+    HCD.member.renderNavAuth('.kd-nav');
+  }
+});
+</script>
+</head>
+<body>
+
+<header class="kd-header">
+  <a class="kd-brand" href="index.html">
+    <div class="kd-seal">易</div>
+    <div><div class="name" data-i18n="site.name">Tử Vi Việt</div><div class="sub">Dịch Kinh 易 經 · Mệnh Lý</div></div>
+  </a>
+  <nav class="kd-nav">
+    <a href="index.html" data-i18n="nav.divination">Gieo Quẻ</a>
+    <a href="bat-tu.html" data-i18n="nav.bazi">Bát Tự · Tử Vi</a>
+    <a href="hop-hon.html" data-i18n="nav.hehun">Hôn Nhân</a>
+    <a href="hoang-lich.html" data-i18n="nav.huangli">Hoàng Lịch</a>
+    <a href="giai-nghia.html">Giải Nghĩa</a><a href="64-que.html" class="active" data-i18n="nav.hexagram">64 Quẻ</a>
+    <a href="them.html" data-i18n="nav.more">Thêm</a>
+  </nav>
+  <div class="kd-lang" style="display:flex;gap:2px;border:1px solid rgba(33,29,24,.22);border-radius:3px;overflow:hidden">
+    <button class="lang-btn active" data-lang="vi" style="padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;background:var(--seal);color:var(--surface);border:none;cursor:pointer" onclick="switchLang('vi')">VI</button>
+    <button class="lang-btn" data-lang="zh" style="padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;background:transparent;color:var(--ink-3);border:none;cursor:pointer" onclick="switchLang('zh')">中文</button>
+  </div>
+</header>
+
+<div style="padding:40px 20px 80px;max-width:1320px;margin:0 auto">
+  <div style="text-align:center">
+    <div style="display:inline-flex;align-items:center;gap:10px;font-family:'Noto Serif TC',serif;color:var(--vermilion-0);font-size:14px;letter-spacing:.3em;margin-bottom:14px">
+      <span style="width:20px;height:1px;background:currentcolor"></span>
+      六 十 四 卦
+      <span style="width:20px;height:1px;background:currentcolor"></span>
+    </div>
+    <h2 style="font-family:'Noto Serif',serif;font-weight:700;font-size:clamp(28px,3.4vw,40px);color:var(--ink-0);margin:0;letter-spacing:.05em">Lục Thập Tứ Quái Kinh Luân</h2>
+    <p style="margin-top:16px;font-family:'Noto Serif',serif;color:var(--fg-muted);font-size:16px;line-height:1.8;max-width:600px;margin-left:auto;margin-right:auto">Quái giả, quải dã. Quải vật tượng dĩ kỳ nhân. Nhấp vào bất kỳ quẻ nào để xem chi tiết.</p>
+  </div>
+
+  <div class="xjt-hex-page">
+    <div class="xjt-hex-grid" id="hexGrid"></div>
+
+    <aside class="xjt-hex-tryside">
+      <div class="xjt-hex-trywrap">
+        <div class="try-eyebrow">— 試 · 演 —</div>
+        <h3>Chạm vào hào,<br>tự thấy sự biến</h3>
+        <p style="font-family:'Noto Serif',serif;font-size:13px;line-height:1.9;color:var(--fg-muted);margin:12px auto 20px;letter-spacing:.03em;text-align:center;max-width:260px">Dịch giả, biến dã. Một hào động, toàn quái chuyển.</p>
+        <div class="try-frame">
+          <div class="try-corner tl"></div><div class="try-corner tr"></div>
+          <div class="try-corner bl"></div><div class="try-corner br"></div>
+          <div class="try-inner" id="tryInner">
+            <div class="gua-name" id="tryName">Càn</div>
+            <div class="gua-num" id="tryNum">01</div>
+            <div class="try-lines" id="tryLines"></div>
+            <div class="try-trigrams" id="tryTri"></div>
+            <div class="try-hint" id="tryHint">Chạm hào để thử biến</div>
+            <a class="try-btn" id="tryLink" href="#">Xem chi tiết »</a>
+          </div>
+          <div class="try-seal">玄機</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer class="kd-footer">
+  <div class="row">
+    <div class="fbrand"><div class="fseal">易</div><div class="ftext" data-i18n="site.name">Tử Vi Việt</div></div>
+    <div class="flinks"><a href="index.html">Gieo Quẻ</a><a href="bat-tu.html">Bát Tự</a><a href="hop-hon.html">Hôn Nhân</a><a href="hoang-lich.html">Hoàng Lịch</a><a href="64-que.html">64 Quẻ</a><a href="them.html">Thêm</a></div>
+  </div>
+  <div class="fhan" data-i18n="footer.han">占 卜 · 易 經 · 八 卦 · 五 行 · 六 十 四 卦</div>
+</footer>
+
+<script>
+// 64 Hexagram data — name, binary string, trigrams
+var HEX_DATA = [
+  {n:1,  bin:'111111', nm:'Càn vi Thiên',       cn:'乾為天',   vi:'Thiên Hành Kiện · Tự cường bất tức',         up:'Càn ☰', lo:'Càn ☰'},
+  {n:2,  bin:'000000', nm:'Khôn vi Địa',        cn:'坤為地',   vi:'Địa Thế Khôn · Hậu đức tải vật',             up:'Khôn ☷', lo:'Khôn ☷'},
+  {n:3,  bin:'010001', nm:'Thủy Lôi Truân',      cn:'水雷屯',   vi:'Vạn vật thủy sinh · Gian nan',                up:'Khảm ☵', lo:'Chấn ☳'},
+  {n:4,  bin:'100010', nm:'Sơn Thủy Mông',       cn:'山水蒙',   vi:'Mông muội sơ khai · Khải mông',              up:'Cấn ☶', lo:'Khảm ☵'},
+  {n:5,  bin:'010111', nm:'Thủy Thiên Nhu',      cn:'水天需',   vi:'Nhu đãi thì cơ · Nhẫn nại',                  up:'Khảm ☵', lo:'Càn ☰'},
+  {n:6,  bin:'111010', nm:'Thiên Thủy Tụng',     cn:'天水訟',   vi:'Tranh tụng · Nghi nhẫn',                      up:'Càn ☰', lo:'Khảm ☵'},
+  {n:7,  bin:'000010', nm:'Địa Thủy Sư',         cn:'地水師',   vi:'Sư xuất dĩ luật · Kỷ luật',                  up:'Khôn ☷', lo:'Khảm ☵'},
+  {n:8,  bin:'010000', nm:'Thủy Địa Tỉ',         cn:'水地比',   vi:'Thân cận · Đoàn kết',                         up:'Khảm ☵', lo:'Khôn ☷'},
+  {n:9,  bin:'110111', nm:'Phong Thiên Tiểu Súc', cn:'風天小畜', vi:'Tiểu súc · Tích lũy',                         up:'Tốn ☴', lo:'Càn ☰'},
+  {n:10, bin:'111011', nm:'Thiên Trạch Lý',      cn:'天澤履',   vi:'Lý hổ vĩ · Cẩn thận',                        up:'Càn ☰', lo:'Đoái ☱'},
+  {n:11, bin:'000111', nm:'Địa Thiên Thái',      cn:'地天泰',   vi:'Thiên địa giao thái · Hanh thông',           up:'Khôn ☷', lo:'Càn ☰'},
+  {n:12, bin:'111000', nm:'Thiên Địa Bĩ',        cn:'天地否',   vi:'Bế tắc · Bất thông',                          up:'Càn ☰', lo:'Khôn ☷'},
+  {n:13, bin:'111101', nm:'Thiên Hỏa Đồng Nhân', cn:'天火同人', vi:'Đồng nhân · Chí đồng đạo hợp',               up:'Càn ☰', lo:'Ly ☲'},
+  {n:14, bin:'101111', nm:'Hỏa Thiên Đại Hữu',   cn:'火天大有', vi:'Đại hữu · Phong doanh',                       up:'Ly ☲', lo:'Càn ☰'},
+  {n:15, bin:'000100', nm:'Địa Sơn Khiêm',       cn:'地山謙',   vi:'Khiêm tốn · Hữu công bất cư',                up:'Khôn ☷', lo:'Cấn ☶'},
+  {n:16, bin:'001000', nm:'Lôi Địa Dự',          cn:'雷地豫',   vi:'Dự nhạc · An hưởng',                          up:'Chấn ☳', lo:'Khôn ☷'},
+  {n:17, bin:'011001', nm:'Trạch Lôi Tùy',       cn:'澤雷隨',   vi:'Tùy thì nhi động · Thuận ứng',               up:'Đoái ☱', lo:'Chấn ☳'},
+  {n:18, bin:'100110', nm:'Sơn Phong Cổ',        cn:'山風蠱',   vi:'Cổ hoặc · Chấn tệ khải tân',                 up:'Cấn ☶', lo:'Tốn ☴'},
+  {n:19, bin:'000011', nm:'Địa Trạch Lâm',       cn:'地澤臨',   vi:'Lâm hạ · Ân uy tịnh thi',                    up:'Khôn ☷', lo:'Đoái ☱'},
+  {n:20, bin:'110000', nm:'Phong Địa Quan',      cn:'風地觀',   vi:'Quan sát · Học tập',                          up:'Tốn ☴', lo:'Khôn ☷'},
+  {n:21, bin:'101001', nm:'Hỏa Lôi Phệ Hạp',     cn:'火雷噬嗑', vi:'Phệ hạp · Minh phạt',                         up:'Ly ☲', lo:'Chấn ☳'},
+  {n:22, bin:'100101', nm:'Sơn Hỏa Bí',          cn:'山火賁',   vi:'Bí sức · Văn minh',                           up:'Cấn ☶', lo:'Ly ☲'},
+  {n:23, bin:'100000', nm:'Sơn Địa Bác',         cn:'山地剝',   vi:'Bác lạc · Suy vi',                            up:'Cấn ☶', lo:'Khôn ☷'},
+  {n:24, bin:'000001', nm:'Địa Lôi Phục',        cn:'地雷復',   vi:'Phục kiến thiên tâm · Tái sinh',             up:'Khôn ☷', lo:'Chấn ☳'},
+  {n:25, bin:'111001', nm:'Thiên Lôi Vô Vọng',   cn:'天雷無妄', vi:'Vô vọng · Thuận tự nhiên',                    up:'Càn ☰', lo:'Chấn ☳'},
+  {n:26, bin:'100111', nm:'Sơn Thiên Đại Súc',   cn:'山天大畜', vi:'Đại súc · Tích lực',                           up:'Cấn ☶', lo:'Càn ☰'},
+  {n:27, bin:'100001', nm:'Sơn Lôi Di',          cn:'山雷頤',   vi:'Di dưỡng · Tự cầu đa phúc',                  up:'Cấn ☶', lo:'Chấn ☳'},
+  {n:28, bin:'011110', nm:'Trạch Phong Đại Quá', cn:'澤風大過', vi:'Đại quá · Độc lập',                           up:'Đoái ☱', lo:'Tốn ☴'},
+  {n:29, bin:'010010', nm:'Khảm vi Thủy',        cn:'坎為水',   vi:'Khảm hãm · Tập hiểm',                         up:'Khảm ☵', lo:'Khảm ☵'},
+  {n:30, bin:'101101', nm:'Ly vi Hỏa',           cn:'離為火',   vi:'Ly minh · Quang chiếu',                       up:'Ly ☲', lo:'Ly ☲'},
+  {n:31, bin:'011100', nm:'Trạch Sơn Hàm',       cn:'澤山咸',   vi:'Hàm cảm · Tương thông',                       up:'Đoái ☱', lo:'Cấn ☶'},
+  {n:32, bin:'001110', nm:'Lôi Phong Hằng',      cn:'雷風恆',   vi:'Hằng cửu · Bất biến',                         up:'Chấn ☳', lo:'Tốn ☴'},
+  {n:33, bin:'111100', nm:'Thiên Sơn Độn',       cn:'天山遯',   vi:'Độn thế · Thoái ẩn',                          up:'Càn ☰', lo:'Cấn ☶'},
+  {n:34, bin:'001111', nm:'Lôi Thiên Đại Tráng', cn:'雷天大壯', vi:'Đại tráng · Cường thịnh',                      up:'Chấn ☳', lo:'Càn ☰'},
+  {n:35, bin:'101000', nm:'Hỏa Địa Tấn',         cn:'火地晉',   vi:'Tấn thăng · Tiến bộ',                         up:'Ly ☲', lo:'Khôn ☷'},
+  {n:36, bin:'000101', nm:'Địa Hỏa Minh Di',     cn:'地火明夷', vi:'Minh di · Hối ám',                             up:'Khôn ☷', lo:'Ly ☲'},
+  {n:37, bin:'110101', nm:'Phong Hỏa Gia Nhân',  cn:'風火家人', vi:'Gia nhân · Đoàn tụ',                           up:'Tốn ☴', lo:'Ly ☲'},
+  {n:38, bin:'101011', nm:'Hỏa Trạch Khuê',      cn:'火澤睽',   vi:'Khuê ly · Bất hợp',                           up:'Ly ☲', lo:'Đoái ☱'},
+  {n:39, bin:'010100', nm:'Thủy Sơn Kiển',       cn:'水山蹇',   vi:'Kiển nan · Trở trệ',                          up:'Khảm ☵', lo:'Cấn ☶'},
+  {n:40, bin:'001010', nm:'Lôi Thủy Giải',       cn:'雷水解',   vi:'Giải trừ · Nguy nan',                          up:'Chấn ☳', lo:'Khảm ☵'},
+  {n:41, bin:'110001', nm:'Sơn Trạch Tổn',       cn:'山澤損',   vi:'Tổn hạ ích thượng · Tiết chế',               up:'Cấn ☶', lo:'Đoái ☱'},
+  {n:42, bin:'100011', nm:'Phong Lôi Ích',       cn:'風雷益',   vi:'Ích chi · Lợi ích',                            up:'Tốn ☴', lo:'Chấn ☳'},
+  {n:43, bin:'011111', nm:'Trạch Thiên Quải',    cn:'澤天夬',   vi:'Quải quyết · Quả đoán',                       up:'Đoái ☱', lo:'Càn ☰'},
+  {n:44, bin:'111110', nm:'Thiên Phong Cấu',     cn:'天風姤',   vi:'Cấu ngộ · Bất kỳ',                            up:'Càn ☰', lo:'Tốn ☴'},
+  {n:45, bin:'011000', nm:'Trạch Địa Tụy',       cn:'澤地萃',   vi:'Tụy tập · Quần anh',                          up:'Đoái ☱', lo:'Khôn ☷'},
+  {n:46, bin:'000110', nm:'Địa Phong Thăng',     cn:'地風升',   vi:'Thăng tiến · Cao thăng',                      up:'Khôn ☷', lo:'Tốn ☴'},
+  {n:47, bin:'011010', nm:'Trạch Thủy Khốn',     cn:'澤水困',   vi:'Khốn ách · Bất thông',                        up:'Đoái ☱', lo:'Khảm ☵'},
+  {n:48, bin:'010110', nm:'Thủy Phong Tỉnh',     cn:'水風井',   vi:'Tỉnh dưỡng · Canh tân',                       up:'Khảm ☵', lo:'Tốn ☴'},
+  {n:49, bin:'011101', nm:'Trạch Hỏa Cách',      cn:'澤火革',   vi:'Cách mệnh · Đỉnh tân',                        up:'Đoái ☱', lo:'Ly ☲'},
+  {n:50, bin:'101110', nm:'Hỏa Phong Đỉnh',      cn:'火風鼎',   vi:'Đỉnh lập · Canh tân',                         up:'Ly ☲', lo:'Tốn ☴'},
+  {n:51, bin:'001001', nm:'Chấn vi Lôi',         cn:'震為雷',   vi:'Chấn động · Lôi đình',                        up:'Chấn ☳', lo:'Chấn ☳'},
+  {n:52, bin:'100100', nm:'Cấn vi Sơn',          cn:'艮為山',   vi:'Cấn chỉ · An tĩnh',                            up:'Cấn ☶', lo:'Cấn ☶'},
+  {n:53, bin:'110100', nm:'Phong Sơn Tiệm',      cn:'風山漸',   vi:'Tiệm tiến · Từ từ',                            up:'Tốn ☴', lo:'Cấn ☶'},
+  {n:54, bin:'001011', nm:'Lôi Trạch Quy Muội',  cn:'雷澤歸妹', vi:'Quy muội · Hôn nhân',                          up:'Chấn ☳', lo:'Đoái ☱'},
+  {n:55, bin:'101100', nm:'Lôi Hỏa Phong',       cn:'雷火豐',   vi:'Phong doanh · Thịnh cực',                     up:'Chấn ☳', lo:'Ly ☲'},
+  {n:56, bin:'001101', nm:'Hỏa Sơn Lữ',          cn:'火山旅',   vi:'Lữ hành · Vô định',                            up:'Ly ☲', lo:'Cấn ☶'},
+  {n:57, bin:'110110', nm:'Tốn vi Phong',        cn:'巽為風',   vi:'Tốn thuận · Khiêm tốn',                       up:'Tốn ☴', lo:'Tốn ☴'},
+  {n:58, bin:'011011', nm:'Đoái vi Trạch',       cn:'兌為澤',   vi:'Đoái duyệt · Hòa lạc',                        up:'Đoái ☱', lo:'Đoái ☱'},
+  {n:59, bin:'110010', nm:'Phong Thủy Hoán',     cn:'風水渙',   vi:'Hoán tán · Phân ly',                           up:'Tốn ☴', lo:'Khảm ☵'},
+  {n:60, bin:'010011', nm:'Thủy Trạch Tiết',     cn:'水澤節',   vi:'Tiết chế · Hữu độ',                            up:'Khảm ☵', lo:'Đoái ☱'},
+  {n:61, bin:'110011', nm:'Phong Trạch Trung Phu',cn:'風澤中孚', vi:'Trung phu · Tín thành',                       up:'Tốn ☴', lo:'Đoái ☱'},
+  {n:62, bin:'001100', nm:'Lôi Sơn Tiểu Quá',    cn:'雷山小過', vi:'Tiểu quá · Hữu hối',                           up:'Chấn ☳', lo:'Cấn ☶'},
+  {n:63, bin:'010101', nm:'Thủy Hỏa Ký Tế',      cn:'水火既濟', vi:'Ký tế · Thận chung',                           up:'Khảm ☵', lo:'Ly ☲'},
+  {n:64, bin:'101010', nm:'Hỏa Thủy Vị Tế',      cn:'火水未濟', vi:'Vị tế · Sự nghiệp vị thành',                  up:'Ly ☲', lo:'Khảm ☵'}
+];
+
+function buildLine(c, isYang) {
+  if (isYang) return '<div class="hex-yang"><div></div></div>';
+  return '<div class="hex-yin"><div><span></span><span></span></div></div>';
+}
+
+function buildLines(bin, isYang) {
+  var h = '';
+  for (var i = 5; i >= 0; i--) {
+    h += buildLine(null, bin.charAt(i) === '1');
+  }
+  return h;
+}
+
+// Find hex by index
+function findHex(idx) {
+  for (var i = 0; i < HEX_DATA.length; i++) {
+    if (HEX_DATA[i].n === idx) return HEX_DATA[i];
+  }
+  return HEX_DATA[0];
+}
+
+// Current displayed hex
+var currentHex = HEX_DATA[0];
+
+function showTry(hex) {
+  currentHex = hex;
+  document.getElementById('tryName').textContent = hex.nm.split(' ')[0];
+  document.getElementById('tryNum').textContent = (hex.n < 10 ? '0' : '') + hex.n;
+  document.getElementById('tryLines').innerHTML = buildLines(hex.bin);
+  document.getElementById('tryTri').innerHTML = '<span>Thượng · ' + hex.up + '</span><span>Hạ · ' + hex.lo + '</span>';
+  document.getElementById('tryHint').textContent = 'Chạm hào để thử biến';
+  document.getElementById('tryLink').href = '#gua-' + hex.n;
+}
+
+function toggleTryLine(idx) {
+  var bin = currentHex.bin.split('');
+  bin[idx] = bin[idx] === '1' ? '0' : '1';
+  var newBin = bin.join('');
+  // Find matching hex
+  for (var i = 0; i < HEX_DATA.length; i++) {
+    if (HEX_DATA[i].bin === newBin) {
+      showTry(HEX_DATA[i]);
+      document.getElementById('tryHint').textContent = '→ ' + HEX_DATA[i].nm.split(' ')[0] + ' (hào ' + (6-idx) + ' biến)';
+      return;
+    }
+  }
+  document.getElementById('tryHint').textContent = 'Quẻ này không có trong 64 quẻ';
+}
+
+// Render grid
+(function() {
+  var grid = document.getElementById('hexGrid');
+  var html = '';
+  HEX_DATA.forEach(function(h) {
+    html += '<a class="xjt-hex-cell" href="#gua-' + h.n + '" onclick="showTry(findHex(' + h.n + '));return true" id="cell-' + h.n + '">';
+    html += '<div class="hex-num">' + (h.n < 10 ? '0' : '') + h.n + '</div>';
+    html += '<div style="display:inline-flex;flex-direction:column;align-items:center;padding:6px 12px">';
+    html += buildLines(h.bin);
+    html += '</div>';
+    html += '<div class="hex-label">' + h.nm.split(' ')[0] + '</div>';
+    html += '</a>';
+  });
+  grid.innerHTML = html;
+})();
+
+// Init try side
+showTry(HEX_DATA[0]);
+
+// Click handler for try lines
+document.getElementById('tryLines').addEventListener('click', function(e) {
+  var line = e.target.closest('.try-line') || e.target.closest('.hex-yang') || e.target.closest('.hex-yin');
+  if (!line) return;
+  var container = document.getElementById('tryLines');
+  var children = container.children;
+  var idx = -1;
+  for (var i = 0; i < children.length; i++) {
+    if (children[i] === line || children[i].contains(line)) { idx = i; break; }
+  }
+  if (idx >= 0) toggleTryLine(5 - idx);
+});
+
+// Add try-line classes for click targeting
+(function() {
+  var container = document.getElementById('tryLines');
+  var obs = new MutationObserver(function() {
+    var children = container.children;
+    for (var i = 0; i < children.length; i++) {
+      if (!children[i].classList.contains('try-line')) {
+        children[i].classList.add('try-line');
+        children[i].classList.add(children[i].classList.contains('hex-yang') ? 'yang' : 'yin');
+      }
+    }
+  });
+  obs.observe(container, { childList: true });
+  setTimeout(function() {
+    var children = container.children;
+    for (var i = 0; i < children.length; i++) {
+      if (!children[i].classList.contains('try-line')) {
+        children[i].classList.add('try-line');
+        children[i].classList.add(children[i].classList.contains('hex-yang') ? 'yang' : 'yin');
+      }
+    }
+  }, 100);
+})();
+</script>
+</body>
+</html>

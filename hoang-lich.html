@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoàng Lịch — Xem Ngày Tốt Xấu | Tử Vi Việt</title>
+<meta name="description" content="Xem hoàng lịch hôm nay: ngày tốt xấu, nghi kỵ, xung sát, giờ hoàng đạo, ngũ hành, 28 sao, cửu tinh.">
+<meta name="theme-color" content="#C23B22"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&family=Noto+Serif+TC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece1c5;--paper-0:#ece1c5;--paper-1:#e0d5b0;
+  --bg:#ece1c5;--bg-elev:#f6efd9;--bg-sunk:#e5d8bd;--surface-card:#f6efd9;
+  --ink-0:#1A1612;--ink-1:#3D3229;--ink-2:#6B5E53;--ink-3:#9C8E80;
+  --vermilion-0:#9c2a1c;--vermilion:#9c2a1c;
+  --fg-muted:#7A6E63;--fg-subtle:#A99B8E;
+  --xjt-border:#D6C9B9;--xjt-border-strong:#BEAE98;
+  --gold-0:#b8893b;--jade-0:#3f5a3e;
+  --font-serif:'Noto Serif SC','Noto Serif',serif;
+  --font-kai:'Noto Sans SC','Noto Serif',serif;
+  --font-mono:'SF Mono','Consolas',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink-0);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit}
+.tc{font-family:'Noto Serif TC',serif}
+::selection{background:var(--seal,#9c2a1c);color:var(--surface,#f6efd9)}
+
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--xjt-border)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal,#9c2a1c);color:var(--surface,#f6efd9);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12;color:var(--ink-0)}
+.kd-brand .sub{font-size:11px;color:var(--vermilion-0);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,30px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;color:var(--ink-1)}
+.kd-nav a:hover{color:var(--vermilion-0);border-bottom-color:var(--vermilion-0)}
+.kd-nav a.active{color:var(--vermilion-0);border-bottom-color:var(--vermilion-0)}
+
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(28px,5vw,52px) clamp(14px,3.5vw,40px)}
+
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-kai);color:var(--vermilion-0);font-size:14px;letter-spacing:.3em;margin-bottom:14px}
+.kicker-line{width:20px;height:1px;background:currentColor}
+.alm-title{font-family:var(--font-serif);font-weight:700;font-size:clamp(28px,3.4vw,44px);color:var(--ink-0);margin:0;letter-spacing:.05em;line-height:1.25}
+
+.alm-nav{margin-top:40px;border:1px solid var(--xjt-border-strong);width:fit-content;max-width:100%;margin-left:auto;margin-right:auto;background:var(--bg-elev);display:grid;grid-template-columns:auto 1fr auto auto;align-items:stretch}
+.alm-nav-btn{padding:10px 18px;font-family:var(--font-serif);font-size:13px;letter-spacing:.2em;color:var(--ink-2);background:transparent;display:inline-flex;align-items:center;justify-content:center;line-height:1;height:100%;width:100%}
+.alm-nav-arrow{width:18px;height:18px}
+.alm-nav-center{padding:10px 24px;border-left:1px solid var(--xjt-border-strong);border-right:1px solid var(--xjt-border-strong);display:flex;align-items:center;justify-content:center;gap:14px}
+.alm-date-input{font-family:var(--font-serif);font-size:14px;background:transparent;border:none;outline:none;color:var(--ink-0);letter-spacing:.05em;min-width:0}
+.alm-today-btn{padding:10px 18px;background:var(--seal,#9c2a1c);color:var(--surface,#f6efd9);font-family:var(--font-serif);font-size:13px;letter-spacing:.2em;border-left:1px solid var(--xjt-border-strong)}
+.alm-date-str{margin-top:14px;text-align:center;font-family:var(--font-kai);font-size:13px;color:var(--fg-muted);letter-spacing:.2em}
+.alm-lunar-str{margin-top:4px;text-align:center;font-family:var(--font-kai);font-size:13px;color:var(--vermilion-0);letter-spacing:.25em}
+
+.frame-double{position:relative;padding:36px 28px;border:1px solid var(--xjt-border-strong);background:var(--bg-elev);text-align:center}
+.frame-double-inner{position:absolute;inset:4px;border:1px solid var(--xjt-border-strong);pointer-events:none}
+.frame-double::after{content:'';position:absolute;top:-2px;left:-2px;width:14px;height:14px;background:var(--vermilion-0)}
+.frame-double::before{content:'';position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:var(--vermilion-0)}
+.corner-bl{position:absolute;bottom:-2px;left:-2px;width:14px;height:14px;background:var(--vermilion-0);z-index:1}
+.corner-br{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;background:var(--vermilion-0);z-index:1}
+
+.alm-year-str{font-family:var(--font-kai);color:var(--vermilion-0);letter-spacing:.35em;font-size:12px}
+.alm-big-day{font-family:var(--font-serif);font-size:clamp(96px,14vw,150px);font-weight:900;letter-spacing:.02em;line-height:.9;margin:22px 0;color:var(--ink-0)}
+.alm-month-day{font-family:var(--font-serif);font-size:22px;letter-spacing:.2em;color:var(--ink-1);border-top:1px solid var(--xjt-border-strong);padding-top:18px;margin-top:14px}
+
+.alm-badges{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.alm-badge{padding:8px 14px;border:1px solid var(--xjt-border-strong);background:var(--bg-elev)}
+.alm-badge.dark{padding:8px 14px;border:1px solid var(--xjt-border-strong);background:var(--ink-0);color:var(--paper-0)}
+.alm-badge-label{font-family:var(--font-kai);font-size:9px;letter-spacing:.3em;opacity:.8}
+.alm-badge-value{font-family:var(--font-serif);font-size:16px;font-weight:700;letter-spacing:.1em;margin-top:2px}
+.alm-badge.dark .alm-badge-label{opacity:.8;color:var(--paper-0)}
+.alm-badge.dark .alm-badge-value{color:var(--paper-0)}
+
+/* Quẻ mini */
+.alm-gua{display:inline-flex;align-items:center;gap:8px;margin-top:4px}
+.alm-gua-lines{display:inline-flex;flex-direction:column;gap:2px;width:28px;flex-shrink:0}
+.alm-gua-line-yang{height:3px;background:var(--ink-0);border-radius:1px}
+.alm-gua-line-yin{display:flex;gap:4px;height:3px}
+.alm-gua-line-yin span{flex:1;background:var(--ink-0);border-radius:1px}
+.alm-gua-name{font-family:var(--font-serif);font-size:16px;font-weight:700;letter-spacing:.08em;color:var(--ink-0)}
+
+/* Nghi Kỵ panels */
+.alm-nghi-ky{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.alm-nk-panel{background:var(--bg-elev);border:1px solid var(--xjt-border-strong);display:flex;flex-direction:column}
+.alm-nk-header{padding:10px 18px;font-family:var(--font-serif);font-size:14px;font-weight:700;letter-spacing:.3em;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.alm-nk-header.yi{background:var(--jade-0);color:var(--paper-0)}
+.alm-nk-header.ky{background:var(--seal,#9c2a1c);color:var(--surface,#f6efd9)}
+.alm-nk-header.good{background:var(--gold-0);color:var(--ink-0)}
+.alm-nk-header.bad{background:var(--ink-0);color:var(--paper-0)}
+.alm-nk-body{padding:16px 20px;display:flex;flex-wrap:wrap;row-gap:6px;flex:1}
+.alm-nk-item{font-family:var(--font-kai);font-size:15px;color:var(--ink-0);letter-spacing:.08em;padding:3px 0}
+.alm-nk-sep{color:var(--xjt-border-strong);margin:0 8px}
+
+/* Smaller info panels */
+.alm-info-row{display:grid;gap:12px;margin-top:14px}
+.alm-info-row.col3{grid-template-columns:1fr 1fr 1fr}
+.alm-info-row.col2{grid-template-columns:1fr 1fr}
+.alm-info-card{padding:14px 18px;background:var(--bg-elev);border:1px solid var(--xjt-border)}
+.alm-info-card.red{border-left:3px solid var(--vermilion-0)}
+.alm-info-card.green{border-left:3px solid var(--jade-0)}
+.alm-info-card.gold{border-left:3px solid var(--gold-0)}
+.alm-info-label{font-family:var(--font-serif);font-size:11px;font-weight:700;letter-spacing:.3em}
+.alm-info-value{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--ink-0);letter-spacing:.08em;margin-top:6px;line-height:1.5}
+
+.divider{display:flex;align-items:center;gap:18px;color:var(--fg-subtle);margin:24px 0}
+.divider-line{flex:1;height:1px;background:var(--xjt-border-strong)}
+.divider-icon{font-size:18px;color:var(--vermilion-0)}
+
+/* SVG pentagon */
+.wx-svg-wrap{flex:1;display:flex;justify-content:center;align-items:center}
+.wx-svg-text{font-size:14px;font-weight:700;font-family:var(--font-serif)}
+.wx-svg-sub{font-size:11px;fill:var(--fg-muted)}
+
+/* Tiết Khí panel */
+.tk-bar{height:3px;background:var(--bg-sunk);position:relative;overflow:hidden;margin-top:12px}
+.tk-bar-fill{position:absolute;inset:0;width:28%;background:linear-gradient(90deg,var(--jade-0),var(--vermilion-0))}
+
+/* Stages grid */
+.stages-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:1fr;gap:6px;flex:1;padding:12px}
+.stage-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 2px;background:var(--bg-sunk);color:var(--ink-0);border:1px solid var(--xjt-border)}
+.stage-cell.active{background:var(--seal,#9c2a1c);color:var(--surface,#f6efd9);border:1px solid var(--vermilion-0)}
+.stage-cell .st-name{font-family:var(--font-serif);font-size:13px;font-weight:700;letter-spacing:.04em}
+.stage-cell .st-br{font-family:var(--font-kai);font-size:10px;opacity:.6;margin-top:2px}
+
+/* Hours grid */
+.hours-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:14px}
+.hour-cell{text-align:center;padding:10px 4px}
+.hour-cell.good{border:1px solid var(--jade-0);background:rgba(63,90,62,.07)}
+.hour-cell.bad{border:1px solid var(--vermilion-0);background:rgba(168,42,31,.06)}
+.hour-cell .h-name{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--ink-0);letter-spacing:.08em}
+.hour-cell .h-ji{font-family:var(--font-serif);font-size:11px;font-weight:700;letter-spacing:.2em;margin-top:3px}
+.hour-cell.good .h-ji{color:var(--jade-0)}.hour-cell.bad .h-ji{color:var(--vermilion-0)}
+.hour-cell .h-time{font-family:var(--font-mono);font-size:10px;color:var(--fg-muted);margin-top:3px}
+
+/* Compass */
+.compass-wrap{position:relative;width:220px;height:220px;margin:0 auto}
+.compass-ring{position:absolute;inset:16px;border:1px solid var(--xjt-border-strong);border-radius:50%}
+.compass-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-kai);font-size:12px;color:var(--fg-muted);letter-spacing:.2em}
+.compass-dir{position:absolute;transform:translate(-50%,-50%);text-align:center;font-weight:700}
+.compass-dir.good .cd-name{color:var(--jade-0)}
+.compass-dir.bad .cd-name{color:var(--vermilion-0)}
+
+/* 9-star grid */
+.star9-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-width:260px;margin:0 auto}
+.star9-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px;border:1px solid var(--xjt-border);background:var(--bg-elev)}
+.star9-cell.marked{border:1px solid var(--vermilion-0);background:rgba(194,59,34,.06)}
+.star9-name{font-family:var(--font-serif);font-size:14px;font-weight:700;letter-spacing:.05em}
+.star9-dir{font-family:var(--font-kai);font-size:10px;color:var(--fg-muted)}
+.star9-tag{font-family:var(--font-serif);font-size:10px;font-weight:700;letter-spacing:.15em}
+.star9-tag.good{color:var(--jade-0)}.star9-tag.bad{color:var(--vermilion-0)}
+
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);padding:clamp(30px,4vw,46px) clamp(16px,5vw,52px);margin-top:30px}
+.kd-footer .row{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal,#9c2a1c);color:var(--surface,#f6efd9);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-2)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}
+.kd-footer .flinks a{color:var(--ink-2)}
+.kd-footer .flinks a:hover{color:var(--vermilion-0)}
+.kd-footer .fhan{max-width:1120px;margin:18px auto 0;font-size:12px;color:var(--fg-subtle);font-family:'Noto Serif TC',serif;letter-spacing:.2em}
+
+@media(max-width:768px){
+  .alm-info-row.col3{grid-template-columns:1fr 1fr}
+  .stages-grid{grid-template-columns:repeat(4,1fr)}
+  .hours-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:480px){
+  .alm-nghi-ky{grid-template-columns:1fr}
+  .alm-info-row.col2{grid-template-columns:1fr}
+  .alm-nav{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+  .alm-nav-center{grid-column:span 2;border-left:none;border-right:none;border-top:1px solid var(--xjt-border-strong);border-bottom:1px solid var(--xjt-border-strong)}
+}
+</style>
+<script src="js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof HCD !== 'undefined' && HCD.member) {
+    HCD.member.renderNavAuth('.kd-nav');
+  }
+});
+</script>
+</head>
+<body>
+
+<header class="kd-header">
+  <a class="kd-brand" href="index.html"><div class="kd-seal">易</div><div><div class="name" data-i18n="site.name">Tử Vi Việt</div><div class="sub">Dịch Kinh 易 經 · Mệnh Lý</div></div></a>
+  <nav class="kd-nav">
+    <a href="index.html" data-i18n="nav.divination">Gieo Quẻ</a><a href="bat-tu.html" data-i18n="nav.bazi">Bát Tự · Tử Vi</a><a href="hop-hon.html" data-i18n="nav.hehun">Hôn Nhân</a>
+    <a href="hoang-lich.html" class="active" data-i18n="nav.huangli">Hoàng Lịch</a><a href="giai-nghia.html">Giải Nghĩa</a><a href="64-que.html" data-i18n="nav.hexagram">64 Quẻ</a><a href="them.html" data-i18n="nav.more">Thêm</a>
+  </nav>
+  <div class="kd-lang" style="display:flex;gap:2px;border:1px solid rgba(33,29,24,.22);border-radius:3px;overflow:hidden">
+    <button class="lang-btn active" data-lang="vi" style="padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;background:var(--seal);color:var(--surface);border:none;cursor:pointer" onclick="switchLang('vi')">VI</button>
+    <button class="lang-btn" data-lang="zh" style="padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;background:transparent;color:var(--ink-3);border:none;cursor:pointer" onclick="switchLang('zh')">中文</button>
+  </div>
+</header>
+
+<main class="wrap" id="app"></main>
+
+<footer class="kd-footer">
+  <div class="row">
+    <div class="fbrand"><div class="fseal">易</div><div class="ftext">Tử Vi Việt · 易經 — Trí tuệ biến dịch phương Đông.</div></div>
+    <div class="flinks"><a href="index.html" data-i18n="nav.divination">Gieo Quẻ</a><a href="bat-tu.html">Bát Tự</a><a href="hop-hon.html" data-i18n="nav.hehun">Hôn Nhân</a><a href="hoang-lich.html" data-i18n="nav.huangli">Hoàng Lịch</a><a href="64-que.html" data-i18n="nav.hexagram">64 Quẻ</a></div>
+  </div>
+  <div class="fhan">占 卜 · 易 經 · 八 卦 · 五 行 · 六 十 四 卦</div>
+</footer>
+
+<script>
+var HS=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+var HS_C=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+var EB=['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+var EB_C=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+var WX=['Mộc','Mộc','Hỏa','Hỏa','Thổ','Thổ','Kim','Kim','Thủy','Thủy'];
+var EB_WX=['Thủy','Thổ','Mộc','Mộc','Thổ','Hỏa','Hỏa','Thổ','Kim','Kim','Thổ','Thủy'];
+var WX_COLORS={Mộc:'#4a6741',Hỏa:'#9e3020',Thổ:'#8b6914',Kim:'#b8893b',Thủy:'#3a5974'};
+
+var YI=['嫁娶','祭祀','祈福','求嗣','开光','出行','解除','出火','拆卸','修造','进人口','入宅','移徙','动土','安床','纳畜','栽种','纳财','交易','立券','挂匾','造畜稠','开市','会友','嫁娶','订婚','入学'];
+var JI=['安葬','开生坟','行丧','伐木','作梁','作灶','安香'];
+var JI_SHEN=['月德合','守日','吉期','六合','天赦','天德','月德','天恩','母仓','生气','益后','续世','阳德','阴德'];
+var XIONG_SHEN=['勾陈','天罡','劫煞','月煞','月刑','月害','游祸','天刑','九空'];
+var STAGES=['长生','沐浴','冠带','临官','帝旺','衰','病','死','墓','绝','胎','养'];
+
+var today=new Date();
+var displayDate=new Date(today);
+var selectedDate=new Date(today);
+
+function getDayPillar(date){
+  var y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();
+  var a=Math.floor((14-m)/12),yr=y+4800-a,mo=m+12*a-3;
+  var jdn=d+Math.floor((153*mo+2)/5)+365*yr+Math.floor(yr/4)-Math.floor(yr/100)+Math.floor(yr/400)-32045;
+  var refJDN=2451545,refStem=6,refBranch=4;
+  var diff=jdn-refJDN;
+  return{stem:((diff%10+refStem)%10+10)%10,branch:((diff%12+refBranch)%12+12)%12};
+}
+
+function getSolarTerm(date){
+  var m=date.getMonth()+1,d=date.getDate();
+  var terms=['Tiểu Hàn','Đại Hàn','Lập Xuân','Vũ Thủy','Kinh Trập','Xuân Phân','Thanh Minh','Cốc Vũ','Lập Hạ','Tiểu Mãn','Mang Chủng','Hạ Chí','Tiểu Thử','Đại Thử','Lập Thu','Xử Thử','Bạch Lộ','Thu Phân','Hàn Lộ','Sương Giáng','Lập Đông','Tiểu Tuyết','Đại Tuyết','Đông Chí'];
+  var days=[6,20,4,19,6,21,5,21,6,22,7,23,8,23,8,23,8,22,9,23,8,22,7,21];
+  var idx=(m-1)*2+(d>=days[(m-1)*2]?1:0);
+  if(idx>=24)idx-=24;
+  var nextIdx=(idx+1)%24;
+  var termDate=new Date(date);termDate.setDate(days[(m-1)*2+(d>=days[(m-1)*2]?0:-1)]);
+  var nextTerm=new Date(date);
+  if(idx%2===0||d>=days[(m-1)*2]){nextTerm.setMonth(nextTerm.getMonth());nextTerm.setDate(days[nextIdx]);}
+  var daysUntil=Math.round((nextTerm-date)/(86400000));
+  return{current:terms[idx],next:terms[nextIdx],daysUntil:Math.max(0,daysUntil),pct:Math.min(100,(30-daysUntil)/30*100)};
+}
+
+function getJianChu(date){
+  var dp=getDayPillar(date);
+  var m=date.getMonth()+1;
+  var jcBase=[2,0,10,8,6,4,2,0,10,8,6,4];
+  var jcNames=['建','除','满','平','定','执','破','危','成','收','开','闭'];
+  var idx=(jcBase[m-1]+date.getDate()-1)%12;
+  return{name:jcNames[idx],index:idx};
+}
+
+function getNaYin(stem,branch){
+  var NAYIN=['Hải Trung Kim','Lô Trung Hỏa','Đại Lâm Mộc','Lộ Bàng Thổ','Kiếm Phong Kim','Sơn Đầu Hỏa','Giản Hạ Thủy','Thành Đầu Thổ','Bạch Lạp Kim','Dương Liễu Mộc','Tuyền Trung Thủy','Ốc Thượng Thổ','Tích Lịch Hỏa','Tùng Bách Mộc','Trường Lưu Thủy','Sa Thạch Kim','Sơn Hạ Hỏa','Bình Địa Mộc','Bích Thượng Thổ','Kim Bạc Kim','Phúc Đăng Hỏa','Thiên Hà Thủy','Đại Dịch Thổ','Thoa Xuyến Kim','Tang Đố Mộc','Đại Khê Thủy','Sa Trung Thổ','Thiên Thượng Hỏa','Thạch Lựu Mộc','Đại Hải Thủy'];
+  return NAYIN[(stem*6+branch)%60];
+}
+
+function get28Stars(date){
+  var stars=['Giác','Cang','Đê','Phòng','Tâm','Vĩ','Cơ','Đẩu','Ngưu','Nữ','Hư','Nguy','Thất','Bích','Khuê','Lâu','Vị','Mão','Tất','Chủy','Sâm','Tỉnh','Quỷ','Liễu','Tinh','Trương','Dực','Chẩn'];
+  var animals=['Mộc Giao','Kim Long','Thổ Hoạn','Nhật Thố','Nguyệt Hồ','Hỏa Hổ','Thủy Báo','Mộc Giải','Kim Ngưu','Thổ Bức','Nhật Thử','Nguyệt Yến','Hỏa Trư','Thủy Du','Mộc Lang','Kim Cẩu','Thổ Trĩ','Nhật Kê','Nguyệt Ô','Hỏa Hầu','Thủy Viên','Mộc Hãn','Kim Dương','Thổ Chương','Nhật Mã','Nguyệt Lộc','Hỏa Xà','Thủy Dẫn'];
+  var good=[0,1,4,7,8,11,13,15,17,19,22,23,24,27];
+  var idx=(date.getDate()-1)%28;
+  return{name:stars[idx],animal:animals[idx],good:good.indexOf(idx)>=0};
+}
+
+function getWuxingPct(date){
+  var dp=getDayPillar(date);
+  var wc={Mộc:10,Hỏa:15,Thổ:12,Kim:18,Thủy:8};
+  var s=dp.stem,b=dp.branch;
+  wc[WX[s]]+=15;wc[EB_WX[b]]+=12;
+  var t=Object.values(wc).reduce(function(a,b){return a+b},0);
+  for(var k in wc)wc[k]=Math.round(wc[k]/t*100);
+  return wc;
+}
+
+function getDayHexagram(date){
+  var dp=getDayPillar(date);
+  var inner=dp.branch%8,outer=dp.stem%8;
+  var HEX=['Càn','Đoài','Ly','Chấn','Tốn','Khảm','Cấn','Khôn'];
+  return{name:HEX[outer]+HEX[inner],inner:inner,outer:outer};
+}
+
+function getTodaysYiJi(date){
+  var dp=getDayPillar(date);
+  var s=dp.stem%4,b=dp.branch%6;
+  var yiCount=18+((dp.stem+dp.branch)%5);
+  var jiCount=2+((dp.stem+date.getDate())%3);
+  return{yi:YI.slice(0,yiCount),ji:JI.slice(0,jiCount),jiShen:JI_SHEN.slice(0,3+((dp.stem+dp.branch)%4)),xiongShen:XIONG_SHEN.slice(0,1+((dp.branch+date.getDate())%3))};
+}
+
+function getTodaysStages(date){
+  var dp=getDayPillar(date);
+  var dayStem=dp.stem;
+  var cycle=[0,2,3,4,5,6,7,8,9,10,11,1];
+  return cycle.map(function(s,i){return{name:STAGES[s],branch:i,active:i===dp.branch}});
+}
+
+function getTodaysHours(date){
+  var dp=getDayPillar(date);
+  var hours=[];
+  for(var h=0;h<12;h++){
+    var hBranch=h;
+    var hStem=((dp.stem%5)*2+hBranch)%10;
+    var good=(hBranch+dp.branch)%3!==0;
+    var start=h*2-1+(h===0?1:0);
+    if(start<0)start=23;
+    var end=(h*2+1)%24;
+    hours.push({stem:hStem,branch:hBranch,good:good,start:start,end:end});
+  }
+  return hours;
+}
+
+function get9Stars(date){
+  var dp=getDayPillar(date);
+  var stars=[{name:'Nhất Bạch',cn:'一白',color:'#94a3b8'},{name:'Nhị Hắc',cn:'二黑',color:'#1c1917'},{name:'Tam Bích',cn:'三碧',color:'#16a34a'},{name:'Tứ Lục',cn:'四綠',color:'#16a34a'},{name:'Ngũ Hoàng',cn:'五黃',color:'#ca8a04'},{name:'Lục Bạch',cn:'六白',color:'#94a3b8'},{name:'Thất Xích',cn:'七赤',color:'#dc2626'},{name:'Bát Bạch',cn:'八白',color:'#94a3b8'},{name:'Cửu Tử',cn:'九紫',color:'#7c3aed'}];
+  var dirs=['Tây Bắc','Đông Nam','Nam','Tây Nam','Đông','Trung','Tây','Đông Bắc','Bắc'];
+  var good=[1,0,0,1,0,1,0,1,1];
+  var idx=(dp.stem+dp.branch)%9;
+  return stars.map(function(s,i){return{name:s.name,cn:s.cn,color:s.color,dir:dirs[(i+idx)%9],good:good[(i+idx)%9]===1,marked:i===idx%9}});
+}
+
+function render(){
+  var date=displayDate;
+  var dp=getDayPillar(date);
+  var st=getSolarTerm(date);
+  var jc=getJianChu(date);
+  var nayin=getNaYin(dp.stem,dp.branch);
+  var sx28=get28Stars(date);
+  var yj=getTodaysYiJi(date);
+  var stages=getTodaysStages(date);
+  var hours=getTodaysHours(date);
+  var wxPct=getWuxingPct(date);
+  var hx=getDayHexagram(date);
+  var s9=get9Stars(date);
+
+  var days=['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+  var lunarStr='Tháng '+date.getMonth()+' ngày '+date.getDate();
+
+  var wxColorOrder={Mộc:'var(--jade-0)',Hỏa:'var(--vermilion-0)',Thổ:'var(--gold-0)',Kim:'var(--ink-3)',Thủy:'var(--ink-1)'};
+  var wxFill={Mộc:'14',Hỏa:'92',Thổ:'49',Kim:'54',Thủy:'32'};
+
+  var yyyy=date.getFullYear(),mm=String(date.getMonth()+1).padStart(2,'0'),dd=String(date.getDate()).padStart(2,'0');
+  var dateStr=yyyy+'/'+mm+'/'+dd;
+
+  var yearHS=((yyyy-4)%10+10)%10,yearEB=((yyyy-4)%12+12)%12;
+  var yearAnimal=['Chuột','Trâu','Hổ','Mèo','Rồng','Rắn','Ngựa','Dê','Khỉ','Gà','Chó','Heo'][yearEB];
+
+  var html='';
+
+  // Title
+  html+='<div style="text-align:center">';
+  html+='<div class="kicker"><span class="kicker-line"></span>Hoàng Lịch<span class="kicker-line"></span></div>';
+  html+='<h2 class="alm-title">Hoàng Lịch Hằng Ngày</h2></div>';
+
+  // Nav
+  html+='<div class="alm-nav"><div class="alm-nav-prev"><button class="alm-nav-btn" onclick="changeDate(-1)"><svg class="alm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg><span style="margin-left:6px">Hôm trước</span></button></div>';
+  html+='<div class="alm-nav-center"><input class="alm-date-input" type="date" value="'+yyyy+'-'+mm+'-'+dd+'" onchange="jumpDate(this.value)"></div>';
+  html+='<div class="alm-nav-next"><button class="alm-nav-btn" onclick="changeDate(1)"><span style="margin-right:6px">Hôm sau</span><svg class="alm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button></div>';
+  html+='<button class="alm-today-btn" onclick="goToday()">Hôm Nay</button></div>';
+
+  html+='<div class="alm-date-str">'+dateStr+' · '+days[date.getDay()]+'</div>';
+  html+='<div class="alm-lunar-str">'+HS_C[yearHS]+EB_C[yearEB]+'('+yearAnimal+') niên · '+HS_C[dp.stem]+HS_C[dp.branch]+' nhật</div>';
+
+  // MAIN GRID
+  html+='<div style="margin-top:40px;display:grid;gap:28px">';
+
+  // COLUMN 1: Big day display
+  html+='<div><div class="frame-double"><div class="frame-double-inner"></div><span class="corner-bl"></span><span class="corner-br"></span>';
+  html+='<div class="alm-year-str">'+HS_C[yearHS]+EB_C[yearEB]+'('+yearAnimal+') niên</div>';
+  html+='<div class="alm-big-day">'+date.getDate()+'</div>';
+  html+='<div class="alm-month-day">Tháng '+date.getMonth()+' ngày '+date.getDate()+'</div>';
+  
+  // Badges
+  html+='<div class="alm-badges">';
+  html+='<div class="alm-badge dark"><div class="alm-badge-label">Nhật Can Chi</div><div class="alm-badge-value">'+HS_C[dp.stem]+EB_C[dp.branch]+'</div></div>';
+  html+='<div class="alm-badge"><div class="alm-badge-label">Tiết Khí</div><div class="alm-badge-value" style="color:var(--vermilion-0)">'+st.current+'</div></div>';
+  html+='<a href="64-que.html" class="alm-badge"><div class="alm-badge-label" style="color:var(--vermilion-0)">Quái Tượng</div><div class="alm-gua"><div class="alm-gua-lines">';
+  for(var i=5;i>=0;i--){
+    var bit=(hx.inner>>i)&1||(hx.outer>>i)&1;
+    if(bit)html+='<div class="alm-gua-line-yang"></div>';
+    else html+='<div class="alm-gua-line-yin"><span></span><span></span></div>';
+  }
+  html+='</div><span class="alm-gua-name">'+hx.name+'</span></div></a></div>';
+
+  // NaYin & JianChu
+  html+='<div class="alm-info-row col2" style="margin-top:14px"><div class="alm-info-card"><div class="alm-info-label" style="color:var(--fg-muted)">Nạp Âm</div><div class="alm-info-value">'+nayin+'</div></div>';
+  html+='<div class="alm-info-card gold"><div class="alm-info-label" style="color:var(--gold-0)">Trực Thần</div><div class="alm-info-value">'+jc.name+'</div></div></div>';
+  html+='</div>';
+
+  // NGHI / KY
+  html+='<div><div class="alm-nghi-ky">';
+  html+='<div class="alm-nk-panel"><div class="alm-nk-header yi"><span>Nghi</span><span style="font-size:11px;opacity:.75">'+yj.yi.length+'</span></div><div class="alm-nk-body">';
+  yj.yi.forEach(function(y,i){html+='<span class="alm-nk-item">'+y+(i<yj.yi.length-1?'<span class="alm-nk-sep">·</span>':'')+'</span>'});
+  html+='</div></div>';
+  html+='<div class="alm-nk-panel"><div class="alm-nk-header ky"><span>Kỵ</span><span style="font-size:11px;opacity:.75">'+yj.ji.length+'</span></div><div class="alm-nk-body">';
+  yj.ji.forEach(function(j,i){html+='<span class="alm-nk-item">'+j+(i<yj.ji.length-1?'<span class="alm-nk-sep">·</span>':'')+'</span>'});
+  html+='</div></div></div>';
+
+  // Ji shen / Xiong shen
+  html+='<div class="alm-nghi-ky" style="margin-top:14px">';
+  html+='<div class="alm-nk-panel"><div class="alm-nk-header good"><span>Cát Thần Nghi Xu</span><span style="font-size:11px;opacity:.75">'+yj.jiShen.length+'</span></div><div class="alm-nk-body">';
+  yj.jiShen.forEach(function(s,i){html+='<span class="alm-nk-item">'+s+(i<yj.jiShen.length-1?'<span class="alm-nk-sep">·</span>':'')+'</span>'});
+  html+='</div></div>';
+  html+='<div class="alm-nk-panel"><div class="alm-nk-header bad"><span>Hung Thần Nghi Kỵ</span><span style="font-size:11px;opacity:.75">'+yj.xiongShen.length+'</span></div><div class="alm-nk-body">';
+  yj.xiongShen.forEach(function(s,i){html+='<span class="alm-nk-item">'+s+(i<yj.xiongShen.length-1?'<span class="alm-nk-sep">·</span>':'')+'</span>'});
+  html+='</div></div></div>';
+
+  // Xung sát, Kiến trừ, Thai thần
+  html+='<div class="alm-info-row col3">';
+  html+='<div class="alm-info-card red"><div class="alm-info-label" style="color:var(--vermilion-0)">Xung Sát</div><div class="alm-info-value">Xung '+EB[(dp.branch+6)%12]+' · Sát '+['Bắc','Đông Bắc','Đông','Đông Nam','Nam','Tây Nam','Tây','Tây Bắc'][dp.branch%8]+'</div></div>';
+  html+='<div class="alm-info-card green"><div class="alm-info-label" style="color:var(--jade-0)">Kiến Trừ Thập Nhị</div><div class="alm-info-value">'+jc.name+'</div></div>';
+  html+='<div class="alm-info-card"><div class="alm-info-label" style="color:var(--fg-muted)">Thai Thần</div><div class="alm-info-value">'+['Phòng','Giường','Cửa','Bếp','Nhà kho','Phòng khách'][dp.branch%6]+'</div></div></div>';
+
+  // 28 Sao + Bành Tổ
+  html+='<div class="alm-info-row col2">';
+  html+='<div class="alm-info-card"><div class="alm-info-label" style="color:var(--fg-muted)">Nhị Thập Bát Tú</div><div class="alm-info-value">'+sx28.animal+' · '+sx28.name+' <span style="font-size:13px;font-weight:400;color:'+(sx28.good?'var(--jade-0)':'var(--vermilion-0)')+'">'+(sx28.good?'Cát':'Hung')+'</span></div></div>';
+  html+='<div class="alm-info-card red"><div class="alm-info-label" style="color:var(--vermilion-0)">Bành Tổ Bách Kỵ</div><div class="alm-info-value">'+HS_C[dp.stem]+' bất hợp tương · '+EB_C[dp.branch]+' bất phục dược</div></div></div>';
+  html+='</div></div>';
+
+  // DIVIDER ☰
+  html+='<div class="divider"><div class="divider-line"></div><span class="divider-icon">☰</span><div class="divider-line"></div></div>';
+
+  // Ngũ Hành + Tiết Khí
+  html+='<div class="alm-nghi-ky" style="align-items:stretch">';
+  html+='<div class="frame-double" style="display:flex;flex-direction:column"><div class="frame-double-inner"></div><span class="corner-bl"></span><span class="corner-br"></span>';
+  html+='<div style="font-family:var(--font-kai);color:var(--vermilion-0);letter-spacing:.3em;font-size:12px;font-weight:700;text-align:center;margin-bottom:14px">✦ Ngũ Hành Năng Lượng Hôm Nay</div>';
+  html+='<div class="wx-svg-wrap"><svg viewBox="0 0 260 260" width="100%" height="auto" style="max-width:320px">';
+  html+='<polygon points="130,50 206,105 177,195 83,195 54,105" fill="none" stroke="var(--xjt-border)" stroke-width="1.2"/>';
+  html+='<polygon points="130,77 180,114 161,173 99,173 80,114" fill="none" stroke="var(--xjt-border)" stroke-width="0.6"/>';
+  var wxData=[{l:'Mộc',c:'木',x:130,y:82,color:'var(--jade-0)',pct:wxPct.Mộc},{l:'Hỏa',c:'火',x:206,y:105,color:'var(--vermilion-0)',pct:wxPct.Hỏa},{l:'Thổ',c:'土',x:163,y:175,color:'var(--gold-0)',pct:wxPct.Thổ},{l:'Kim',c:'金',x:96,y:177,color:'var(--ink-3)',pct:wxPct.Kim},{l:'Thủy',c:'水',x:124,y:128,color:'var(--ink-1)',pct:wxPct.Thủy}];
+  var labelPos=[{x:130,y:24},{x:228,y:94},{x:190,y:209},{x:70,y:209},{x:33,y:94}];
+  wxData.forEach(function(w,i){
+    html+='<circle cx="'+w.x+'" cy="'+w.y+'" r="3.5" fill="'+w.color+'"/>';
+    html+='<text x="'+labelPos[i].x+'" y="'+labelPos[i].y+'" text-anchor="middle" font-size="14" font-weight="bold" fill="'+w.color+'" font-family="var(--font-serif)">'+w.c+'</text>';
+    html+='<text x="'+labelPos[i].x+'" y="'+(labelPos[i].y+14)+'" text-anchor="middle" font-size="11" fill="var(--fg-muted)">'+w.pct+'%</text>';
+  });
+  html+='<polygon points="'+wxData.map(function(w){return w.x+','+w.y}).join(' ')+'" fill="rgba(194,59,34,0.12)" stroke="var(--vermilion-0)" stroke-width="2" stroke-linejoin="round"/>';
+  html+='</svg></div></div>';
+
+  // Tiết Khí panel
+  html+='<div style="display:flex;flex-direction:column;gap:16px;min-height:0">';
+  html+='<div class="frame-double"><div class="frame-double-inner"></div><span class="corner-bl"></span><span class="corner-br"></span>';
+  html+='<div style="font-family:var(--font-kai);color:var(--vermilion-0);letter-spacing:.3em;font-size:12px;font-weight:700;text-align:center;margin-bottom:14px">✦ Tiết Khí</div>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">';
+  html+='<div><div style="font-family:var(--font-serif);font-size:24px;font-weight:700;letter-spacing:.15em;color:var(--ink-0)">'+st.current+'</div></div>';
+  html+='<div style="text-align:right"><div style="font-family:var(--font-kai);font-size:12px;color:var(--vermilion-0);letter-spacing:.1em">Còn '+st.daysUntil+' ngày → '+st.next+'</div></div>';
+  html+='</div><div class="tk-bar"><div class="tk-bar-fill" style="width:'+st.pct+'%"></div></div></div>';
+
+  // 12 Trường Sinh
+  html+='<div style="flex:1;display:flex;flex-direction:column;background:var(--bg-elev);border:1px solid var(--xjt-border-strong)">';
+  html+='<div style="padding:10px 20px;background:var(--gold-0);color:var(--ink-0);font-family:var(--font-serif);font-size:14px;font-weight:700;letter-spacing:.3em">Nhật Can Thập Nhị Trường Sinh</div>';
+  html+='<div class="stages-grid">';
+  stages.forEach(function(st){
+    html+='<div class="stage-cell'+(st.active?' active':'')+'"><div class="st-name">'+st.name+'</div><div class="st-br">'+EB_C[st.branch]+'</div></div>';
+  });
+  html+='</div></div></div></div>';
+
+  // DIVIDER ☲
+  html+='<div class="divider"><div class="divider-line"></div><span class="divider-icon">☲</span><div class="divider-line"></div></div>';
+
+  // Giờ tốt xấu
+  html+='<div style="background:var(--bg-elev);border:1px solid var(--xjt-border-strong)">';
+  html+='<div style="padding:10px 20px;background:var(--ink-0);color:var(--paper-0);font-family:var(--font-serif);font-size:14px;font-weight:700;letter-spacing:.3em">Giờ Tốt Xấu Hôm Nay</div>';
+  html+='<div class="hours-grid">';
+  hours.forEach(function(h){
+    var cls=h.good?'good':'bad';
+    var start=h.start,end=h.end;
+    var sStr=String(start).padStart(2,'0'),eStr=String(end).padStart(2,'0');
+    html+='<div class="hour-cell '+cls+'"><div class="h-name">'+HS_C[h.stem]+EB_C[h.branch]+'</div><div class="h-ji">'+(h.good?'Cát':'Hung')+'</div><div class="h-time">'+sStr+'-'+eStr+'</div></div>';
+  });
+  html+='</div></div>';
+
+  // DIVIDER ☵
+  html+='<div class="divider"><div class="divider-line"></div><span class="divider-icon">☵</span><div class="divider-line"></div></div>';
+
+  // Phương vị + Cửu tinh
+  html+='<div class="alm-nghi-ky">';
+  html+='<div class="frame-double"><div class="frame-double-inner"></div><span class="corner-bl"></span><span class="corner-br"></span>';
+  html+='<div style="font-family:var(--font-kai);color:var(--vermilion-0);letter-spacing:.3em;font-size:12px;font-weight:700;text-align:center;margin-bottom:14px">✦ Phương Vị Cát Hung</div>';
+  html+='<div style="display:flex;justify-content:center"><div class="compass-wrap"><div class="compass-ring"></div><div class="compass-center">Trung Cung</div>';
+  var dirs=[{n:'Bắc',x:50,y:0,c:'good'},{n:'Đông Bắc',x:85,y:15,c:'good'},{n:'Đông',x:100,y:50,c:'bad'},{n:'Đông Nam',x:85,y:85,c:'good'},{n:'Nam',x:50,y:100,c:'bad'},{n:'Tây Nam',x:15,y:85,c:'good'},{n:'Tây',x:0,y:50,c:'bad'},{n:'Tây Bắc',x:15,y:15,c:'good'}];
+  dirs.forEach(function(d){html+='<div class="compass-dir '+d.c+'" style="top:'+d.y+'%;left:'+d.x+'%"><div class="cd-name" style="font-size:14px;font-family:var(--font-serif);letter-spacing:.08em">'+d.n+'</div><div style="font-size:11px;font-family:var(--font-kai)">'+(d.c==='good'?'Cát':'Hung')+'</div></div>'});
+  html+='</div></div></div>';
+
+  // Cửu Tinh
+  html+='<div class="frame-double"><div class="frame-double-inner"></div><span class="corner-bl"></span><span class="corner-br"></span>';
+  html+='<div style="font-family:var(--font-kai);color:var(--vermilion-0);letter-spacing:.3em;font-size:12px;font-weight:700;text-align:center;margin-bottom:14px">✦ Cửu Tinh Phi Cung</div>';
+  html+='<div class="star9-grid">';
+  s9.forEach(function(s){
+    var cls=s.marked?' marked':'';
+    html+='<div class="star9-cell'+cls+'"><span class="star9-name" style="color:'+s.color+'">'+s.cn+'</span><span class="star9-dir">'+s.dir+'</span><span class="star9-tag '+(s.good?'good':'bad')+'">'+(s.good?'Cát':'Hung')+'</span></div>';
+  });
+  html+='</div></div></div>';
+  html+='</div>';
+
+  document.getElementById("app").innerHTML=html;
+}
+
+function changeDate(delta) {
+  displayDate.setDate(displayDate.getDate() + delta);
+  render();
+}
+function goToday() {
+  displayDate = new Date();
+  render();
+}
+function jumpDate(val) {
+  if (!val) return;
+  var parts = val.split('-');
+  displayDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+  render();
+}
+
+// Khởi tạo: hiển thị hoàng lịch hôm nay
+render();
+</script>
+</body>
+</html>

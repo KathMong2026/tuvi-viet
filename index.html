@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bói Dịch Trực Tuyến — Gieo Quẻ Dịch Kinh | Tử Vi Việt</title>
+<meta name="description" content="Gieo quẻ dịch online miễn phí. Tam đồng tiền, lục hào chiêm bốc, 64 quẻ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece1c5;--surface:#f6efd9;--input:#fffdf6;--ink:#211d18;--ink-2:#3f372b;--ink-3:#463d30;--ink-4:#5b4f3c;
+  --muted:#6b5d48;--faint:#a99878;--seal:#9c2a1c;--dark:#211d18;--dark-soft:#cdbf9d;--dark-warm:#d98b5f;--line:rgba(33,29,24,.13);
+  --gold:#b8893b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 16% 10%, rgba(255,252,242,.6), transparent 42%),
+    radial-gradient(circle at 86% 90%, rgba(140,100,45,.08), transparent 46%),
+    var(--paper);
+  color:var(--ink);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit}
+.tc{font-family:'Noto Serif TC',serif}
+.brush{font-family:'Ma Shan Zheng',cursive}
+
+.wx-kim{color:#b8893b} .wx-moc{color:#4a6741} .wx-thuy{color:#3a5974} .wx-hoa{color:#9e3020} .wx-tho{color:#8b6914}
+
+::selection{background:var(--seal);color:var(--surface)}
+
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);
+  background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(33,29,24,.14)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal);color:var(--surface);display:flex;align-items:center;
+  justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12}
+.kd-brand .sub{font-size:11px;color:var(--seal);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,30px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.kd-nav a:hover{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-nav a.active{color:var(--seal);border-bottom-color:var(--seal)}
+
+.wrap{max-width:1120px;margin:0 auto;padding:clamp(30px,5vw,56px) clamp(16px,4vw,48px)}
+.muted{color:var(--muted)}
+.center{text-align:center}
+.hide{display:none!important}
+
+.section-title{display:flex;align-items:baseline;gap:12px;margin:8px 0 18px;flex-wrap:wrap}
+.section-title .zh{font-size:clamp(1.7rem,4vw,2.2rem);color:var(--seal);letter-spacing:4px;font-family:'Noto Serif TC',serif;font-weight:700}
+.section-title .vi{font-size:clamp(1rem,2.2vw,1.15rem);color:var(--ink-4);letter-spacing:1px}
+.section-title.center{justify-content:center}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:22px;box-shadow:0 8px 24px rgba(33,29,24,.06)}
+a.card{display:block;text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s}
+a.card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(33,29,24,.14)}
+.card h3{margin-top:0}
+.card b.zh{color:var(--seal)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--seal);color:var(--surface);border:none;
+  border-radius:2px;padding:14px 32px;font-size:16px;cursor:pointer;font-family:'Noto Serif',serif;letter-spacing:.03em;box-shadow:0 3px 0 rgba(0,0,0,.2)}
+.btn:hover{background:#882318}
+.btn.ghost{background:transparent;color:var(--seal);border:1px solid var(--seal);box-shadow:none}
+
+.form-frame{position:relative;background:var(--surface);border:1px solid rgba(156,42,28,.35);border-radius:4px;padding:clamp(22px,3vw,34px)}
+.form-frame::before{content:"";position:absolute;inset:7px;border:1px solid rgba(156,42,28,.22);border-radius:2px;pointer-events:none}
+.corner{position:absolute;width:9px;height:9px;background:var(--seal);z-index:1}
+.corner.tl{top:-1px;left:-1px}.corner.tr{top:-1px;right:-1px}
+.corner.bl{bottom:-1px;left:-1px}.corner.br{bottom:-1px;right:-1px}
+.ff-title{text-align:center;font-family:'Noto Serif TC',serif;font-size:clamp(1.4rem,2.6vw,1.8rem);font-weight:700;margin-top:6px;letter-spacing:.06em}
+.ff-sub{text-align:center;font-size:13px;color:var(--ink-4);margin-bottom:18px}
+.ff-label{display:block;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink-2);margin-bottom:7px;letter-spacing:.08em}
+.ff-input,.ff-select{width:100%;padding:11px 12px;font-size:15px;color:var(--ink);background:var(--input);border:1px solid rgba(33,29,24,.2);border-radius:4px;outline:none;font-family:'Noto Serif',serif}
+.ff-input:focus,.ff-select:focus{border-color:var(--seal)}
+.ff-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-bottom:16px}
+.btn-run{width:100%;padding:15px;background:var(--seal);color:var(--surface);border:none;border-radius:3px;
+  font-family:'Noto Serif TC',serif;font-size:18px;letter-spacing:.25em;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.2);margin-top:16px}
+.btn-run:hover{background:#882318}
+
+/* Coins */
+.coins{display:flex;gap:18px;justify-content:center;margin:26px 0}
+.coin{width:70px;height:70px;border-radius:50%;border:3px solid var(--gold);
+  background:radial-gradient(circle at 35% 30%,#f6e6c2,#d9b873);display:grid;place-items:center;color:#6b4f1d;position:relative}
+.coin .sq{width:24px;height:24px;border:2px solid #6b4f1d;border-radius:3px}
+.coin.flip{animation:flip .6s ease}
+@keyframes flip{0%{transform:rotateY(0)}100%{transform:rotateY(720deg)}}
+
+.stat-row{display:flex;gap:clamp(24px,6vw,52px);justify-content:center;margin:30px 0;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .n{font-size:clamp(28px,5vw,38px);color:var(--seal);font-weight:700}
+.stat .l{font-size:13px;color:var(--muted)}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px}
+@media(max-width:780px){.steps{grid-template-columns:1fr}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:20px}
+.step .no{font-size:24px;color:var(--seal);font-family:'Noto Serif TC',serif}
+.step h3{margin:8px 0 6px}}
+
+.hexlines{display:flex;flex-direction:column-reverse;gap:7px;align-items:center}
+.hexline{display:flex;gap:8px;align-items:center;width:120px;justify-content:center;height:14px}
+.hexline .seg{height:12px;background:var(--ink);border-radius:2px}
+.hexline.yang .seg{width:120px}
+.hexline.yin .seg{width:52px}
+.hexline.changing .seg{background:var(--seal);box-shadow:0 0 0 2px rgba(156,42,28,.25)}
+
+.notice{background:rgba(156,42,28,.07);border:1px solid rgba(156,42,28,.3);border-radius:4px;padding:12px 16px;font-size:14px;color:var(--seal);margin-top:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:6px 14px;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--seal);color:var(--seal)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:clamp(14px,2vw,22px);box-shadow:0 8px 24px rgba(33,29,24,.07);margin:16px 0}
+.panel-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;color:var(--seal);margin:0 0 12px;letter-spacing:.1em}
+
+/* Hex list */
+.hex-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.gua-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:16px 12px;text-align:center;transition:transform .18s,box-shadow .18s}
+.gua-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(33,29,24,.13)}
+.gua-card .no{font-size:11px;color:var(--faint)}
+.gua-card .nm{font-size:22px;color:var(--seal);font-family:'Noto Serif TC',serif;margin:2px 0}
+.gua-card .sym{font-size:22px;color:var(--ink);line-height:1.1}
+.gua-card .vi{font-size:13px;color:var(--ink-4)}
+
+/* FAQ */
+.faq{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.faq-q{width:100%;text-align:left;padding:16px 20px;font-family:'Noto Serif TC',serif;font-size:16px;font-weight:600;color:var(--ink);letter-spacing:.04em;display:flex;justify-content:space-between;align-items:center}
+.faq-q::after{content:'+';font-size:22px;color:var(--seal);font-weight:300}
+.faq-item.open .faq-q::after{content:'−'}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;padding:0 20px}
+.faq-item.open .faq-a{max-height:600px;padding:0 20px 18px}
+.faq-a p{margin:0;font-size:14.5px;line-height:1.9;color:var(--ink-2);font-family:'Noto Serif',serif}
+
+/* Tuvi grid in other pages */
+.tuvi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:620px;margin:0 auto}
+.palace{display:flex;flex-direction:column;justify-content:space-between;border-radius:4px;padding:8px 9px;min-height:80px;
+  background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.palace.menh{background:var(--dark);color:#f3ead0;border-color:var(--seal)}
+.palace .ph{display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0}
+.palace .ph .pn{font-size:13px;font-weight:700}
+.palace .pstars{flex:1;padding:2px 0}
+.palace .pstars .main{font-size:10px;font-weight:700;color:var(--ink)}
+.palace.menh .pstars .main{color:#f3ead0}
+.palace .pstars .aux{font-size:9px;color:var(--seal)}
+
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);
+  padding:clamp(30px,4vw,46px) clamp(16px,5vw,52px);margin-top:30px}
+.kd-footer .row{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal);color:var(--surface);display:flex;align-items:center;
+  justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-4)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}
+.kd-footer .flinks a{color:var(--ink-3)}
+.kd-footer .flinks a:hover{color:var(--seal)}
+.kd-footer .fhan{max-width:1120px;margin:18px auto 0;font-size:12px;color:var(--faint);
+  font-family:'Noto Serif TC',serif;letter-spacing:.2em}
+</style>
+<script src="js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof HCD !== 'undefined' && HCD.member) {
+    HCD.member.renderNavAuth('.kd-nav');
+  }
+});
+</script>
+</head>
+<body>
+<header class="kd-header">
+  <a class="kd-brand" href="index.html">
+    <div class="kd-seal">易</div>
+    <div><div class="name" data-i18n="site.name">Tử Vi Việt</div><div class="sub" data-i18n="site.tagline">Dịch Kinh 易 經 · Mệnh Lý</div></div>
+  </a>
+  <nav class="kd-nav"><a href="index.html" class="active" data-i18n="nav.divination">Gieo Quẻ</a><a href="bat-tu.html" class="" data-i18n="nav.bazi">Bát Tự · Tử Vi</a><a href="hop-hon.html" class="" data-i18n="nav.hehun">Hôn Nhân</a><a href="hoang-lich.html" class="" data-i18n="nav.huangli">Hoàng Lịch</a><a href="giai-nghia.html">Giải Nghĩa</a><a href="64-que.html" class="" data-i18n="nav.hexagram">64 Quẻ</a><a href="them.html" class="" data-i18n="nav.more">Thêm</a></nav>
+  <div class="kd-lang" style="display:flex;gap:2px;border:1px solid rgba(33,29,24,.22);border-radius:3px;overflow:hidden">
+    <button class="lang-btn active" data-lang="vi" style="padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;background:var(--seal);color:var(--surface);border:none;cursor:pointer" onclick="switchLang('vi')">VI</button>
+    <button class="lang-btn" data-lang="zh" style="padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;background:transparent;color:var(--ink-3);border:none;cursor:pointer" onclick="switchLang('zh')">中文</button>
+  </div>
+</header>
+<div class="wrap">
+<section class="center" style="padding:clamp(30px,6vw,80px) 0 16px">
+  <div class="bagua tc" style="font-size:clamp(24px,5vw,32px);letter-spacing:10px;color:var(--seal);opacity:.75;margin-bottom:10px">☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷</div>
+  <h1 style="font-size:clamp(2.2rem,6vw,3.8rem);font-weight:700;color:var(--ink);letter-spacing:4px;margin:10px 0" data-i18n="index.hero.title">Trực Tuyến Dịch Kinh Bói Quẻ</h1>
+  <p class="muted" style="font-size:15px;letter-spacing:4px">Tử Vi Việt · Tam Thiên Niên Cổ Pháp · AI Giải Đoán</p>
+</section>
+
+<!-- Form gieo quẻ -->
+<div class="form-frame" style="max-width:760px;margin:0 auto 30px">
+  <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+  <div class="ff-title">Dịch Kinh Vấn Bốc <span class="tc" style="font-size:.7em">易經問卜</span></div>
+  <div class="ff-sub">Tam đồng tiền diêu quái · Lục hào chiêm bốc · Vấn sự cụ thể</div>
+  
+  <div class="coins" id="coinRow">
+    <div class="coin" id="coin1"><div class="sq"></div></div>
+    <div class="coin" id="coin2"><div class="sq"></div></div>
+    <div class="coin" id="coin3"><div class="sq"></div></div>
+  </div>
+
+  <label class="ff-label tc" style="text-align:center;margin-top:16px">Sở Vấn Chi Sự <span class="ff-sub" style="display:inline;margin:0;letter-spacing:0">(Điều muốn hỏi)</span></label>
+  <textarea id="questionInput" class="ff-input" rows="3" placeholder="Xin viết điều bạn muốn hỏi (ví dụ: Công danh năm nay có thành tựu không?)" style="min-height:100px;resize:none;width:100%"></textarea>
+
+  <div class="chips" style="margin-top:14px">
+    <span class="muted" style="font-size:12px">✦ Không viết?</span>
+    <span class="chip" onclick="setQ('Vận mệnh năm nay của tôi thế nào?')">Vận năm nay</span>
+    <span class="chip" onclick="setQ('Tài vận năm nay của tôi thế nào?')">Tài vận</span>
+    <span class="chip" onclick="setQ('Tình duyên năm nay của tôi thế nào?')">Tình duyên</span>
+    <span class="chip" onclick="setQ('Sự nghiệp năm nay của tôi thế nào?')">Sự nghiệp</span>
+  </div>
+
+  <div class="notice">Tâm thành tắc linh. Vấn đề càng cụ thể, quẻ tượng càng rõ.</div>
+
+  <button class="btn-run" id="btnToss" onclick="tossCoins()" style="margin-top:18px">☷ Dao Quái · Gieo Quẻ ☰</button>
+  <div class="ff-sub" style="margin-top:12px;margin-bottom:0">Miễn phí · Không cần đăng ký</div>
+</div>
+
+<!-- Kết quả gieo quẻ -->
+<div class="panel hide" id="resultPanel">
+  <div class="panel-title">Kết Quả Gieo Quẻ <span class="tc" style="font-size:.7em">卜卦結果</span></div>
+  <div id="resultContent"></div>
+</div>
+
+<!-- Stats -->
+<div class="stat-row">
+  <div class="stat"><div class="n">64</div><div class="l">Kinh Quái</div></div>
+  <div class="stat"><div class="n">384</div><div class="l">Kinh Hào</div></div>
+  <div class="stat"><div class="n">3000<span style="font-size:24px">+</span></div><div class="l">Năm Truyền Thừa</div></div>
+</div>
+
+<!-- Steps -->
+<div class="steps">
+  <div class="step"><div class="no">一</div><h3>Viết Điều Muốn Hỏi</h3><p class="muted">Một niệm viết một câu. Sự càng cụ thể, quẻ càng rõ.</p></div>
+  <div class="step"><div class="no">二</div><h3>Gieo Ba Đồng Tiền</h3><p class="muted">Lục hào tự thượng nhi hạ, càn khôn âm dương các hữu kỳ sở.</p></div>
+  <div class="step"><div class="no">三</div><h3>Xem Quẻ và Nghe Giải</h3><p class="muted">Bản quẻ, biến quẻ, hỗ thác tung đều hiện.</p></div>
+</div>
+
+<!-- FAQ -->
+<div style="margin-top:30px">
+  <div class="section-title center"><span class="zh">常問問題</span><span class="vi">Câu hỏi thường gặp</span></div>
+  <div class="faq" id="faqList">
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Dịch Kinh bói toán có miễn phí không?</button><div class="faq-a"><p>Hoàn toàn miễn phí. Gieo quẻ, đọc quẻ, xem bát tự, lịch hoàng đạo — không cần đăng ký.</p></div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Dịch Kinh có thể xem được những gì?</button><div class="faq-a"><p>Phù hợp với những quyết định cụ thể trước mắt: sự nghiệp, tình duyên, tài vận. Không thích hợp cho câu hỏi mơ hồ hay chẩn đoán y tế.</p></div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Bát Tự và Dịch Kinh khác nhau thế nào?</button><div class="faq-a"><p>Bát Tự xem tiên thiên mệnh cách dựa trên ngày giờ sinh. Dịch Kinh bói là hỏi việc tức thì. Hai bên bổ trợ cho nhau.</p></div></div>
+  </div>
+</div>
+</div>
+<footer class="kd-footer">
+  <div class="row">
+    <div class="fbrand"><div class="fseal">易</div><div class="ftext">Tử Vi Việt · 易經 — Trí tuệ biến dịch phương Đông.</div></div>
+    <div class="flinks"><a href="index.html" data-i18n="nav.divination">Gieo Quẻ</a><a href="bat-tu.html" data-i18n="nav.bazi">Bát Tự · Tử Vi</a><a href="hop-hon.html">Hôn Nhân</a><a href="hoang-lich.html" data-i18n="nav.huangli">Hoàng Lịch</a><a href="64-que.html" data-i18n="nav.hexagram">64 Quẻ</a></div>
+  </div>
+  <div class="fhan">占 卜 · �

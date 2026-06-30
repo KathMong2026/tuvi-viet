@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hồ Sơ Cá Nhân — Tử Vi Việt</title>
+<meta name="description" content="Quản lý hồ sơ cá nhân và lá số Tử Vi, Bát Tự đã lưu.">
+<meta name="theme-color" content="#9c2a1c"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece1c5;--surface:#f6efd9;--input:#fffdf6;--ink:#211d18;--ink-2:#3f372b;--ink-3:#463d30;--ink-4:#5b4f3c;
+  --muted:#6b5d48;--faint:#a99878;--seal:#9c2a1c;--dark:#211d18;--dark-soft:#cdbf9d;--dark-warm:#d98b5f;--line:rgba(33,29,24,.13);
+  --gold:#b8893b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:radial-gradient(circle at 16% 10%,rgba(255,252,242,.6),transparent 42%),radial-gradient(circle at 86% 90%,rgba(140,100,45,.08),transparent 46%),var(--paper);
+  color:var(--ink);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit}
+.tc{font-family:'Noto Serif TC',serif}
+::selection{background:var(--seal);color:var(--surface)}
+.hide{display:none!important}
+
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(33,29,24,.14)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12}
+.kd-brand .sub{font-size:11px;color:var(--seal);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,30px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.kd-nav a:hover{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-nav a.active{color:var(--seal);border-bottom-color:var(--seal)}
+
+/* User avatar / menu */
+.user-menu{position:relative;display:flex;align-items:center;gap:8px}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.user-name{font-size:15px;color:var(--ink-2);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user-dropdown{position:absolute;top:100%;right:0;margin-top:8px;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 32px rgba(33,29,24,.15);min-width:180px;overflow:hidden;display:none;z-index:50}
+.user-dropdown.show{display:block}
+.user-dropdown a,.user-dropdown button{display:block;width:100%;text-align:left;padding:11px 16px;font-size:14px;color:var(--ink-2);transition:background .12s}
+.user-dropdown a:hover,.user-dropdown button:hover{background:rgba(156,42,28,.06);color:var(--seal)}
+.user-dropdown .divider{height:1px;background:var(--line);margin:4px 0}
+
+.wrap{max-width:900px;margin:0 auto;padding:clamp(30px,5vw,52px) clamp(16px,4vw,40px)}
+.page-title{font-family:'Noto Serif TC',serif;font-size:clamp(1.6rem,3vw,2rem);color:var(--seal);font-weight:700;letter-spacing:.08em;text-align:center;margin-bottom:4px}
+.page-sub{text-align:center;font-size:14px;color:var(--ink-4);margin-bottom:30px}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:clamp(18px,3vw,28px);box-shadow:0 8px 24px rgba(33,29,24,.06)}
+.panel+.panel{margin-top:22px}
+.panel h3{font-family:'Noto Serif TC',serif;font-size:18px;color:var(--seal);margin:0 0 18px;letter-spacing:.06em;display:flex;align-items:center;gap:10px}
+.panel h3 .dot{width:8px;height:8px;background:var(--seal);border-radius:50%}
+
+.ff-row{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;margin-bottom:16px}
+@media(max-width:560px){.ff-row{grid-template-columns:1fr}}
+.ff-field label{display:block;font-family:'Noto Serif TC',serif;font-size:13px;color:var(--ink-2);margin-bottom:6px;letter-spacing:.04em}
+.ff-input,.ff-select{width:100%;padding:10px 12px;font-size:14px;color:var(--ink);background:var(--input);border:1px solid rgba(33,29,24,.2);border-radius:4px;outline:none}
+.ff-input:focus,.ff-select:focus{border-color:var(--seal)}
+.ff-input:disabled{background:#f5f2e8;color:var(--muted)}
+
+.btn-sm{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:3px;font-size:14px;transition:background .15s,opacity .15s}
+.btn-primary{background:var(--seal);color:var(--surface);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.btn-primary:hover{background:#882318}
+.btn-ghost{background:transparent;color:var(--ink-3);border:1px solid var(--line)}
+.btn-ghost:hover{background:rgba(33,29,24,.05)}
+.btn-danger{background:transparent;color:#c0392b;border:1px solid #e6c3c3}
+.btn-danger:hover{background:#fef5f5}
+
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--dark);color:var(--surface);padding:12px 24px;border-radius:6px;font-size:14px;z-index:100;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* Chart table */
+.chart-table{width:100%;border-collapse:collapse;font-size:14px}
+.chart-table th{text-align:left;padding:10px 12px 8px;font-family:'Noto Serif TC',serif;font-size:13px;color:var(--muted);border-bottom:2px solid var(--line);letter-spacing:.04em}
+.chart-table td{padding:12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.chart-table tr:hover td{background:rgba(156,42,28,.03)}
+.chart-table .type-badge{display:inline-block;padding:3px 10px;border-radius:3px;font-size:12px;font-family:'Noto Serif TC',serif;background:rgba(33,29,24,.06);color:var(--ink-3)}
+.chart-table .actions{display:flex;gap:8px;flex-wrap:wrap}
+.chart-table .notes-input{width:100%;padding:6px 8px;font-size:13px;background:var(--input);border:1px solid var(--line);border-radius:3px;outline:none;font-family:'Noto Serif',serif;min-width:120px}
+.chart-table .notes-input:focus{border-color:var(--seal)}
+
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-state .icon{font-size:48px;margin-bottom:12px;opacity:.6}
+.empty-state p{font-size:15px;line-height:1.7}
+.empty-state a{color:var(--seal);font-weight:600}
+
+.spinner-sm{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);padding:clamp(30px,4vw,46px) clamp(16px,5vw,52px);margin-top:40px}
+.kd-footer .row{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-4)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}
+.kd-footer .flinks a{color:var(--ink-3)}
+.kd-footer .flinks a:hover{color:var(--seal)}
+
+/* Modal confirm */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:90;display:flex;align-items:center;justify-content:center;display:none}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:28px;max-width:380px;width:90%;box-shadow:0 16px 48px rgba(33,29,24,.2);text-align:center}
+.modal-box p{font-size:15px;color:var(--ink-2);margin-bottom:18px;line-height:1.6}
+.modal-box .btns{display:flex;gap:10px;justify-content:center}
+</style>
+<script src="js/i18n.js"></script>
+</head>
+<body>
+
+<header class="kd-header">
+  <a class="kd-brand" href="index.html"><div class="kd-seal">易</div><div><div class="name" data-i18n="site.name">Tử Vi Việt</div><div class="sub">Dịch Kinh · Mệnh Lý</div></div></a>
+  <nav class="kd-nav">
+    <a href="index.html" data-i18n="nav.divination">Gieo Quẻ</a>
+    <a href="bat-tu.html" data-i18n="nav.bazi">Bát Tự · Tử Vi</a>
+    <a href="hop-hon.html" data-i18n="nav.hehun">Hôn Nhân</a>
+    <a href="hoang-lich.html" data-i18n="nav.huangli">Hoàng Lịch</a>
+    <a href="giai-nghia.html">Giải Nghĩa</a><a href="64-que.html" data-i18n="nav.hexagram">64 Quẻ</a>
+    <a href="them.html" data-i18n="nav.more">Thêm</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div class="page-title" data-i18n="profile.title">Hồ Sơ Cá Nhân</div>
+  <div class="page-sub" data-i18n="profile.sub">Quản lý thông tin và lá số đã lưu</div>
+
+  <!-- Profile Info -->
+  <div class="panel">
+    <h3><span class="dot"></span><span data-i18n="profile.section.info">Thông Tin Cá Nhân</span></h3>
+    <div id="profileForm">
+      <div class="ff-row">
+        <div class="ff-field">
+          <label data-i18n="profile.displayName">Tên hiển thị</label>
+          <input class="ff-input" type="text" id="pName" placeholder="Tên của bạn">
+        </div>
+        <div class="ff-field">
+          <label data-i18n="profile.email">Email</label>
+          <input class="ff-input" type="email" id="pEmail" disabled>
+        </div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-field">
+          <label data-i18n="profile.defaultBirth">Ngày sinh mặc định</label>
+          <div style="display:flex;gap:8px">
+            <input class="ff-input" type="number" id="pYear" placeholder="Năm" min="1900" max="2100" style="flex:1.2">
+            <input class="ff-input" type="number" id="pMonth" placeholder="Tháng" min="1" max="12" style="flex:0.8">
+            <input class="ff-input" type="number" id="pDay" placeholder="Ngày" min="1" max="31" style="flex:0.8">
+          </div>
+        </div>
+        <div class="ff-field">
+          <label data-i18n="profile.defaultGender">Giới tính mặc định</label>
+          <select class="ff-select" id="pGender">
+            <option value="nam">Nam</option>
+            <option value="nu">Nữ</option>
+          </select>
+        </div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-field">
+          <label data-i18n="profile.defaultLocation">Nơi sinh mặc định</label>
+          <select class="ff-select" id="pLocation">
+            <option value="105.85">Hà Nội (105.85°E)</option>
+            <option value="106.70">TP Hồ Chí Minh (106.70°E)</option>
+            <option value="108.22">Đà Nẵng (108.22°E)</option>
+            <option value="116.38">Bắc Kinh (116.38°E)</option>
+            <option value="custom">Tự nhập kinh độ...</option>
+          </select>
+        </div>
+        <div class="ff-field" id="pCustomLonWrap" style="display:none">
+          <label>Kinh độ</label>
+          <input class="ff-input" type="number" id="pCustomLon" placeholder="105.85" step="0.01" min="0" max="180">
+        </div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-sm btn-primary" id="btnSaveProfile" onclick="saveProfile()">
+          <span id="saveSpinner" class="spinner-sm hide"></span>
+          <span id="saveLabel" data-i18n="profile.btn.save">Lưu Thay Đổi</span>
+        </button>
+        <button class="btn-sm btn-ghost" onclick="handleLogout()" data-i18n="nav.logout">Đăng Xuất</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts List -->
+  <div class="panel">
+    <h3><span class="dot"></span><span data-i18n="profile.section.charts">Lá Số Đã Lưu</span></h3>
+    <div id="chartsLoading" style="text-align:center;padding:20px;color:var(--muted)">Đang tải...</div>
+    <div id="chartsEmpty" class="empty-state hide">
+      <div class="icon">📜</div>
+      <p data-i18n="profile.noCharts">Chưa có lá số nào được lưu.</p>
+      <p style="margin-top:8px"><a href="bat-tu.html">→ Đi tới Bát Tự / Tử Vi để tạo lá số</a></p>
+    </div>
+    <div id="chartsList" class="hide" style="overflow-x:auto"></div>
+  </div>
+</main>
+
+<!-- Delete confirm modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <p data-i18n="profile.chart.deleteConfirm">Xác nhận xóa lá số này?</p>
+    <div class="btns">
+      <button class="btn-sm btn-danger" id="btnConfirmDelete">Xóa</button>
+      <button class="btn-sm btn-ghost" onclick="closeDeleteModal()">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer class="kd-footer">
+  <div class="row">
+    <div class="fbrand">
+      <div class="fseal">易</div>
+      <div class="ftext">© 2026 Tử Vi Việt</div>
+    </div>
+    <div class="flinks">
+      <a href="index.html">Gieo Quẻ</a>
+      <a href="bat-tu.html">Bát Tự</a>
+      <a href="profile.html">Hồ Sơ</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+(function() {
+  'use strict';
+  var t = function(k) { return (typeof I18N !== 'undefined' ? I18N.t(k) : null) || k; };
+
+  var _deleteTargetId = null;
+
+  function sanitizeForInput(val) {
+    if (!val) return '';
+    return String(val).replace(/[<>"']/g, '').substring(0, 500);
+  }
+
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(function() { el.classList.remove('show'); }, 2500);
+  }
+
+  // ─── Auth check ───
+  HCD.firebase.waitForAuth().then(function(user) {
+    if (!user) {
+      sessionStorage.setItem('hcd-redirect', window.location.href);
+      window.location.href = 'login.html';
+      return;
+    }
+    loadProfile(user);
+    loadCharts();
+  });
+
+  function loadProfile(user) {
+    HCD.firebase.getProfile().then(function(profile) {
+      document.getElementById('pName').value = sanitizeForInput(profile.displayName || '');
+      document.getElementById('pEmail').value = sanitizeForInput(profile.email || user.email || '');
+      if (profile.birthYear) {
+        document.getElementById('pYear').value = profile.birthYear;
+        document.getElementById('pMonth').value = profile.birthMonth;
+        document.getElementById('pDay').value = profile.birthDay;
+      }
+      document.getElementById('pGender').value = profile.gender || 'nam';
+      var loc = profile.longitude || '105.85';
+      var known = ['105.85','106.70','108.22','116.38'];
+      if (known.indexOf(String(loc)) >= 0) {
+        document.getElementById('pLocation').value = String(loc);
+        document.getElementById('pCustomLonWrap').style.display = 'none';
+      } else {
+        document.getElementById('pLocation').value = 'custom';
+        document.getElementById('pCustomLon').value = loc;
+        document.getElementById('pCustomLonWrap').style.display = 'block';
+      }
+    }).catch(function(err) {
+      console.error('Load profile error:', err);
+    });
+  }
+
+  document.getElementById('pLocation').addEventListener('change', function() {
+    var wrap = document.getElementById('pCustomLonWrap');
+    if (this.value === 'custom') {
+      wrap.style.display = 'block';
+    } else {
+      wrap.style.display = 'none';
+    }
+  });
+
+  window.saveProfile = function() {
+    var btn = document.getElementById('btnSaveProfile');
+    var spinner = document.getElementById('saveSpinner');
+    var label = document.getElementById('saveLabel');
+    btn.disabled = true;
+    spinner.classList.remove('hide');
+
+    var locVal = document.getElementById('pLocation').value;
+    var longitude = locVal === 'custom'
+      ? (parseFloat(document.getElementById('pCustomLon').value) || 105.85)
+      : parseFloat(locVal);
+
+    var data = {
+      displayName: document.getElementById('pName').value.trim(),
+      birthYear: parseInt(document.getElementById('pYear').value) || null,
+      birthMonth: parseInt(document.getElementById('pMonth').value) || null,
+      birthDay: parseInt(document.getElementById('pDay').value) || null,
+      gender: document.getElementById('pGender').value,
+      longitude: String(longitude)
+    };
+
+    HCD.firebase.updateProfile(data).then(function() {
+      spinner.classList.add('hide');
+      label.textContent = t('profile.btn.saved');
+      btn.classList.add('btn-ghost');
+      btn.classList.remove('btn-primary');
+      setTimeout(function() {
+        label.textContent = t('profile.btn.save');
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-ghost');
+        btn.disabled = false;
+      }, 2000);
+    }).catch(function(err) {
+      spinner.classList.add('hide');
+      btn.disabled = false;
+      toast('Lỗi: ' + (err.message || ''));
+    });
+  };
+
+  // ─── Charts ───
+  function loadCharts() {
+    HCD.firebase.getCharts().then(function(charts) {
+      document.getElementById('chartsLoading').classList.add('hide');
+      if (charts.length === 0) {
+        document.getElementById('chartsEmpty').classList.remove('hide');
+        return;
+      }
+      document.getElementById('chartsList').classList.remove('hide');
+      renderChartTable(charts);
+    }).catch(function(err) {
+      document.getElementById('chartsLoading').textContent = 'Lỗi tải lá số: ' + (err.message || '');
+    });
+  }
+
+  function renderChartTable(charts) {
+    var nameLabels = { batu: 'Bát Tự', tuvi: 'Tử Vi', both: 'Bát Tự + Tử Vi' };
+    var html = '<table class="chart-table">';
+    html += '<thead><tr>';
+    html += '<th>' + t('profile.chart.name') + '</th>';
+    html += '<th>' + t('profile.chart.date') + '</th>';
+    html += '<th>' + t('profile.chart.type') + '</th>';
+    html += '<th>' + t('profile.chart.notes') + '</th>';
+    html += '<th>' + t('profile.chart.actions') + '</th>';
+    html += '</tr></thead><tbody>';
+
+    charts.forEach(function(c) {
+      var dateStr = [c.birthDay, c.birthMonth, c.birthYear].filter(Boolean).join('/');
+      var typeLabel = nameLabels[c.type] || c.type;
+      var notes = c.notes || '';
+
+      html += '<tr>';
+      html += '<td><strong>' + escHtml(c.name) + '</strong></td>';
+      html += '<td style="white-space:nowrap">' + escHtml(dateStr) + '</td>';
+      html += '<td><span class="type-badge">' + escHtml(typeLabel) + '</span></td>';
+      html += '<td><input class="notes-input" value="' + escAttr(notes) + '" placeholder="' + t('profile.chart.emptyNotes') + '" onchange="updateChartNote(\'' + c.id + '\', this.value)"></td>';
+      html += '<td><div class="actions">';
+      html += '<button class="btn-sm btn-ghost" onclick="viewChart(\'' + c.id + '\')">' + t('profile.chart.view') + '</button>';
+      html += '<button class="btn-sm btn-danger" onclick="confirmDelete(\'' + c.id + '\', \'' + escAttr(c.name) + '\')">' + t('profile.chart.delete') + '</button>';
+      html += '</div></td>';
+      html += '</tr>';
+    });
+
+    html += '</tbody></table>';
+    document.getElementById('chartsList').innerHTML = html;
+  }
+
+  function escHtml(s) {
+    if (!s) return '';
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function escAttr(s) {
+    if (!s) return '';
+    return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  window.updateChartNote = function(chartId, value) {
+    HCD.firebase.updateChart(chartId, { notes: value.trim() }).catch(function(err) {
+      console.error('Update note error:', err);
+    });
+  };
+
+  window.viewChart = function(chartId) {
+    sessionStorage.setItem('hcd-view-chart', chartId);
+    window.location.href = 'bat-tu.html#saved';
+  };
+
+  window.confirmDelete = function(chartId, name) {
+    _deleteTargetId = chartId;
+    document.getElementById('deleteModal').classList.add('show');
+    document.getElementById('btnConfirmDelete').onclick = function() {
+      HCD.firebase.deleteChart(chartId).then(function() {
+        closeDeleteModal();
+        toast('Đã xóa lá số: ' + name);
+        loadCharts();
+      }).catch(function(err) {
+        toast('Lỗi xóa: ' + (err.message || ''));
+      });
+    };
+  };
+
+  window.closeDeleteModal = function() {
+    document.getElementById('deleteModal').classList.remove('show');
+    _deleteTargetId = null;
+  };
+
+  window.handleLogout = function() {
+    HCD.firebase.logout().then(function() {
+      window.location.href = 'index.html';
+    });
+  };
+})();
+</script>
+</body>
+</html>

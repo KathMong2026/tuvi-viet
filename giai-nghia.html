@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giải Nghĩa — Bát Tự · Tử Vi Cơ Bản | Tử Vi Việt</title>
+<meta name="description" content="Tra cứu khái niệm Bát Tự, Tử Vi cơ bản: Ngũ Hành, Thiên Can, Địa Chi, Thập Thần, 12 Cung, Chính Tinh. Dành cho người mới học mệnh lý.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece1c5;--surface:#f6efd9;--input:#fffdf6;--ink:#211d18;--ink-2:#3f372b;--ink-3:#463d30;--ink-4:#5b4f3c;
+  --muted:#6b5d48;--faint:#a99878;--seal:#9c2a1c;--dark:#211d18;--dark-soft:#cdbf9d;--dark-warm:#d98b5f;--line:rgba(33,29,24,.13);
+  --gold:#b8893b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 16% 10%, rgba(255,252,242,.6), transparent 42%),
+    radial-gradient(circle at 86% 90%, rgba(140,100,45,.08), transparent 46%),
+    var(--paper);
+  color:var(--ink);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit}
+.tc{font-family:'Noto Serif TC',serif}
+.brush{font-family:'Ma Shan Zheng',cursive}
+
+.wx-kim{color:#b8893b} .wx-moc{color:#4a6741} .wx-thuy{color:#3a5974} .wx-hoa{color:#9e3020} .wx-tho{color:#8b6914}
+
+::selection{background:var(--seal);color:var(--surface)}
+
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);
+  background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(33,29,24,.14)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal);color:var(--surface);display:flex;align-items:center;
+  justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12}
+.kd-brand .sub{font-size:11px;color:var(--seal);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,30px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.kd-nav a:hover{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-nav a.active{color:var(--seal);border-bottom-color:var(--seal)}
+
+.wrap{max-width:1120px;margin:0 auto;padding:clamp(30px,5vw,56px) clamp(16px,4vw,48px)}
+.muted{color:var(--muted)}
+.center{text-align:center}
+.hide{display:none!important}
+
+.section-title{display:flex;align-items:baseline;gap:12px;margin:8px 0 18px;flex-wrap:wrap}
+.section-title .zh{font-size:clamp(1.7rem,4vw,2.2rem);color:var(--seal);letter-spacing:4px;font-family:'Noto Serif TC',serif;font-weight:700}
+.section-title .vi{font-size:clamp(1rem,2.2vw,1.15rem);color:var(--ink-4);letter-spacing:1px}
+.section-title.center{justify-content:center}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:22px;box-shadow:0 8px 24px rgba(33,29,24,.06)}
+a.card{display:block;text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s}
+a.card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(33,29,24,.14)}
+.card h3{margin-top:0}
+.card b.zh{color:var(--seal)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--seal);color:var(--surface);border:none;
+  border-radius:2px;padding:14px 32px;font-size:16px;cursor:pointer;font-family:'Noto Serif',serif;letter-spacing:.03em;box-shadow:0 3px 0 rgba(0,0,0,.2)}
+.btn:hover{background:#882318}
+.btn.ghost{background:transparent;color:var(--seal);border:1px solid var(--seal);box-shadow:none}
+
+.form-frame{position:relative;background:var(--surface);border:1px solid rgba(156,42,28,.35);border-radius:4px;padding:clamp(22px,3vw,34px)}
+.form-frame::before{content:"";position:absolute;inset:7px;border:1px solid rgba(156,42,28,.22);border-radius:2px;pointer-events:none}
+.corner{position:absolute;width:9px;height:9px;background:var(--seal);z-index:1}
+.corner.tl{top:-1px;left:-1px}.corner.tr{top:-1px;right:-1px}
+.corner.bl{bottom:-1px;left:-1px}.corner.br{bottom:-1px;right:-1px}
+.ff-title{text-align:center;font-family:'Noto Serif TC',serif;font-size:clamp(1.4rem,2.6vw,1.8rem);font-weight:700;margin-top:6px;letter-spacing:.06em}
+.ff-sub{text-align:center;font-size:13px;color:var(--ink-4);margin-bottom:18px}
+.ff-label{display:block;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink-2);margin-bottom:7px;letter-spacing:.08em}
+.ff-input,.ff-select{width:100%;padding:11px 12px;font-size:15px;color:var(--ink);background:var(--input);border:1px solid rgba(33,29,24,.2);border-radius:4px;outline:none;font-family:'Noto Serif',serif}
+.ff-input:focus,.ff-select:focus{border-color:var(--seal)}
+.ff-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-bottom:16px}
+.btn-run{width:100%;padding:15px;background:var(--seal);color:var(--surface);border:none;border-radius:3px;
+  font-family:'Noto Serif TC',serif;font-size:18px;letter-spacing:.25em;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.2);margin-top:16px}
+.btn-run:hover{background:#882318}
+
+/* Coins */
+.coins{display:flex;gap:18px;justify-content:center;margin:26px 0}
+.coin{width:70px;height:70px;border-radius:50%;border:3px solid var(--gold);
+  background:radial-gradient(circle at 35% 30%,#f6e6c2,#d9b873);display:grid;place-items:center;color:#6b4f1d;position:relative}
+.coin .sq{width:24px;height:24px;border:2px solid #6b4f1d;border-radius:3px}
+.coin.flip{animation:flip .6s ease}
+@keyframes flip{0%{transform:rotateY(0)}100%{transform:rotateY(720deg)}}
+
+.stat-row{display:flex;gap:clamp(24px,6vw,52px);justify-content:center;margin:30px 0;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .n{font-size:clamp(28px,5vw,38px);color:var(--seal);font-weight:700}
+.stat .l{font-size:13px;color:var(--muted)}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px}
+@media(max-width:780px){.steps{grid-template-columns:1fr}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:20px}
+.step .no{font-size:24px;color:var(--seal);font-family:'Noto Serif TC',serif}
+.step h3{margin:8px 0 6px}}
+
+.hexlines{display:flex;flex-direction:column-reverse;gap:7px;align-items:center}
+.hexline{display:flex;gap:8px;align-items:center;width:120px;justify-content:center;height:14px}
+.hexline .seg{height:12px;background:var(--ink);border-radius:2px}
+.hexline.yang .seg{width:120px}
+.hexline.yin .seg{width:52px}
+.hexline.changing .seg{background:var(--seal);box-shadow:0 0 0 2px rgba(156,42,28,.25)}
+
+.notice{background:rgba(156,42,28,.07);border:1px solid rgba(156,42,28,.3);border-radius:4px;padding:12px 16px;font-size:14px;color:var(--seal);margin-top:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:6px 14px;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--seal);color:var(--seal)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:clamp(14px,2vw,22px);box-shadow:0 8px 24px rgba(33,29,24,.07);margin:16px 0}
+.panel-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;color:var(--seal);margin:0 0 12px;letter-spacing:.1em}
+
+/* Hex list */
+.hex-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.gua-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:16px 12px;text-align:center;transition:transform .18s,box-shadow .18s}
+.gua-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(33,29,24,.13)}
+.gua-card .no{font-size:11px;color:var(--faint)}
+.gua-card .nm{font-size:22px;color:var(--seal);font-family:'Noto Serif TC',serif;margin:2px 0}
+.gua-card .sym{font-size:22px;color:var(--ink);line-height:1.1}
+.gua-card .vi{font-size:13px;color:var(--ink-4)}
+
+/* FAQ */
+.faq{display:flex;flex-direction:column;gap:10px}
+.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.faq-q{width:100%;text-align:left;padding:16px 20px;font-family:'Noto Serif TC',serif;font-size:16px;font-weight:600;color:var(--ink);letter-spacing:.04em;display:flex;justify-content:space-between;align-items:center}
+.faq-q::after{content:'+';font-size:22px;color:var(--seal);font-weight:300}
+.faq-item.open .faq-q::after{content:'−'}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;padding:0 20px}
+.faq-item.open .faq-a{max-height:600px;padding:0 20px 18px}
+.faq-a p{margin:0;font-size:14.5px;line-height:1.9;color:var(--ink-2);font-family:'Noto Serif',serif}
+
+/* Tuvi grid in other pages */
+.tuvi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:620px;margin:0 auto}
+.palace{display:flex;flex-direction:column;justify-content:space-between;border-radius:4px;padding:8px 9px;min-height:80px;
+  background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.palace.menh{background:var(--dark);color:#f3ead0;border-color:var(--seal)}
+.palace .ph{display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0}
+.palace .ph .pn{font-size:13px;font-weight:700}
+.palace .pstars{flex:1;padding:2px 0}
+.palace .pstars .main{font-size:10px;font-weight:700;color:var(--ink)}
+.palace.menh .pstars .main{color:#f3ead0}
+.palace .pstars .aux{font-size:9px;color:var(--seal)}
+
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);
+  padding:clamp(30px,4vw,46px) clamp(16px,5vw,52px);margin-top:30px}
+.kd-footer .row{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal);color:var(--surface);display:flex;align-items:center;
+  justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-4)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}
+.kd-footer .flinks a{color:var(--ink-3)}
+.kd-footer .flinks a:hover{color:var(--seal)}
+.kd-footer .fhan{max-width:1120px;margin:18px auto 0;font-size:12px;color:var(--faint);
+  font-family:'Noto Serif TC',serif;letter-spacing:.2em}
+</style>
+<script src="js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof HCD !== 'undefined' && HCD.member) {
+    HCD.member.renderNavAuth('.kd-nav');
+  }
+});
+</script>
+</head>
+<body>
+<header class="kd-header">
+  <a class="kd-brand" href="index.html">
+    <div class="kd-seal">易</div>
+    <div><div class="name">Tử Vi Việt</div><div class="sub">Dịch Kinh 易 經 · Mệnh Lý</div></div>
+  </a>
+  <nav class="kd-nav"><a href="index.html" class="">Gieo Quẻ</a><a href="bat-tu.html" class="">Bát Tự · Tử Vi</a><a href="hop-hon.html" class="">Hôn Nhân</a><a href="hoang-lich.html" class="">Hoàng Lịch</a><a href="giai-nghia.html" class="active">Giải Nghĩa</a><a href="64-que.html" class="">64 Quẻ</a><a href="them.html">Thêm</a></nav>
+  <div class="kd-lang" style="display:flex;gap:2px;border:1px solid rgba(33,29,24,.22);border-radius:3px;overflow:hidden">
+    <button class="lang-btn active" data-lang="vi" style="padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;background:var(--seal);color:var(--surface);border:none;cursor:pointer" onclick="switchLang('vi')">VI</button>
+    <button class="lang-btn" data-lang="zh" style="padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;background:transparent;color:var(--ink-3);border:none;cursor:pointer" onclick="switchLang('zh')">中文</button>
+  </div>
+</header>
+<div class="wrap">
+<div class="section-title center"><span class="vi" style="font-size:1.6rem;color:var(--seal);font-weight:700">Giải Nghĩa</span><span class="zh" style="font-size:.9rem;color:var(--ink-4)">Bát Tự · Tử Vi Cơ Bản</span></div>
+<p class="center muted">Những khái niệm nền tảng để đọc hiểu kết quả Bát Tự và Tử Vi — dành cho người mới bắt đầu.</p>
+<style>
+.gn{max-width:900px;margin:0 auto}
+.gn h2{font-size:20px;color:var(--seal);margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--seal);font-weight:700}
+.gn h3{font-size:17px;color:var(--ink);margin:22px 0 10px;font-weight:600}
+.gn p{font-size:15px;line-height:2;color:var(--ink-2);margin:0 0 12px}
+.gn ul{margin:8px 0 16px;padding-left:22px}
+.gn li{font-size:15px;line-height:1.9;color:var(--ink-2);margin-bottom:6px}
+.gn .tag{display:inline-block;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:1px 10px;font-size:13px;font-weight:600;color:var(--seal);margin:0 3px}
+.gn .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+@media(max-width:680px){.gn .grid-2{grid-template-columns:1fr}}
+.gn .card{border:1px solid var(--line);border-radius:5px;padding:16px 18px;background:var(--surface)}
+.gn .card h4{font-size:15px;color:var(--seal);margin:0 0 6px}
+.gn .card p{font-size:14px;line-height:1.8;margin:0}
+.gn table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.gn th{background:var(--seal);color:var(--surface);padding:8px 10px;text-align:left;font-weight:600}
+.gn td{border-bottom:1px solid var(--line);padding:7px 10px;color:var(--ink-2)}
+.gn tr:nth-child(even) td{background:rgba(246,239,217,.5)}
+.gn .note{border-left:3px solid var(--seal);background:var(--surface);padding:12px 18px;margin:16px 0;font-size:14px;line-height:1.8}
+.gn .sep{height:1px;background:var(--line);margin:30px 0}
+
+/* Vòng tròn Ngũ Hành */
+.gn .wx-cycle{display:flex;justify-content:center;align-items:center;margin:20px 0}
+.gn .wx-ring{position:relative;width:280px;height:280px;border-radius:50%;background:var(--surface);border:2px solid var(--line)}
+@media(max-width:600px){.gn .wx-ring{width:220px;height:220px}}
+.gn .wx-ring-item{position:absolute;width:70px;height:70px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:13px;box-shadow:0 3px 10px rgba(0,0,0,.12);transition:transform .2s;border:2px solid}
+.gn .wx-ring-item:hover{transform:scale(1.12)}
+.gn .wx-ring-item .wx-label{font-size:9px;opacity:.9;margin-top:1px}
+.gn .wx-cycle-legend{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:0 0 14px}
+.gn .wx-legend-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2)}
+.gn .wx-legend-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.1);flex-shrink:0}
+.gn .wx-arrow-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:8px 0}
+.gn .wx-arrow-group{display:flex;align-items:center;gap:10px;font-size:14px;padding:6px 14px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.gn .wx-arrow-group .arr{font-size:18px;color:var(--seal)}
+.gn .wx-color-demo{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}
+.gn .wx-color-cell{text-align:center;padding:20px 8px;border-radius:8px;color:#fff;font-weight:600;font-size:15px;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.gn .wx-color-cell .wxc-sub{font-size:11px;opacity:.85;font-weight:400;margin-top:4px}
+</style>
+
+<div class="gn">
+
+<!-- 1. NGU HANH -->
+<h2>1. Ngũ Hành</h2>
+<p>Ngũ Hành là năm yếu tố: <b>Kim</b> (kim loại), <b>Mộc</b> (gỗ), <b>Thủy</b> (nước), <b>Hỏa</b> (lửa), <b>Thổ</b> (đất).</p>
+
+<h3>Màu sắc Ngũ Hành</h3>
+<div class="wx-color-demo">
+<div class="wx-color-cell" style="background:#b8893b"><span>金 Kim</span><div class="wxc-sub">Vàng · Nâu</div></div>
+<div class="wx-color-cell" style="background:#4a6741"><span>木 Mộc</span><div class="wxc-sub">Xanh lá</div></div>
+<div class="wx-color-cell" style="background:#3a5974"><span>水 Thủy</span><div class="wxc-sub">Xanh dương</div></div>
+<div class="wx-color-cell" style="background:#9e3020"><span>火 Hỏa</span><div class="wxc-sub">Đỏ · Hồng</div></div>
+<div class="wx-color-cell" style="background:#8b6914"><span>土 Thổ</span><div class="wxc-sub">Nâu đất</div></div>
+</div>
+
+<h3>Vòng Tương Sinh</h3>
+<p>Mỗi hành <b>sinh ra</b> hành tiếp theo — nuôi dưỡng nhau, tạo thành một vòng tròn thuận:</p>
+<div class="wx-cycle-legend">
+<span class="wx-legend-item"><span class="wx-legend-dot" style="background:#b8893b"></span>Kim</span>
+<span class="wx-legend-item"><span class="wx-legend-dot" style="background:#4a6741"></span>Mộc</span>
+<span class="wx-legend-item"><span class="wx-legend-dot" style="background:#3a5974"></span>Thủy</span>
+<span class="wx-legend-item"><span class="wx-legend-dot" style="background:#9e3020"></span>Hỏa</span>
+<span class="wx-legend-item"><span class="wx-legend-dot" style="background:#8b6914"></span>Thổ</span>
+</div>
+<div class="wx-cycle">
+<div class="wx-ring">
+<div class="wx-ring-item" style="top:5px;left:50%;transform:translateX(-50%);background:#b8893b;border-color:#967a32;color:#fff"><div>金</div><div class="wx-label">Kim</div></div>
+<div class="wx-ring-item" style="top:50%;right:5px;transform:translateY(-50%);background:#4a6741;border-color:#3a5634;color:#fff"><div>木</div><div class="wx-label">Mộc</div></div>
+<div class="wx-ring-item" style="bottom:5px;left:50%;transform:translateX(-50%);background:#3a5974;border-color:#2e4760;color:#fff"><div>水</div><div class="wx-label">Thủy</div></div>
+<div class="wx-ring-item" style="top:50%;left:5px;transform:translateY(-50%);background:#9e3020;border-color:#7e2619;color:#fff"><div>火</div><div class="wx-label">Hỏa</div></div>
+<div class="wx-ring-item" style="top:50%;left:50%;transform:translate(-50%,-50%);background:#8b6914;border-color:#6f5310;color:#fff"><div>土</div><div class="wx-label">Thổ</div></div>
+</div>
+</div>
+<div class="wx-arrow-row">
+<span class="wx-arrow-group"><b>Mộc</b> <span class="arr">→</span> <b>Hỏa</b> <span class="arr">→</span> <b>Thổ</b> <span class="arr">→</span> <b>Kim</b> <span class="arr">→</span> <b>Thủy</b> <span class="arr">→</span> <b>Mộc</b></span>
+</div>
+<p style="text-align:center;font-size:14px;color:var(--ink-3);margin-top:8px">Mộc sinh Hỏa — Hỏa sinh Thổ — Thổ sinh Kim — Kim sinh Thủy — Thủy sinh Mộc</p>
+
+<h3>Vòng Tương Khắc</h3>
+<p>Mỗi hành <b>khắc chế</b> một hành khác — kiểm soát, cân bằng lẫn nhau:</p>
+<div class="wx-arrow-row">
+<span class="wx-arrow-group"><b>Mộc</b> <span class="arr" style="color:var(--ink-4)">✕</span> <b>Thổ</b> <span class="arr" style="color:var(--ink-4)">✕</span> <b>Thủy</b> <span class="arr" style="color:var(--ink-4)">✕</span> <b>Hỏa</b> <span class="arr" style="color:var(--ink-4)">✕</span> <b>Kim</b> <span class="arr" style="color:var(--ink-4)">✕</span> <b>Mộc</b></span>
+</div>
+<p style="text-align:center;font-size:14px;color:var(--ink-3);margin-top:8px">Mộc khắc Thổ — Thổ khắc Thủy — Thủy khắc Hỏa — Hỏa khắc Kim — Kim khắc Mộc</p>
+
+<div class="grid-2">
+<div class="card"><h4>Phương hướng</h4><p>Đông (Mộc) — Nam (Hỏa) — Trung tâm (Thổ) — Tây (Kim) — Bắc (Thủy).</p></div>
+<div class="card"><h4>Mùa vụ</h4><p>Xuân (Mộc) — Hạ (Hỏa) — Giữa hạ (Thổ) — Thu (Kim) — Đông (Thủy).</p></div>
+</div>
+
+<div class="sep"></div>
+
+<!-- 2. THIEN CAN DIA CHI -->
+<h2>2. Thiên Can, Địa Chi và 12 Con Giáp</h2>
+<p>Thiên Can (10 can) + Địa Chi (12 chi) = 60 tổ hợp Can Chi — dùng để ghi năm, tháng, ngày, giờ.</p>
+
+<div class="grid-2">
+<div class="card"><h4 style="color:#b8893b">10 Thiên Can</h4>
+<table style="font-size:13px">
+<tr><th>Can</th><th>Hành</th></tr>
+<tr><td>Giáp</td><td><span class="wx-moc">Mộc dương</span></td></tr>
+<tr><td>Ất</td><td><span class="wx-moc">Mộc âm</span></td></tr>
+<tr><td>Bính</td><td><span class="wx-hoa">Hỏa dương</span></td></tr>
+<tr><td>Đinh</td><td><span class="wx-hoa">Hỏa âm</span></td></tr>
+<tr><td>Mậu</td><td><span class="wx-tho">Thổ dương</span></td></tr>
+<tr><td>Kỷ</td><td><span class="wx-tho">Thổ âm</span></td></tr>
+<tr><td>Canh</td><td><span class="wx-kim">Kim dương</span></td></tr>
+<tr><td>Tân</td><td><span class="wx-kim">Kim âm</span></td></tr>
+<tr><td>Nhâm</td><td><span class="wx-thuy">Thủy dương</span></td></tr>
+<tr><td>Quý</td><td><span class="wx-thuy">Thủy âm</span></td></tr>
+</table>
+</div>
+<div class="card"><h4 style="color:#3a5974">12 Địa Chi & Con Giáp</h4>
+<table style="font-size:13px">
+<tr><th>Chi</th><th>Giáp</th><th>Giờ</th><th>Hành</th></tr>
+<tr><td>Tý</td><td>Chuột</td><td>23h-1h</td><td><span class="wx-thuy">Thủy</span></td></tr>
+<tr><td>Sửu</td><td>Trâu</td><td>1h-3h</td><td><span class="wx-tho">Thổ</span></td></tr>
+<tr><td>Dần</td><td>Hổ</td><td>3h-5h</td><td><span class="wx-moc">Mộc</span></td></tr>
+<tr><td>Mão</td><td>Mèo</td><td>5h-7h</td><td><span class="wx-moc">Mộc</span></td></tr>
+<tr><td>Thìn</td><td>Rồng</td><td>7h-9h</td><td><span class="wx-tho">Thổ</span></td></tr>
+<tr><td>Tỵ</td><td>Rắn</td><td>9h-11h</td><td><span class="wx-hoa">Hỏa</span></td></tr>
+<tr><td>Ngọ</td><td>Ngựa</td><td>11h-13h</td><td><span class="wx-hoa">Hỏa</span></td></tr>
+<tr><td>Mùi</td><td>Dê</td><td>13h-15h</td><td><span class="wx-tho">Thổ</span></td></tr>
+<tr><td>Thân</td><td>Khỉ</td><td>15h-17h</td><td><span class="wx-kim">Kim</span></td></tr>
+<tr><td>Dậu</td><td>Gà</td><td>17h-19h</td><td><span class="wx-kim">Kim</span></td></tr>
+<tr><td>Tuất</td><td>Chó</td><td>19h-21h</td><td><span class="wx-tho">Thổ</span></td></tr>
+<tr><td>Hợi</td><td>Lợn</td><td>21h-23h</td><td><span class="wx-thuy">Thủy</span></td></tr>
+</table>
+</div>
+</div>
+
+<p>Mười hai con giáp tượng trưng cho <b>tính chất của Địa Chi</b>: Dần (Hổ) = khởi đầu mạnh mẽ, Mão (Mèo) = hiền hòa, Thìn (Rồng) = uy quyền, Tỵ (Rắn) = bí ẩn, Ngọ (Ngựa) = phóng khoáng...</p>
+
+<div class="sep"></div>
+
+<!-- 3. BÁT TỰ -->
+<h2>3. Bát Tự — Tám Chữ</h2>
+<p>Bát Tự (tám chữ) gồm <b>4 Trụ</b>: Năm, Tháng, Ngày, Giờ. Mỗi trụ là một cặp Thiên Can + Địa Chi = 2 chữ × 4 trụ = 8 chữ.</p>
+
+<p>Quan trọng nhất là <b>Nhật Chủ</b> (Thiên Can của trụ Ngày) — đại diện cho <b>bản thân</b>. Bảy chữ còn lại tương tác với Nhật Chủ tạo thành các quan hệ gọi là <b>Thập Thần</b>.</p>
+
+<h3>Thập Thần — Mười Loại Quan Hệ</h3>
+<p>Thập Thần xuất phát từ sự <b>tương tác giữa Nhật Chủ và các chữ còn lại</b> dựa trên hai yếu tố: (1) Ngũ Hành sinh khắc, (2) Âm Dương đồng hay dị. Các quan hệ này phản ánh mọi mặt của cuộc đời — sự nghiệp, tài lộc, học vấn, các mối quan hệ.</p>
+
+<div class="grid-2">
+<div class="card" style="border-left:3px solid var(--seal)"><h4>Tỷ Kiên — 比肩</h4><p>Anh em ruột, bạn đồng trang lứa. Cùng giúp đỡ nhưng cũng cạnh tranh. Nhiều Tỷ Kiên = độc lập, không thích nhờ vả, dễ bị bạn bè lấn át.</p></div>
+<div class="card" style="border-left:3px solid #b8893b"><h4>Kiếp Tài — 劫財</h4><p>Bạn bè, đồng nghiệp. Cùng chia sẻ tài lộc — dễ hao tiền vì bạn bè. Nhiều Kiếp Tài = bạn bè đông nhưng dễ bị lợi dụng, tiền đến nhanh đi nhanh.</p></div>
+<div class="card" style="border-left:3px solid #4a6741"><h4>Thực Thần — 食神</h4><p>Tài năng, sáng tạo, ăn nói, con cái. Sao phúc — sống thanh thản, có khiếu nghệ thuật. Nữ mệnh nhiều Thực Thần = thương con.</p></div>
+<div class="card" style="border-left:3px solid #9e3020"><h4>Thương Quan — 傷官</h4><p>Tài hoa, nổi loạn, kiện tụng. Trí thông minh vượt trội nhưng dễ kiêu ngạo, hay phản đối cấp trên. Nhiều Thương Quan = dễ thay đổi công việc.</p></div>
+<div class="card" style="border-left:3px solid #3a5974"><h4>Thiên Tài — 偏財</h4><p>Tiền bất ngờ, đầu tư, làm ăn, kinh doanh. Năng khiếu buôn bán. Với nam: tình cảm ngoài hôn nhân. Nhiều Thiên Tài = linh hoạt tiền bạc.</p></div>
+<div class="card" style="border-left:3px solid #8b6914"><h4>Chính Tài — 正財</h4><p>Tiền lương, thu nhập chính, ổn định. Với nam: vợ. Người có Chính Tài tốt = làm ra tiền, biết giữ tiền, gia đình ổn định.</p></div>
+<div class="card" style="border-left:3px solid #9e3020"><h4>Thất Sát — 七殺 (Thiên Quan)</h4><p>Áp lực lớn, thử thách, quyền uy, quân đội. Mạnh mẽ, dám đương đầu. Nếu chế ngự được = thành công vang dội. Nếu bị áp chế = tai họa. Nữ mệnh Thất Sát = hôn nhân gặp nhiều sóng gió.</p></div>
+<div class="card" style="border-left:3px solid var(--seal)"><h4>Chính Quan — 正官</h4><p>Danh vọng, chức vụ, kỷ luật, uy tín. Với nữ: chồng. Người có Quan tinh tốt = làm việc có nguyên tắc, được cấp trên tin tưởng, hợp công chức.</p></div>
+<div class="card" style="border-left:3px solid #3a5974"><h4>Thiên Ấn — 偏印</h4><p>Học vấn đặc biệt, tâm linh, huyền học, trực giác. Thiên tài một lĩnh vực. Không thích học theo khuôn khổ, hợp nghiên cứu độc lập.</p></div>
+<div class="card" style="border-left:3px solid #4a6741"><h4>Chính Ấn — 正印</h4><p>Học vấn chính thống, bằng cấp, văn bằng, sự che chở. Với bất kỳ ai: mẹ. Có Chính Ấn tốt = học hành đỗ đạt, được quý nhân giúp đỡ, sống nhân hậu.</p></div>
+</div>
+
+<p><b>Giải thích nguồn gốc:</b> Thập Thần ra đời từ việc xem xét Ngũ Hành tương sinh, tương khắc giữa Nhật Chủ và các Thiên Can còn lại trong Tứ Trụ. Ví dụ: Can sinh Nhật Chủ là Ấn (mẹ sinh mình), Nhật Chủ sinh ra Can khác là Thực Thương (mình sinh con), Can khắc Nhật Chủ là Quan Sát (áp lực bên ngoài), Nhật Chủ khắc Can khác là Tài Tinh (mình làm ra tiền).</p>
+
+<h3>Thân Cường — Thân Nhược</h3>
+<div class="grid-2">
+<div class="card" style="border:2px solid #b8893b;background:#fbf2e0"><h4 style="color:#b8893b">Thân Cường</h4><p>Nhật Chủ được nhiều sinh phù. Người khỏe mạnh, quyết đoán, chịu áp lực tốt. Hợp dùng Tài (tiêu hao bớt) và Quan (kỷ luật).</p></div>
+<div class="card" style="border:2px solid #3a5974;background:#f0edf0"><h4 style="color:#3a5974">Thân Nhược</h4><p>Nhật Chủ ít được giúp đỡ. Người nhạy cảm, dễ bị áp lực. Cần dùng Ấn (học vấn, che chở) và Tỷ Kiếp (bạn bè, gia đình) để nâng đỡ.</p></div>
+</div>
+
+<h3>Dụng Thần — Kỵ Thần</h3>
+<p><b>Dụng Thần</b> = hành cần nhất của mệnh, như "thuốc" cho lá số. <b>Kỵ Thần</b> = hành gây hại, cần tránh. Ví dụ: người Thân nhược thiếu Hỏa thì Dụng Thần là Hỏa, Kỵ Thần là Thủy (vì Thủy khắc Hỏa).</p>
+
+<h3>Đại Vận</h3>
+<p>Mỗi 10 năm người ta bước vào một <b>Đại Vận</b> mới — như sang một "chương" mới của cuộc đời. Đại Vận tốt = dù mệnh xấu cũng vượt qua được. Đại Vận xấu = dù mệnh tốt cũng gặp khó khăn. Xem Đại Vận biết khi nào nên tiến, khi nào nên thủ.</p>
+
+<div class="sep"></div>
+
+<!-- 4. TU VI -->
+<h2>4. Tử Vi Đẩu Số</h2>
+<p>Tử Vi dùng <b>ngày giờ sinh</b> để an sao vào <b>12 cung</b>, mỗi cung đại diện một lĩnh vực đời sống. Mỗi cung có các <b>chính tinh</b> và <b>phụ tinh</b> mang ý nghĩa riêng.</p>
+
+<h3>12 Cung</h3>
+<div class="grid-2">
+<div class="card" style="border-top:3px solid var(--seal)"><h4>Mệnh</h4><p>Bản thân, tính cách, vận mệnh tổng thể. Cung quan trọng nhất.</p></div>
+<div class="card"><h4>Cha Mẹ</h4><p>Cha mẹ, người trên, dòng họ, nguồn gốc xuất thân.</p></div>
+<div class="card"><h4>Phúc Đức</h4><p>Phúc phần đời trước, tâm linh, tín ngưỡng, đời sống tinh thần.</p></div>
+<div class="card"><h4>Nhà Cửa</h4><p>Nhà đất, bất động sản, gia đình, nơi ở.</p></div>
+<div class="card" style="border-top:3px solid #b8893b"><h4>Sự Nghiệp</h4><p>Quan lộc, công danh, việc làm, thăng tiến.</p></div>
+<div class="card"><h4>Bạn Bè</h4><p>Bạn bè, đồng nghiệp, cấp dưới, các mối quan hệ xã hội.</p></div>
+<div class="card"><h4>Ra Ngoài</h4><p>Thiên di — đi xa, xuất ngoại, di chuyển, biến động.</p></div>
+<div class="card" style="border-top:3px solid #9e3020"><h4>Sức Khỏe</h4><p>Tật ách — bệnh tật, sức khỏe, tai ương.</p></div>
+<div class="card" style="border-top:3px solid #4a6741"><h4>Tiền Bạc</h4><p>Tài bạch — tiền bạc, của cải, tài chính.</p></div>
+<div class="card"><h4>Con Cái</h4><p>Con cái, hưởng thụ, tình dục, khả năng sinh sản.</p></div>
+<div class="card" style="border-top:3px solid #3a5974"><h4>Vợ Chồng</h4><p>Phu thê — hôn nhân, người phối ngẫu, quan hệ vợ chồng.</p></div>
+<div class="card"><h4>Anh Em</h4><p>Anh chị em, họ hàng cùng thế hệ, đồng môn.</p></div>
+</div>
+
+<h3>14 Chính Tinh</h3>
+<p>Mười bốn ngôi sao chính, mỗi sao mang một tính chất riêng:</p>
+<div class="grid-2">
+<div class="card" style="border:2px solid var(--seal)"><h4 style="color:var(--seal)">Tử Vi 紫微</h4><p>Vua — quyền uy, sang trọng, địa vị. Đế tinh.</p></div>
+<div class="card"><h4>Thiên Cơ 天機</h4><p>Mưu tinh — thông minh, tính toán, hay suy nghĩ.</p></div>
+<div class="card" style="border:2px solid #9e3020"><h4 style="color:#9e3020">Thái Dương 太陽</h4><p>Mặt Trời — quang minh, hào phóng, nhưng dễ hao tán.</p></div>
+<div class="card" style="border:2px solid #b8893b"><h4 style="color:#b8893b">Vũ Khúc 武曲</h4><p>Tài tinh — cứng rắn, quyết đoán, hợp kinh doanh.</p></div>
+<div class="card"><h4>Thiên Đồng 天同</h4><p>Phúc tinh — hiền hòa, an nhàn, hưởng thụ.</p></div>
+<div class="card" style="border:2px solid #9e3020"><h4 style="color:#9e3020">Liêm Trinh 廉貞</h4><p>Thứ vua — quyền lực, uy nghiêm, dễ tranh đấu.</p></div>
+<div class="card"><h4>Thiên Phủ 天府</h4><p>Kho tàng — ổn định, bảo thủ, giỏi quản lý.</p></div>
+<div class="card" style="border:2px solid #3a5974"><h4 style="color:#3a5974">Thái Âm 太陰</h4><p>Mặt Trăng — dịu dàng, nữ tính, lãng mạn.</p></div>
+<div class="card" style="border:2px solid #9e3020"><h4 style="color:#9e3020">Tham Lang 貪狼</h4><p>Đào hoa — nghệ thuật, ham muốn, đa tài, xã giao.</p></div>
+<div class="card"><h4>Cự Môn 巨門</h4><p>Khẩu tài — ăn nói, tranh luận, dễ thị phi.</p></div>
+<div class="card"><h4>Thiên Tướng 天相</h4><p>Ấn tín — trung gian, hòa giải, giúp đỡ.</p></div>
+<div class="card" style="border:2px solid #4a6741"><h4 style="color:#4a6741">Thiên Lương 天梁</h4><p>Ân tinh — che chở, cứu giúp, từ thiện.</p></div>
+<div class="card" style="border:2px solid var(--seal)"><h4 style="color:var(--seal)">Thất Sát 七殺</h4><p>Tướng tinh — dũng mãnh, liều lĩnh, thay đổi.</p></div>
+<div class="card" style="border:2px solid #3a5974"><h4 style="color:#3a5974">Phá Quân 破軍</h4><p>Phá tinh — phá cũ xây mới, cách mạng.</p></div>
+</div>
+
+<h3>Tứ Hóa</h3>
+<div class="grid-2">
+<div class="card" style="border-left:4px solid #b8893b"><h4 style="color:#b8893b">Hóa Lộc</h4><p>Tốt — tăng tài lộc, may mắn ở cung được hóa.</p></div>
+<div class="card" style="border-left:4px solid #9e3020"><h4 style="color:#9e3020">Hóa Quyền</h4><p>Tốt — tăng quyền lực, khả năng kiểm soát, lãnh đạo.</p></div>
+<div class="card" style="border-left:4px solid #4a6741"><h4 style="color:#4a6741">Hóa Khoa</h4><p>Tốt — tăng học vấn, danh tiếng, văn bằng.</p></div>
+<div class="card" style="border-left:4px solid #3a5974"><h4 style="color:#3a5974">Hóa Kỵ</h4><p>Xấu — gây phiền muộn, khó khăn, nợ nần.</p></div>
+</div>
+
+<div class="sep"></div>
+
+<!-- 5. HUONG DAN DOC KET QUA -->
+<h2>5. Hướng Dẫn Đọc Kết Quả</h2>
+<div class="grid-2">
+<div class="card"><h4 style="color:#4a6741">Đọc Bát Tự</h4>
+<ul>
+<li>Bước 1: Xem <b>Nhật Chủ</b> (Thiên Can trụ Ngày)</li>
+<li>Bước 2: Xem <b>Thân cường/nhược</b></li>
+<li>Bước 3: Xem <b>Dụng Thần</b> và <b>Kỵ Thần</b></li>
+<li>Bước 4: Xem <b>Đại Vận</b> hiện tại</li>
+<li>Bước 5: Xem <b>Thập Thần</b> ở mỗi trụ</li>
+</ul>
+</div>
+<div class="card"><h4 style="color:#9e3020">Đọc Tử Vi</h4>
+<ul>
+<li>Bước 1: Xem <b>Mệnh cung</b> + chính tinh</li>
+<li>Bước 2: Xem <b>Sự Nghiệp</b> + <b>Tiền Bạc</b></li>
+<li>Bước 3: Xem <b>Tứ Hóa</b> (Lộc, Quyền, Khoa, Kỵ)</li>
+<li>Bước 4: Xem cung <b>Vợ Chồng</b>, <b>Con Cái</b>, <b>Cha Mẹ</b></li>
+<li>Bước 5: Xem sao xấu ở cung nào cần đề phòng</li>
+</ul>
+</div>
+</div>
+
+<div class="sep"></div>
+<div class="note">
+<b>Lưu ý:</b> Mệnh lý học là tri thức phương Đông có tính tham khảo. Trang web sử dụng <b>Chân Thái Dương Thời</b> (hiệu chỉnh theo kinh độ) và các engine <b>lunar-typescript</b>, <b>iztro</b> để tính toán. Kết quá mang tính chất soi chiếu bản thân, không nên phụ thuộc hoàn toàn.
+</div>
+
+</div>
+
+
+</body>
+</html>

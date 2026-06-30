@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đăng Nhập · Đăng Ký — Tử Vi Việt</title>
+<meta name="description" content="Đăng nhập hoặc đăng ký tài khoản Tử Vi Việt để lưu lá số, tra cứu cá nhân.">
+<meta name="theme-color" content="#9c2a1c"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece1c5;--surface:#f6efd9;--input:#fffdf6;--ink:#211d18;--ink-2:#3f372b;--ink-3:#463d30;--ink-4:#5b4f3c;
+  --muted:#6b5d48;--faint:#a99878;--seal:#9c2a1c;--dark:#211d18;--dark-soft:#cdbf9d;--dark-warm:#d98b5f;--line:rgba(33,29,24,.13);
+  --gold:#b8893b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:radial-gradient(circle at 16% 10%,rgba(255,252,242,.6),transparent 42%),radial-gradient(circle at 86% 90%,rgba(140,100,45,.08),transparent 46%),var(--paper);
+  color:var(--ink);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit}
+.tc{font-family:'Noto Serif TC',serif}
+::selection{background:var(--seal);color:var(--surface)}
+
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(33,29,24,.14)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12}
+.kd-brand .sub{font-size:11px;color:var(--seal);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,30px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.kd-nav a:hover{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-nav a.active{color:var(--seal);border-bottom-color:var(--seal)}
+
+.wrap{max-width:520px;margin:0 auto;padding:clamp(40px,8vw,80px) clamp(16px,4vw,32px)}
+.hide{display:none!important}
+
+/* Form frame */
+.form-frame{position:relative;background:var(--surface);border:1px solid rgba(156,42,28,.35);border-radius:4px;padding:clamp(28px,4vw,42px);box-shadow:0 10px 30px rgba(33,29,24,.10)}
+.form-frame::before{content:"";position:absolute;inset:7px;border:1px solid rgba(156,42,28,.22);border-radius:2px;pointer-events:none}
+.corner{position:absolute;width:9px;height:9px;background:var(--seal);z-index:1}
+.corner.tl{top:-1px;left:-1px}.corner.tr{top:-1px;right:-1px}.corner.bl{bottom:-1px;left:-1px}.corner.br{bottom:-1px;right:-1px}
+
+.ff-title{text-align:center;font-family:'Noto Serif TC',serif;font-size:clamp(1.5rem,3vw,1.9rem);font-weight:700;margin:6px 0 4px;letter-spacing:.08em;color:var(--seal)}
+.ff-sub{text-align:center;font-size:13px;color:var(--ink-4);margin-bottom:24px;letter-spacing:.04em}
+
+.ff-field{margin-bottom:16px}
+.ff-field label{display:block;font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink-2);margin-bottom:7px;letter-spacing:.06em}
+.ff-field .vn{font-family:'Noto Serif',serif;font-size:11px;color:var(--muted);letter-spacing:0}
+.ff-input{width:100%;padding:12px 14px;font-size:15px;color:var(--ink);background:var(--input);border:1px solid rgba(33,29,24,.2);border-radius:4px;outline:none}
+.ff-input:focus{border-color:var(--seal)}
+.ff-input.error{border-color:#c0392b;background:#fef5f5}
+
+.btn-primary{width:100%;padding:15px;background:var(--seal);color:var(--surface);border:none;border-radius:3px;font-family:'Noto Serif TC',serif;font-size:17px;letter-spacing:.2em;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.2);transition:background .15s}
+.btn-primary:hover{background:#882318}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed}
+
+.btn-google{width:100%;padding:13px;background:#fff;color:var(--ink-2);border:1px solid rgba(33,29,24,.2);border-radius:3px;font-size:15px;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;transition:background .15s}
+.btn-google:hover{background:#f5f5f5}
+.btn-google img{width:18px;height:18px}
+
+.ff-divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:20px 0;color:var(--muted);font-size:13px}
+.ff-divider::before,.ff-divider::after{content:"";height:1px;flex:1;background:rgba(33,29,24,.18)}
+
+.ff-switch{text-align:center;margin-top:18px;font-size:14px;color:var(--ink-3)}
+.ff-switch a{color:var(--seal);cursor:pointer;font-weight:600}
+.ff-switch a:hover{text-decoration:underline}
+
+.ff-forgot{text-align:right;margin-top:-10px;margin-bottom:16px}
+.ff-forgot a{font-size:13px;color:var(--muted);cursor:pointer}
+.ff-forgot a:hover{color:var(--seal)}
+
+.msg{text-align:center;font-size:14px;margin-bottom:16px;padding:10px 14px;border-radius:4px;display:none}
+.msg.show{display:block}
+.msg.error{background:#fef0ef;color:#9e2c1c;border:1px solid #f5c6cb}
+.msg.success{background:#edf7ed;color:#2d6a2d;border:1px solid #c3e6cb}
+
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);padding:clamp(30px,4vw,46px) clamp(16px,5vw,52px);margin-top:40px}
+.kd-footer .row{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-4)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}
+.kd-footer .flinks a{color:var(--ink-3)}
+.kd-footer .flinks a:hover{color:var(--seal)}
+</style>
+<script src="js/i18n.js"></script>
+</head>
+<body>
+
+<header class="kd-header">
+  <a class="kd-brand" href="index.html"><div class="kd-seal">易</div><div><div class="name" data-i18n="site.name">Tử Vi Việt</div><div class="sub">Dịch Kinh · Mệnh Lý</div></div></a>
+  <nav class="kd-nav">
+    <a href="index.html" data-i18n="nav.divination">Gieo Quẻ</a>
+    <a href="bat-tu.html" data-i18n="nav.bazi">Bát Tự · Tử Vi</a>
+    <a href="hop-hon.html" data-i18n="nav.hehun">Hôn Nhân</a>
+    <a href="hoang-lich.html" data-i18n="nav.huangli">Hoàng Lịch</a>
+    <a href="giai-nghia.html">Giải Nghĩa</a><a href="64-que.html" data-i18n="nav.hexagram">64 Quẻ</a>
+    <a href="them.html" data-i18n="nav.more">Thêm</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+<!-- ====== LOGIN FORM ====== -->
+<div id="loginSection">
+  <div class="form-frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    <div class="ff-title" data-i18n="login.title">Đăng Nhập</div>
+    <div class="ff-sub" data-i18n="login.sub">Tử Vi Việt Hội Viên</div>
+
+    <div id="loginMsg" class="msg"></div>
+
+    <div class="ff-field">
+      <label data-i18n="login.email">Email</label>
+      <input class="ff-input" type="email" id="loginEmail" placeholder="email@example.com" autocomplete="email">
+    </div>
+    <div class="ff-field">
+      <label data-i18n="login.password">Mật khẩu</label>
+      <input class="ff-input" type="password" id="loginPassword" placeholder="········" autocomplete="current-password">
+    </div>
+
+    <div class="ff-forgot"><a onclick="handleForgot()" data-i18n="login.forgot">Quên mật khẩu?</a></div>
+
+    <button class="btn-primary" id="btnLogin" onclick="handleLogin()">
+      <span id="loginSpinner" class="spinner hide"></span>
+      <span data-i18n="login.btn.login">Đăng Nhập</span>
+    </button>
+
+    <div class="ff-divider"><span data-i18n="login.or">hoặc</span></div>
+
+    <button class="btn-google" onclick="handleGoogleLogin()">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      <span data-i18n="login.btn.google">Tiếp tục với Google</span>
+    </button>
+
+    <div class="ff-switch">
+      <span data-i18n="login.noAccount">Chưa có tài khoản?</span>
+      <a onclick="showRegister()" data-i18n="login.btn.register">Tạo tài khoản mới</a>
+    </div>
+  </div>
+</div>
+
+<!-- ====== REGISTER FORM ====== -->
+<div id="registerSection" class="hide">
+  <div class="form-frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    <div class="ff-title" data-i18n="login.registerTitle">Đăng Ký</div>
+    <div class="ff-sub" data-i18n="login.registerSub">Tạo tài khoản Tử Vi Việt</div>
+
+    <div id="registerMsg" class="msg"></div>
+
+    <div class="ff-field">
+      <label data-i18n="login.email">Email</label>
+      <input class="ff-input" type="email" id="regEmail" placeholder="email@example.com" autocomplete="email">
+    </div>
+    <div class="ff-field">
+      <label data-i18n="login.password">Mật khẩu</label>
+      <input class="ff-input" type="password" id="regPassword" placeholder="········" autocomplete="new-password">
+    </div>
+    <div class="ff-field">
+      <label data-i18n="login.confirmPassword">Xác nhận mật khẩu</label>
+      <input class="ff-input" type="password" id="regConfirm" placeholder="········" autocomplete="new-password">
+    </div>
+
+    <button class="btn-primary" id="btnRegister" onclick="handleRegister()">
+      <span id="regSpinner" class="spinner hide"></span>
+      <span data-i18n="login.btn.createAccount">Tạo Tài Khoản</span>
+    </button>
+
+    <button class="btn-google" onclick="handleGoogleLogin()">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      <span data-i18n="login.btn.google">Tiếp tục với Google</span>
+    </button>
+
+    <div class="ff-switch">
+      <span data-i18n="login.hasAccount">Đã có tài khoản?</span>
+      <a onclick="showLogin()" data-i18n="login.btn.backToLogin">← Quay lại đăng nhập</a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer class="kd-footer">
+  <div class="row">
+    <div class="fbrand">
+      <div class="fseal">易</div>
+      <div class="ftext">© 2026 Tử Vi Việt</div>
+    </div>
+    <div class="flinks">
+      <a href="index.html">Gieo Quẻ</a>
+      <a href="bat-tu.html">Bát Tự</a>
+      <a href="login.html">Đăng Nhập</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Firebase SDKs -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+(function() {
+  'use strict';
+  var t = function(k) { return (typeof I18N !== 'undefined' ? I18N.t(k) : null) || k; };
+
+  function sanitizeEmail(val) {
+    return (val || '').trim().toLowerCase().substring(0, 254);
+  }
+
+  function getSafeRedirect() {
+    var redirect = sessionStorage.getItem('hcd-redirect');
+    sessionStorage.removeItem('hcd-redirect');
+    // Chỉ redirect đến các trang nội bộ hợp lệ
+    if (redirect) {
+      var allowedPages = ['bat-tu.html','index.html','hop-hon.html','hoang-lich.html','64-que.html','giai-nghia.html','them.html','profile.html'];
+      for (var i = 0; i < allowedPages.length; i++) {
+        if (redirect.indexOf(allowedPages[i]) >= 0) return allowedPages[i];
+      }
+    }
+    return 'profile.html';
+  }
+
+  function showMsg(which, type, text) {
+    var el = document.getElementById(which);
+    el.textContent = text;
+    el.className = 'msg show ' + type;
+    setTimeout(function() { el.className = 'msg'; }, 5000);
+  }
+
+  function setLoading(btnId, spinnerId, loading) {
+    var btn = document.getElementById(btnId);
+    var spin = document.getElementById(spinnerId);
+    btn.disabled = loading;
+    if (loading) { spin.classList.remove('hide'); }
+    else { spin.classList.add('hide'); }
+  }
+
+  // ─── Login ───
+  window.handleLogin = function() {
+    var email = sanitizeEmail(document.getElementById('loginEmail').value);
+    var pw = document.getElementById('loginPassword').value;
+
+    if (!email) { showMsg('loginMsg', 'error', 'Vui lòng nhập email.'); return; }
+    if (pw.length < 6) { showMsg('loginMsg', 'error', 'Mật khẩu phải có ít nhất 6 ký tự.'); return; }
+
+    setLoading('btnLogin', 'loginSpinner', true);
+    HCD.firebase.loginWithEmail(email, pw)
+      .then(function(result) {
+        var redirect = getSafeRedirect();
+        window.location.href = redirect;
+      })
+      .catch(function(err) {
+        setLoading('btnLogin', 'loginSpinner', false);
+        var msg = err.code === 'auth/user-not-found' ? 'Email chưa được đăng ký.'
+          : err.code === 'auth/wrong-password' ? 'Mật khẩu không đúng.'
+          : err.code === 'auth/invalid-email' ? 'Email không hợp lệ.'
+          : err.code === 'auth/invalid-credential' ? 'Email hoặc mật khẩu không đúng.'
+          : err.code === 'auth/too-many-requests' ? 'Quá nhiều lần thử. Vui lòng đợi vài phút.'
+          : 'Lỗi đăng nhập: ' + (err.message || '');
+        showMsg('loginMsg', 'error', msg);
+      });
+  };
+
+  // ─── Register ───
+  window.handleRegister = function() {
+    var email = sanitizeEmail(document.getElementById('regEmail').value);
+    var pw = document.getElementById('regPassword').value;
+    var confirm = document.getElementById('regConfirm').value;
+
+    if (!email) { showMsg('registerMsg', 'error', 'Vui lòng nhập email.'); return; }
+    if (pw.length < 6) { showMsg('registerMsg', 'error', t('login.pwTooShort')); return; }
+    if (pw !== confirm) { showMsg('registerMsg', 'error', t('login.pwMismatch')); return; }
+
+    setLoading('btnRegister', 'regSpinner', true);
+    HCD.firebase.registerWithEmail(email, pw)
+      .then(function(result) {
+        // Tự động tạo profile
+        return HCD.firebase.updateProfile({
+          displayName: email.split('@')[0],
+          email: email
+        });
+      })
+      .then(function() {
+        var redirect = getSafeRedirect();
+        window.location.href = redirect;
+      })
+      .catch(function(err) {
+        setLoading('btnRegister', 'regSpinner', false);
+        var msg = err.code === 'auth/email-already-in-use' ? 'Email này đã được đăng ký.'
+          : err.code === 'auth/invalid-email' ? 'Email không hợp lệ.'
+          : err.code === 'auth/weak-password' ? 'Mật khẩu quá yếu (cần ít nhất 6 ký tự).'
+          : 'Lỗi đăng ký: ' + (err.message || '');
+        showMsg('registerMsg', 'error', msg);
+      });
+  };
+
+  // ─── Google Login ───
+  window.handleGoogleLogin = function() {
+    // Supabase OAuth: chuyển hướng sang Google rồi quay lại redirectTo (profile.html).
+    // Hồ sơ tuvi_profiles được tạo khi người dùng lưu hồ sơ lần đầu.
+    HCD.firebase.loginWithGoogle().catch(function(err) {
+      showMsg('loginMsg', 'error', 'Lỗi đăng nhập Google: ' + (err.message || ''));
+    });
+  };
+
+  // ─── Forgot password ───
+  window.handleForgot = function() {
+    var email = sanitizeEmail(document.getElementById('loginEmail').value);
+    if (!email) {
+      showMsg('loginMsg', 'error', 'Vui lòng nhập email trước.');
+      return;
+    }
+    HCD.firebase.resetPassword(email)
+      .then(function() {
+        showMsg('loginMsg', 'success', t('login.resetSent'));
+      })
+      .catch(function(err) {
+        showMsg('loginMsg', 'error', 'Lỗi: ' + (err.message || ''));
+      });
+  };
+
+  // ─── Switch forms ───
+  window.showRegister = function() {
+    document.getElementById('loginSection').classList.add('hide');
+    document.getElementById('registerSection').classList.remove('hide');
+    document.title = 'Đăng Ký — Tử Vi Việt';
+  };
+
+  window.showLogin = function() {
+    document.getElementById('registerSection').classList.add('hide');
+    document.getElementById('loginSection').classList.remove('hide');
+    document.title = 'Đăng Nhập — Tử Vi Việt';
+  };
+
+  // ─── Check if already logged in ───
+  HCD.firebase.waitForAuth().then(function(user) {
+    if (user) {
+      var redirect = getSafeRedirect();
+      window.location.href = redirect;
+    }
+  });
+
+  // Enter key support
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter') return;
+    var reg = document.getElementById('registerSection');
+    if (reg && !reg.classList.contains('hide')) {
+      if (typeof window.handleRegister === 'function') window.handleRegister();
+    } else {
+      if (typeof window.handleLogin === 'function') window.handleLogin();
+    }
+  });
+})();
+</script>
+</body>
+</html>
