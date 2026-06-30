@@ -8,15 +8,14 @@
  *   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
  *   <script src="js/supabase.js"></script>
  *
- * Bảng dùng (dùng chung project với shop, tiền tố tuvi_):
- *   tuvi_profiles, tuvi_horoscopes
+ * Bảng dùng: tuvi_profiles, tuvi_horoscopes
  */
 (function (global) {
   'use strict';
 
   // ── Cấu hình (anon key công khai — an toàn nhờ RLS) ──
-  var SUPABASE_URL = 'https://qtgynwhjfcppuvwykiji.supabase.co';
-  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0Z3lud2hqZmNwcHV2d3lraWppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0MTI4MzAsImV4cCI6MjA5NTk4ODgzMH0.3O0Jotvym9tcN_Hj9mP0GDYWIlguNcj5HYghlsjaaoc';
+  var SUPABASE_URL = 'https://odeslzfzgjwyczmnxpqb.supabase.co';
+  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kZXNsemZ6Z2p3eWN6bW54cHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4MzAyNzcsImV4cCI6MjA5ODQwNjI3N30.xl_kyLTBMiTKOrXyDccOoRZmB8MZBbAdcV4-b60UdwU';
 
   if (!global.supabase || !global.supabase.createClient) {
     console.error('[Tử Vi Việt] Chưa nạp supabase-js. Thêm <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> TRƯỚC js/supabase.js');
