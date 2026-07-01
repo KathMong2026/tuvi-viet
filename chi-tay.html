@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xem Chỉ Tay · Thủ Tướng | Tử Vi Việt</title>
+<meta name="description" content="Xem chỉ tay theo bảng câu hỏi hướng dẫn: đường tâm đạo, trí đạo, sinh đạo, sự nghiệp và hình bàn tay, luận giải chi tiết bằng AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#ece1c5;--surface:#f6efd9;--input:#fffdf6;--ink:#211d18;--ink-2:#3f372b;--ink-3:#463d30;--ink-4:#5b4f3c;--muted:#6b5d48;--faint:#a99878;--seal:#9c2a1c;--dark:#211d18;--dark-soft:#cdbf9d;--line:rgba(33,29,24,.13);--gold:#b8893b}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:radial-gradient(circle at 16% 10%,rgba(255,252,242,.6),transparent 42%),radial-gradient(circle at 86% 90%,rgba(140,100,45,.08),transparent 46%),var(--paper);color:var(--ink);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer;border:none;background:none}select{font-family:inherit}
+.tc{font-family:'Noto Serif TC',serif}::selection{background:var(--seal);color:var(--surface)}
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(33,29,24,.14)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12}
+.kd-brand .sub{font-size:11px;color:var(--seal);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,24px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.kd-nav a:hover,.kd-nav a.active{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-lang{display:flex;gap:2px;border:1px solid rgba(33,29,24,.22);border-radius:3px;overflow:hidden}
+.lang-btn{padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;border:none;cursor:pointer}
+.wrap{max-width:960px;margin:0 auto;padding:clamp(26px,4vw,48px) clamp(16px,4vw,44px)}
+.muted{color:var(--muted)}
+.section-title{display:flex;align-items:baseline;gap:12px;margin:4px 0 6px;flex-wrap:wrap;justify-content:center}
+.section-title .zh{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--seal);letter-spacing:5px;font-family:'Noto Serif TC',serif;font-weight:700}
+.section-title .vi{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--ink-4);letter-spacing:1px}
+.lead{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 20px;font-size:14.5px;line-height:1.7}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;box-shadow:0 8px 24px rgba(33,29,24,.06)}
+.palm-wrap{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;justify-content:center;margin-bottom:8px}
+.palm-svg{flex:0 0 auto}
+.palm-legend{font-size:13px;color:var(--ink-2);line-height:1.9;min-width:180px}
+.palm-legend .dot{display:inline-block;width:12px;height:3px;border-radius:2px;vertical-align:middle;margin-right:7px}
+.ct-form{max-width:720px;margin:16px auto 0;display:grid;gap:14px}
+.ct-row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:560px){.ct-row{grid-template-columns:1fr}}
+.ct-field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:5px}
+.ct-field label .ln{color:var(--seal)}
+.ct-field select{width:100%;padding:10px 12px;font-size:14.5px;background:var(--input);border:1px solid var(--line);border-radius:6px;color:var(--ink)}
+.ct-field select:focus{outline:none;border-color:var(--seal)}
+.ct-submit{padding:13px 22px;font-size:16px;font-weight:700;color:#fff;background:var(--seal);border-radius:6px;margin-top:4px}
+.ct-submit:hover{background:#851f14}
+#ctResult{display:none;margin-top:24px}#ctResult.show{display:block}
+.ai-out{text-align:left}.ai-out h4{color:var(--seal);margin:15px 0 4px;font-size:15px}.ai-out p{margin:8px 0;line-height:1.85;font-size:14.5px;color:var(--ink-2)}
+.disclaimer{max-width:760px;margin:26px auto 0;font-size:12.5px;color:var(--muted);line-height:1.7;border-top:1px solid var(--line);padding-top:14px;text-align:center}
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);padding:clamp(28px,4vw,44px) clamp(16px,5vw,52px);margin-top:34px}
+.kd-footer .row{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-4)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}.kd-footer .flinks a{color:var(--ink-3)}
+.kd-footer .fhan{max-width:1120px;margin:18px auto 0;font-size:12px;color:var(--faint);font-family:'Noto Serif TC',serif;letter-spacing:.2em;text-align:center}
+</style>
+<script src="js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>document.addEventListener('DOMContentLoaded',function(){if(typeof HCD!=='undefined'&&HCD.member)HCD.member.renderNavAuth('.kd-nav');});</script>
+</head>
+<body>
+<header class="kd-header">
+  <a class="kd-brand" href="index.html"><div class="kd-seal">易</div><div><div class="name">Tử Vi Việt</div><div class="sub">Dịch Kinh 易 經 · Mệnh Lý</div></div></a>
+  <nav class="kd-nav">
+    <a href="index.html">Gieo Quẻ</a><a href="bat-tu.html">Bát Tự · Tử Vi</a><a href="hop-hon.html">Hôn Nhân</a>
+    <a href="phong-thuy.html">Phong Thủy</a><a href="chi-tay.html" class="active">Chỉ Tay</a><a href="them.html">Thêm</a>
+  </nav>
+  <div class="kd-lang">
+    <button class="lang-btn active" data-lang="vi" style="background:var(--seal);color:var(--surface)" onclick="switchLang('vi')">VI</button>
+    <button class="lang-btn" data-lang="zh" style="background:transparent;color:var(--ink-3)" onclick="switchLang('zh')">中文</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="section-title center"><span class="zh">手相</span><span class="vi">Xem Chỉ Tay · Thủ Tướng</span></div>
+  <p class="lead">Nhìn vào lòng bàn tay và chọn đặc điểm gần đúng nhất cho từng đường. Hệ thống sẽ luận giải chi tiết bằng AI. Xem hình minh họa để xác định 4 đường chính.</p>
+
+  <div class="card">
+    <div class="palm-wrap">
+      <svg class="palm-svg" width="230" height="250" viewBox="0 0 230 250" xmlns="http://www.w3.org/2000/svg">
+        <!-- lòng bàn tay -->
+        <path d="M55 240 Q40 150 50 95 L60 40 Q63 30 72 32 Q80 34 80 46 L82 92 L92 34 Q95 24 104 26 Q112 28 111 40 L108 92 L122 30 Q125 20 134 22 Q142 24 140 37 L133 94 L150 46 Q154 37 162 41 Q169 45 165 55 L150 100 Q175 108 178 140 Q182 200 160 240 Z" fill="#f0e4c4" stroke="#b9a37a" stroke-width="1.6"/>
+        <!-- Sinh đạo (life) - xanh lá -->
+        <path d="M150 70 Q95 78 78 150 Q72 200 92 236" fill="none" stroke="#3f7a4d" stroke-width="3" stroke-linecap="round"/>
+        <!-- Trí đạo (head) - cam -->
+        <path d="M152 96 Q110 108 74 130" fill="none" stroke="#c47a2a" stroke-width="3" stroke-linecap="round"/>
+        <!-- Tâm đạo (heart) - đỏ -->
+        <path d="M158 78 Q120 88 70 96" fill="none" stroke="#9e3020" stroke-width="3" stroke-linecap="round"/>
+        <!-- Sự nghiệp (fate) - tím -->
+        <path d="M118 238 Q120 170 126 108" fill="none" stroke="#6a4a8a" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="1 0"/>
+      </svg>
+      <div class="palm-legend">
+        <div><span class="dot" style="background:#9e3020"></span><b>Tâm đạo</b> — tình cảm (trên cùng)</div>
+        <div><span class="dot" style="background:#c47a2a"></span><b>Trí đạo</b> — trí tuệ (giữa)</div>
+        <div><span class="dot" style="background:#3f7a4d"></span><b>Sinh đạo</b> — sức sống (ôm gốc ngón cái)</div>
+        <div><span class="dot" style="background:#6a4a8a"></span><b>Sự nghiệp</b> — vận mệnh (dọc giữa lòng bàn)</div>
+        <div style="margin-top:8px;color:var(--faint);font-size:12px">Mẹo: xem tay thuận (tay hay dùng) để biết hiện tại &amp; tương lai.</div>
+      </div>
+    </div>
+
+    <div class="ct-form">
+      <div class="ct-row">
+        <div class="ct-field"><label>Giới tính</label><select id="ctGender"><option value="Nam">Nam</option><option value="Nữ">Nữ</option></select></div>
+        <div class="ct-field"><label>Tay xem</label><select id="ctHand"><option value="thuận (phải)">Tay thuận (phải)</option><option value="thuận (trái)">Tay thuận (trái)</option><option value="trái">Tay trái</option><option value="phải">Tay phải</option></select></div>
+      </div>
+      <div class="ct-field"><label><span class="ln">Đường Tâm Đạo</span> (tình cảm)</label>
+        <select id="ctHeart">
+          <option value="dài, cong lên chạm ngón trỏ/giữa — nồng nhiệt, lãng mạn, coi trọng tình cảm">Dài, cong lên phía ngón trỏ/giữa</option>
+          <option value="thẳng và dài — lý trí, chung thủy, kiểm soát cảm xúc tốt">Thẳng và dài</option>
+          <option value="ngắn — thực tế, ít bộc lộ, đề cao bản thân trong tình cảm">Ngắn</option>
+          <option value="nhiều nhánh/đứt đoạn — tình cảm nhiều biến động, đa cảm">Nhiều nhánh hoặc đứt đoạn</option>
+          <option value="dạng chuỗi (mắt xích) — nhạy cảm, dễ xúc động, hay lo nghĩ chuyện tình">Dạng chuỗi mắt xích</option>
+        </select>
+      </div>
+      <div class="ct-field"><label><span class="ln">Đường Trí Đạo</span> (trí tuệ)</label>
+        <select id="ctHead">
+          <option value="dài và thẳng ngang — tư duy thực tế, logic, giỏi tính toán">Dài, thẳng ngang</option>
+          <option value="cong xuôi xuống gò Nguyệt — giàu trí tưởng tượng, sáng tạo, trực giác">Cong xuống (sáng tạo)</option>
+          <option value="ngắn — quyết đoán nhanh, thiên hành động hơn suy nghĩ">Ngắn</option>
+          <option value="rõ, sâu, liền mạch — tập trung tốt, ý chí mạnh">Rõ, sâu, liền mạch</option>
+          <option value="mờ hoặc đứt quãng — dễ phân tâm, suy nghĩ thay đổi thất thường">Mờ hoặc đứt quãng</option>
+          <option value="dính liền đường sinh đạo lúc đầu — thận trọng, phụ thuộc gia đình thời trẻ">Dính liền sinh đạo lúc đầu</option>
+        </select>
+      </div>
+      <div class="ct-field"><label><span class="ln">Đường Sinh Đạo</span> (sức sống)</label>
+        <select id="ctLife">
+          <option value="dài, cong rộng ôm trọn gò Kim Tinh — sinh lực dồi dào, sức khỏe tốt">Dài, cong rộng (sinh lực mạnh)</option>
+          <option value="dài nhưng ôm sát gốc ngón cái — năng lượng vừa phải, dè dặt">Dài nhưng ôm sát ngón cái</option>
+          <option value="ngắn hoặc mờ — thể lực trung bình, cần giữ gìn sức khỏe">Ngắn hoặc mờ</option>
+          <option value="có đảo/đứt đoạn — sức khỏe hoặc cuộc sống có giai đoạn biến động">Có đảo hoặc đứt đoạn</option>
+          <option value="nhiều nhánh nhỏ hướng lên — nghị lực, cầu tiến, hay bôn ba">Nhiều nhánh nhỏ hướng lên</option>
+        </select>
+      </div>
+      <div class="ct-field"><label><span class="ln">Đường Sự Nghiệp</span> (vận mệnh)</label>
+        <select id="ctFate">
+          <option value="rõ, thẳng từ cổ tay lên ngón giữa — sự nghiệp ổn định, có định hướng sớm">Rõ, thẳng từ cổ tay lên</option>
+          <option value="mờ hoặc gần như không có — tự lập, hợp nghề tự do, đường đời do mình định">Mờ hoặc không có</option>
+          <option value="đứt đoạn, gãy khúc — sự nghiệp nhiều thay đổi, chuyển hướng">Đứt đoạn, gãy khúc</option>
+          <option value="bắt đầu muộn (từ giữa lòng bàn) — thành công đến sau tuổi trung niên">Xuất hiện muộn (từ giữa lòng bàn)</option>
+          <option value="nhiều nhánh/nhiều đường — đa năng, nhiều nguồn thu, làm nhiều việc">Nhiều nhánh, đa năng</option>
+        </select>
+      </div>
+      <div class="ct-field"><label>Hình dáng bàn tay (tùy chọn)</label>
+        <select id="ctShape">
+          <option value="">— Không xét —</option>
+          <option value="lòng bàn vuông, ngón ngắn (hành Thổ) — thực tế, chắc chắn, đáng tin">Lòng vuông, ngón ngắn (Thổ)</option>
+          <option value="lòng bàn dài, ngón dài thanh (hành Mộc) — nhạy cảm, tinh tế, nghệ thuật">Lòng dài, ngón thanh (Mộc)</option>
+          <option value="lòng vuông, ngón dài (hành Kim) — lý trí, kỷ luật, giỏi tổ chức">Lòng vuông, ngón dài (Kim)</option>
+          <option value="lòng dài, ngón ngắn (hành Hỏa) — năng động, nhiệt huyết, quyết đoán">Lòng dài, ngón ngắn (Hỏa)</option>
+          <option value="bàn tay mềm, ngón thuôn (hành Thủy) — linh hoạt, giàu cảm xúc, thích ứng tốt">Bàn tay mềm, ngón thuôn (Thủy)</option>
+        </select>
+      </div>
+      <button class="ct-submit" type="button" onclick="xemChiTay()">🖐️ Xem Chỉ Tay</button>
+    </div>
+  </div>
+
+  <div id="ctResult" class="card"><div class="ai-out" id="ctAiOut"></div></div>
+
+  <p class="disclaimer">Xem chỉ tay (thủ tướng học) mang tính tham khảo, giải trí và soi chiếu bản thân, không phải dự đoán tuyệt đối. Kết quả dựa trên đặc điểm bạn tự chọn nên hãy quan sát bàn tay kỹ để chọn cho đúng.</p>
+</div>
+
+<footer class="kd-footer">
+  <div class="row"><div class="fbrand"><div class="fseal">易</div><div class="ftext">Tử Vi Việt · 易經 — Trí tuệ biến dịch phương Đông.</div></div>
+  <div class="flinks"><a href="index.html">Gieo Quẻ</a><a href="bat-tu.html">Bát Tự · Tử Vi</a><a href="phong-thuy.html">Phong Thủy</a><a href="chi-tay.html">Chỉ Tay</a></div></div>
+  <div class="fhan">占 卜 · 易 經 · 八 卦 · 五 行 · 六 十 四 卦</div>
+</footer>
+
+<script>
+function renderAI(t){var e=String(t).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});e=e.replace(/^\s*#{1,4}\s*(.+)$/gm,'<h4>$1</h4>').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');return e.split(/\n{2,}/).map(function(b){b=b.trim();if(!b)return '';if(b.indexOf('<h4')===0)return b;return '<p>'+b.replace(/\n/g,'<br>')+'</p>';}).join('');}
+function xemChiTay(){
+  var g=function(id){return document.getElementById(id).value;};
+  var payload={gender:g('ctGender'),hand:g('ctHand'),heart:g('ctHeart'),head:g('ctHead'),life:g('ctLife'),fate:g('ctFate'),shape:g('ctShape')};
+  var box=document.getElementById('ctResult'), out=document.getElementById('ctAiOut');
+  box.classList.add('show'); box.scrollIntoView({behavior:'smooth',block:'start'});
+  if(!(window.HCD&&HCD.supabase)){out.innerHTML='<p style="color:var(--seal)">Lỗi: chưa nạp Supabase.</p>';return;}
+  var btn=document.querySelector('.ct-submit'); btn.disabled=true; var old=btn.textContent; btn.textContent='Đang luận giải… (10-30s)';
+  out.innerHTML='<p class="muted">AI đang luận giải chỉ tay của bạn, vui lòng đợi…</p>';
+  HCD.supabase.functions.invoke('chitay-luangiai',{body:payload}).then(function(res){
+    btn.disabled=false; btn.textContent=old;
+    if(res.error){var msg=((res.error&&res.error.message)||String(res.error));var ctx=res.error&&res.error.context;
+      if(ctx&&typeof ctx.text==='function'){ctx.text().then(function(t){var m=msg;try{var jj=JSON.parse(t);if(jj&&jj.error)m=jj.error;}catch(_){}out.innerHTML='<p style="color:var(--seal)">Lỗi luận giải: '+m+'</p>';});}
+      else out.innerHTML='<p style="color:var(--seal)">Lỗi luận giải: '+msg+'</p>'; return;}
+    var d=res.data||{}; if(d.error){out.innerHTML='<p style="color:var(--seal)">'+d.error+'</p>';return;}
+    out.innerHTML=renderAI(d.text||'(không có nội dung)');
+  }).catch(function(e){btn.disabled=false; btn.textContent=old; out.innerHTML='<p style="color:var(--seal)">Lỗi: '+(e.message||e)+'</p>';});
+}
+</script>
+</body>
+</html>

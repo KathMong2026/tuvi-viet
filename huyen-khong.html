@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huyền Không Phi Tinh · Lập Tinh Bàn | Tử Vi Việt</title>
+<meta name="description" content="Lập tinh bàn Huyền Không Phi Tinh 9 cung: sơn tinh, vận tinh, hướng tinh theo vận và 24 sơn hướng, nhận diện cách cục và luận giải AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece1c5;--surface:#f6efd9;--input:#fffdf6;--ink:#211d18;--ink-2:#3f372b;--ink-3:#463d30;--ink-4:#5b4f3c;
+  --muted:#6b5d48;--faint:#a99878;--seal:#9c2a1c;--dark:#211d18;--dark-soft:#cdbf9d;--line:rgba(33,29,24,.13);
+  --gold:#b8893b;--good:#3f7a4d;--bad:#9e3020;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:radial-gradient(circle at 16% 10%,rgba(255,252,242,.6),transparent 42%),radial-gradient(circle at 86% 90%,rgba(140,100,45,.08),transparent 46%),var(--paper);color:var(--ink);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer;border:none;background:none}input,select{font-family:inherit}
+.tc{font-family:'Noto Serif TC',serif}
+::selection{background:var(--seal);color:var(--surface)}
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(33,29,24,.14)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12}
+.kd-brand .sub{font-size:11px;color:var(--seal);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,24px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.kd-nav a:hover,.kd-nav a.active{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-lang{display:flex;gap:2px;border:1px solid rgba(33,29,24,.22);border-radius:3px;overflow:hidden}
+.lang-btn{padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;border:none;cursor:pointer}
+.wrap{max-width:1000px;margin:0 auto;padding:clamp(26px,4vw,48px) clamp(16px,4vw,44px)}
+.muted{color:var(--muted)}
+.section-title{display:flex;align-items:baseline;gap:12px;margin:4px 0 6px;flex-wrap:wrap;justify-content:center}
+.section-title .zh{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--seal);letter-spacing:5px;font-family:'Noto Serif TC',serif;font-weight:700}
+.section-title .vi{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--ink-4);letter-spacing:1px}
+.lead{text-align:center;color:var(--muted);max-width:660px;margin:0 auto 22px;font-size:14.5px;line-height:1.7}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;box-shadow:0 8px 24px rgba(33,29,24,.06)}
+.pt-form{max-width:640px;margin:0 auto 24px;display:grid;gap:16px}
+.pt-row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:560px){.pt-row{grid-template-columns:1fr}}
+.pt-field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:6px}
+.pt-field select{width:100%;padding:11px 13px;font-size:15px;background:var(--input);border:1px solid var(--line);border-radius:6px;color:var(--ink)}
+.pt-field select:focus{outline:none;border-color:var(--seal)}
+.pt-submit{padding:13px 22px;font-size:16px;font-weight:700;color:#fff;background:var(--seal);border-radius:6px}
+.pt-submit:hover{background:#851f14}
+#hkResult{display:none}#hkResult.show{display:block}
+.hk-head{text-align:center;margin-bottom:14px}
+.hk-head .hh-main{font-size:clamp(1.3rem,3.5vw,1.7rem);font-weight:700;color:var(--seal)}
+.hk-head .hh-sub{font-size:14px;color:var(--ink-3);margin-top:4px}
+.cachcuc{display:inline-block;margin-top:10px;padding:6px 18px;border-radius:999px;font-size:15px;font-weight:700}
+.cachcuc.tot{background:rgba(63,122,77,.15);color:var(--good);border:1px solid rgba(63,122,77,.4)}
+.cachcuc.xau{background:rgba(158,48,32,.12);color:var(--bad);border:1px solid rgba(158,48,32,.35)}
+.cachcuc.tb{background:var(--dark);color:#f3ead0}
+.cc-desc{max-width:640px;margin:8px auto 0;font-size:13.5px;color:var(--ink-2);line-height:1.65;text-align:center}
+/* tinh bàn */
+.tinhban{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:520px;margin:18px auto 6px}
+.tb-cell{position:relative;border-radius:6px;padding:8px 6px 20px;min-height:96px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tb-cell.center{background:var(--dark);color:#f3ead0;border-color:var(--seal)}
+.tb-cell.vuong{background:rgba(63,122,77,.14);border-color:rgba(63,122,77,.45)}
+.tb-cell .tc-dir{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10.5px;color:var(--faint)}
+.tb-cell.center .tc-dir{color:var(--dark-soft)}
+.tb-stars{display:flex;align-items:baseline;gap:10px}
+.tb-son{font-size:19px;font-weight:700;color:var(--bad)}
+.tb-huong{font-size:19px;font-weight:700;color:#2f5d86}
+.tb-van{font-size:12px;color:var(--muted);align-self:flex-end}
+.tb-cell.center .tb-son,.tb-cell.center .tb-huong{color:#f3ead0}
+.tb-cell.center .tb-van{color:var(--dark-soft)}
+.tb-badge{position:absolute;top:4px;right:5px;font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:999px}
+.tb-badge.toa{background:#6b4f2a;color:#fff}
+.tb-badge.huong{background:#2f5d86;color:#fff}
+.tb-legend{text-align:center;font-size:12px;color:var(--muted);margin-bottom:6px}
+.tb-legend b.s{color:var(--bad)}.tb-legend b.h{color:#2f5d86}
+.star-legend{max-width:760px;margin:14px auto 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.sl-item{font-size:12px;color:var(--ink-2);padding:6px 9px;background:var(--surface);border:1px solid var(--line);border-radius:5px;line-height:1.4}
+.sl-item b{color:var(--seal)}
+.h3-sec{font-size:1.1rem;color:var(--seal);margin:26px 0 10px;text-align:center;font-family:'Noto Serif TC',serif}
+.ai-box{max-width:820px;margin:24px auto 0;border-top:1px solid var(--line);padding-top:18px;text-align:center}
+.ai-btn{padding:12px 24px;font-size:15px;font-weight:700;color:#fff;background:var(--seal);border-radius:6px}
+.ai-btn:hover{background:#851f14}
+.ai-out{margin-top:16px;text-align:left}.ai-out h4{color:var(--seal);margin:15px 0 4px;font-size:14px}.ai-out p{margin:8px 0;line-height:1.85;font-size:14.5px;color:var(--ink-2)}
+.disclaimer{max-width:760px;margin:28px auto 0;font-size:12.5px;color:var(--muted);line-height:1.7;border-top:1px solid var(--line);padding-top:14px;text-align:center}
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);padding:clamp(28px,4vw,44px) clamp(16px,5vw,52px);margin-top:34px}
+.kd-footer .row{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-4)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}.kd-footer .flinks a{color:var(--ink-3)}
+.kd-footer .fhan{max-width:1120px;margin:18px auto 0;font-size:12px;color:var(--faint);font-family:'Noto Serif TC',serif;letter-spacing:.2em;text-align:center}
+</style>
+<script src="js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>document.addEventListener('DOMContentLoaded',function(){if(typeof HCD!=='undefined'&&HCD.member)HCD.member.renderNavAuth('.kd-nav');});</script>
+</head>
+<body>
+<header class="kd-header">
+  <a class="kd-brand" href="index.html"><div class="kd-seal">易</div><div><div class="name">Tử Vi Việt</div><div class="sub">Dịch Kinh 易 經 · Mệnh Lý</div></div></a>
+  <nav class="kd-nav">
+    <a href="index.html">Gieo Quẻ</a><a href="bat-tu.html">Bát Tự · Tử Vi</a><a href="hop-hon.html">Hôn Nhân</a>
+    <a href="phong-thuy.html">Phong Thủy</a><a href="huyen-khong.html" class="active">Huyền Không</a><a href="them.html">Thêm</a>
+  </nav>
+  <div class="kd-lang">
+    <button class="lang-btn active" data-lang="vi" style="background:var(--seal);color:var(--surface)" onclick="switchLang('vi')">VI</button>
+    <button class="lang-btn" data-lang="zh" style="background:transparent;color:var(--ink-3)" onclick="switchLang('zh')">中文</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="section-title center"><span class="zh">玄空飛星</span><span class="vi">Huyền Không Phi Tinh</span></div>
+  <p class="lead">Lập <b>tinh bàn 9 cung</b> theo vận nhà và hướng (24 sơn): sơn tinh (phía sau), vận tinh (đương lệnh), hướng tinh (mặt tiền). Nhận diện <b>cách cục</b> và luận giải chi tiết bằng AI. Dành cho người đã biết hướng nhà theo la bàn.</p>
+
+  <div class="card pt-form">
+    <div class="pt-row">
+      <div class="pt-field">
+        <label>Vận nhà (theo năm xây / nhập trạch)</label>
+        <select id="hkVan">
+          <option value="9" selected>Vận 9 — 2024–2043 (đương vận)</option>
+          <option value="8">Vận 8 — 2004–2023</option>
+          <option value="7">Vận 7 — 1984–2003</option>
+          <option value="6">Vận 6 — 1964–1983</option>
+          <option value="1">Vận 1</option><option value="2">Vận 2</option><option value="3">Vận 3</option><option value="4">Vận 4</option><option value="5">Vận 5</option>
+        </select>
+      </div>
+      <div class="pt-field">
+        <label>Hướng nhà (mặt tiền nhìn ra) — 24 sơn</label>
+        <select id="hkSon"></select>
+      </div>
+    </div>
+    <button class="pt-submit" type="button" onclick="lapTinhBan()">☯ Lập Tinh Bàn</button>
+  </div>
+
+  <div id="hkResult"></div>
+
+  <p class="disclaimer">Tinh bàn được lập theo phái <b>Huyền Không Phi Tinh</b> (Lượng Thiên Xích). Kết quả phụ thuộc vào hướng đo bằng la bàn chính xác và vận nhà đúng. Đây là góc nhìn tham khảo, nên kết hợp khảo sát thực địa.</p>
+</div>
+
+<footer class="kd-footer">
+  <div class="row"><div class="fbrand"><div class="fseal">易</div><div class="ftext">Tử Vi Việt · 易經 — Trí tuệ biến dịch phương Đông.</div></div>
+  <div class="flinks"><a href="index.html">Gieo Quẻ</a><a href="bat-tu.html">Bát Tự · Tử Vi</a><a href="phong-thuy.html">Phong Thủy</a><a href="huyen-khong.html">Huyền Không</a></div></div>
+  <div class="fhan">占 卜 · 易 經 · 八 卦 · 五 行 · 六 十 四 卦</div>
+</footer>
+
+<script>
+// ================= ENGINE HUYỀN KHÔNG PHI TINH (đã kiểm chứng) =================
+var DIRS=['Bắc','Đông Bắc','Đông','Đông Nam','Nam','Tây Nam','Tây','Tây Bắc'];
+var OPP={'Bắc':'Nam','Nam':'Bắc','Đông':'Tây','Tây':'Đông','Đông Bắc':'Tây Nam','Tây Nam':'Đông Bắc','Đông Nam':'Tây Bắc','Tây Bắc':'Đông Nam'};
+var TRIGRAM_NUM={'Khảm':1,'Khôn':2,'Chấn':3,'Tốn':4,'Càn':6,'Đoài':7,'Cấn':8,'Ly':9};
+var NUM_DIR={1:'Bắc',2:'Tây Nam',3:'Đông',4:'Đông Nam',6:'Tây Bắc',7:'Tây',8:'Đông Bắc',9:'Nam'};
+var DIR_TRIGRAM={'Bắc':'Khảm','Tây Nam':'Khôn','Đông':'Chấn','Đông Nam':'Tốn','Tây Bắc':'Càn','Tây':'Đoài','Đông Bắc':'Cấn','Nam':'Ly'};
+var TRI_SON={
+ 'Khảm':[['Nhâm','D'],['Tý','A'],['Quý','A']],'Cấn':[['Sửu','A'],['Cấn','D'],['Dần','D']],
+ 'Chấn':[['Giáp','D'],['Mão','A'],['Ất','A']],'Tốn':[['Thìn','A'],['Tốn','D'],['Tỵ','D']],
+ 'Ly':[['Bính','D'],['Ngọ','A'],['Đinh','A']],'Khôn':[['Mùi','A'],['Khôn','D'],['Thân','D']],
+ 'Đoài':[['Canh','D'],['Dậu','A'],['Tân','A']],'Càn':[['Tuất','A'],['Càn','D'],['Hợi','D']]};
+var SON={};
+for(var tri in TRI_SON){ (function(tri){ var dir=NUM_DIR[TRIGRAM_NUM[tri]]; TRI_SON[tri].forEach(function(s,i){ SON[s[0]]={dir:dir,yuan:i,yy:s[1],trigram:tri}; }); })(tri); }
+var PATH=['Trung','Tây Bắc','Tây','Đông Bắc','Nam','Bắc','Tây Nam','Đông','Đông Nam'];
+function fly(center,forward){ var res={}; for(var i=0;i<9;i++){ var v=((center-1)+(forward?i:-i)); v=((v%9)+9)%9; res[PATH[i]]=v+1; } return res; }
+function buildChart(vanNum,facingSon){
+  var f=SON[facingSon], facingDir=f.dir, sittingDir=OPP[facingDir];
+  var van=fly(vanNum,true);
+  var facingCenter=van[facingDir], sittingCenter=van[sittingDir];
+  var sittingSonName=TRI_SON[DIR_TRIGRAM[sittingDir]][f.yuan][0]; var s=SON[sittingSonName];
+  function yy(cv,yuan,mYY){ if(cv===5)return mYY; var t=DIR_TRIGRAM[NUM_DIR[cv]]; return TRI_SON[t][yuan][1]; }
+  var fYY=yy(facingCenter,f.yuan,f.yy), sYY=yy(sittingCenter,s.yuan,s.yy);
+  return {van:van, son:fly(sittingCenter,sYY==='D'), huong:fly(facingCenter,fYY==='D'),
+    facingDir:facingDir, sittingDir:sittingDir, facingSon:facingSon, sittingSon:sittingSonName};
+}
+function cachCuc(c,vanNum){
+  var sonAt=null,huongAt=null;
+  DIRS.forEach(function(d){ if(c.son[d]===vanNum)sonAt=d; if(c.huong[d]===vanNum)huongAt=d; });
+  var S=c.sittingDir,H=c.facingDir;
+  if(sonAt===S&&huongAt===H)return {name:'Vượng Sơn Vượng Hướng',cls:'tot',desc:'Cách tốt nhất: sơn tinh vượng tọa sau (vượng đinh – người, sức khỏe), hướng tinh vượng ra mặt tiền (vượng tài – tiền bạc). Nhà vượng cả người lẫn của trong đương vận.'};
+  if(sonAt===H&&huongAt===S)return {name:'Thượng Sơn Hạ Thủy',cls:'xau',desc:'Cách xấu: sơn tinh vượng lại ra mặt tiền, hướng tinh vượng lại vào sau — dễ tổn đinh (người) và hao tài. Cần bố cục thủy/sơn đảo hoặc hóa giải, hoặc hợp khi địa hình đảo (sau thấp trước cao).'};
+  if(sonAt===H&&huongAt===H)return {name:'Song Tinh Đáo Hướng',cls:'tb',desc:'Cả sơn tinh và hướng tinh vượng đều tụ ở mặt tiền: vượng tài nhưng bất lợi đinh. Hợp nhà có minh đường/thủy phía trước, phía sau cần bổ sung "sơn" (tường cao, non bộ).'};
+  if(sonAt===S&&huongAt===S)return {name:'Song Tinh Đáo Tọa',cls:'tb',desc:'Cả hai sao vượng tụ phía sau: vượng đinh (người) nhưng bất lợi tài. Hợp nhà phía sau có núi/tường cao; phía trước cần bố trí thủy để dẫn tài.'};
+  return {name:'Cách khác',cls:'tb',desc:'Không thuộc bốn cách chính; cần xét chi tiết từng cung và địa hình thực tế.'};
+}
+var STAR={1:['Nhất Bạch','Tham Lang','Thủy','văn chương, công danh, quý nhân, đào hoa'],
+ 2:['Nhị Hắc','Cự Môn','Thổ','bệnh tật, ốm đau (sao bệnh)'],
+ 3:['Tam Bích','Lộc Tồn','Mộc','thị phi, kiện tụng, tranh chấp'],
+ 4:['Tứ Lục','Văn Khúc','Mộc','học hành, thi cử, văn nghệ, tình duyên'],
+ 5:['Ngũ Hoàng','Liêm Trinh','Thổ','đại sát tinh — tai họa, bệnh nặng (cần tránh động)'],
+ 6:['Lục Bạch','Vũ Khúc','Kim','quyền lực, công danh, quý nhân, quan lộc'],
+ 7:['Thất Xích','Phá Quân','Kim','đạo tặc, thị phi, đã thoái vận'],
+ 8:['Bát Bạch','Tả Phù','Thổ','tài lộc, điền sản (vượng khí gần)'],
+ 9:['Cửu Tử','Hữu Bật','Hỏa','hỷ khánh, thăng tiến — đương vượng vận 9']};
+
+var lastHK=null;
+// nạp 24 sơn theo nhóm 8 hướng
+(function(){
+  var sel=document.getElementById('hkSon');
+  var order=['Bắc','Đông Bắc','Đông','Đông Nam','Nam','Tây Nam','Tây','Tây Bắc'];
+  order.forEach(function(dir){
+    var tri=DIR_TRIGRAM[dir];
+    var og=document.createElement('optgroup'); og.label=dir+' ('+tri+')';
+    TRI_SON[tri].forEach(function(s){ var yuan=['Địa','Thiên','Nhân'][SON[s[0]].yuan]; var o=document.createElement('option'); o.value=s[0]; o.textContent=s[0]+' — '+dir+' ('+yuan+' nguyên)'; og.appendChild(o); });
+    sel.appendChild(og);
+  });
+  sel.value='Ngọ';
+})();
+
+function lapTinhBan(){
+  var van=parseInt(document.getElementById('hkVan').value,10);
+  var son=document.getElementById('hkSon').value;
+  var c=buildChart(van,son), cc=cachCuc(c,van);
+  lastHK={van:van,facingSon:son,sittingSon:c.sittingSon,facingDir:c.facingDir,sittingDir:c.sittingDir,cachCuc:cc.name,son:c.son,huong:c.huong,vanban:c.van};
+  var box=document.getElementById('hkResult');
+  var h='';
+  h+='<div class="hk-head"><div class="hh-main">Vận '+van+' · Tọa '+c.sittingSon+' — Hướng '+son+'</div>'
+    +'<div class="hh-sub">Tọa (sau): <b>'+c.sittingDir+'</b> · Hướng (mặt tiền): <b>'+c.facingDir+'</b></div>'
+    +'<div class="cachcuc '+cc.cls+'">'+cc.name+'</div><div class="cc-desc">'+cc.desc+'</div></div>';
+
+  // tinh bàn 3x3 (Bắc trên)
+  var GRID=[['Tây Bắc','Bắc','Đông Bắc'],['Tây','__C__','Đông'],['Tây Nam','Nam','Đông Nam']];
+  h+='<div class="tb-legend">Mỗi cung: <b class="s">sơn tinh</b> (trái, phía sau/người) · vận tinh (nhỏ) · <b class="h">hướng tinh</b> (phải, tài lộc)</div>';
+  h+='<div class="tinhban">';
+  GRID.forEach(function(rowArr){ rowArr.forEach(function(dir){
+    if(dir==='__C__'){ h+='<div class="tb-cell center"><div class="tb-stars"><span class="tb-son">'+c.son['Trung']+'</span><span class="tb-van">'+van+'</span><span class="tb-huong">'+c.huong['Trung']+'</span></div><div class="tc-dir">Trung Cung</div></div>'; return; }
+    var vuong=(c.huong[dir]===van);
+    var badge=''; if(dir===c.sittingDir)badge='<span class="tb-badge toa">TỌA</span>'; if(dir===c.facingDir)badge='<span class="tb-badge huong">HƯỚNG</span>';
+    h+='<div class="tb-cell'+(vuong?' vuong':'')+'">'+badge+'<div class="tb-stars"><span class="tb-son">'+c.son[dir]+'</span><span class="tb-van">'+c.van[dir]+'</span><span class="tb-huong">'+c.huong[dir]+'</span></div><div class="tc-dir">'+dir+'</div></div>';
+  }); });
+  h+='</div><div class="tb-legend" style="margin-top:2px">Ô nền xanh = cung có <b>hướng tinh '+van+'</b> (vượng khí đương vận)</div>';
+
+  // legend 9 sao
+  h+='<div class="h3-sec">Ý Nghĩa 9 Sao (Cửu Tinh)</div><div class="star-legend">';
+  for(var i=1;i<=9;i++){ var s=STAR[i]; h+='<div class="sl-item"><b>'+i+' '+s[0]+'</b> ('+s[2]+') — '+s[3]+'</div>'; }
+  h+='</div>';
+
+  // AI
+  h+='<div class="ai-box"><button class="ai-btn" type="button" id="hkAiBtn" onclick="luanGiaiHK()">✨ Luận giải tinh bàn bằng AI</button><div class="ai-out" id="hkAiOut"></div></div>';
+
+  box.innerHTML=h; box.classList.add('show'); box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function renderAI(t){ var e=String(t).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); e=e.replace(/^\s*#{1,4}\s*(.+)$/gm,'<h4>$1</h4>').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>'); return e.split(/\n{2,}/).map(function(b){b=b.trim();if(!b)return '';if(b.indexOf('<h4')===0)return b;return '<p>'+b.replace(/\n/g,'<br>')+'</p>';}).join(''); }
+function luanGiaiHK(){
+  var out=document.getElementById('hkAiOut'), btn=document.getElementById('hkAiBtn');
+  if(!lastHK){out.textContent='Chưa có tinh bàn.';return;}
+  if(!(window.HCD&&HCD.supabase)){out.textContent='Lỗi: chưa nạp Supabase.';return;}
+  btn.disabled=true; var old=btn.textContent; btn.textContent='Đang luận giải… (10-30s)';
+  out.innerHTML='<p class="muted">AI đang phân tích tinh bàn, vui lòng đợi…</p>';
+  HCD.supabase.functions.invoke('huyenkhong-luangiai',{body:lastHK}).then(function(res){
+    btn.disabled=false; btn.textContent=old;
+    if(res.error){ var msg=((res.error&&res.error.message)||String(res.error)); var ctx=res.error&&res.error.context;
+      if(ctx&&typeof ctx.text==='function'){ctx.text().then(function(t){var m=msg;try{var jj=JSON.parse(t);if(jj&&jj.error)m=jj.error;}catch(_){}out.innerHTML='<p style="color:var(--seal)">Lỗi luận giải: '+m+'</p>';});}
+      else out.innerHTML='<p style="color:var(--seal)">Lỗi luận giải: '+msg+'</p>'; return; }
+    var d=res.data||{}; if(d.error){out.innerHTML='<p style="color:var(--seal)">'+d.error+'</p>';return;}
+    out.innerHTML=renderAI(d.text||'(không có nội dung)');
+  }).catch(function(e){ btn.disabled=false; btn.textContent=old; out.innerHTML='<p style="color:var(--seal)">Lỗi: '+(e.message||e)+'</p>'; });
+}
+</script>
+</body>
+</html>
