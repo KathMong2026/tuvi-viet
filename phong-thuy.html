@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phong Thủy Nhà Ở · Bát Trạch | Tử Vi Việt</title>
+<meta name="description" content="Xem phong thủy nhà ở theo Bát Trạch: cung phi, Đông/Tây tứ mệnh, 8 hướng tốt xấu, gợi ý bố trí nhà và luận giải AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ece1c5;--surface:#f6efd9;--input:#fffdf6;--ink:#211d18;--ink-2:#3f372b;--ink-3:#463d30;--ink-4:#5b4f3c;
+  --muted:#6b5d48;--faint:#a99878;--seal:#9c2a1c;--dark:#211d18;--dark-soft:#cdbf9d;--dark-warm:#d98b5f;--line:rgba(33,29,24,.13);
+  --gold:#b8893b;--good:#3f7a4d;--bad:#9e3020;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(circle at 16% 10%, rgba(255,252,242,.6), transparent 42%),
+    radial-gradient(circle at 86% 90%, rgba(140,100,45,.08), transparent 46%),
+    var(--paper);
+  color:var(--ink);font-family:'Noto Serif',serif;min-height:100vh;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit}
+.tc{font-family:'Noto Serif TC',serif}
+
+.wx-kim{color:#b8893b}.wx-moc{color:#4a6741}.wx-thuy{color:#3a5974}.wx-hoa{color:#9e3020}.wx-tho{color:#8b6914}
+::selection{background:var(--seal);color:var(--surface)}
+
+.kd-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px 22px;padding:13px clamp(16px,4vw,52px);
+  background:rgba(236,225,197,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(33,29,24,.14)}
+.kd-brand{display:flex;align-items:center;gap:12px}
+.kd-seal{width:42px;height:42px;background:var(--seal);color:var(--surface);display:flex;align-items:center;
+  justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:28px;border-radius:3px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kd-brand .name{font-size:20px;font-weight:700;line-height:1.12}
+.kd-brand .sub{font-size:11px;color:var(--seal);font-family:'Noto Serif TC',serif;letter-spacing:.38em;padding-left:.38em;line-height:1.2}
+.kd-nav{display:flex;align-items:center;gap:clamp(10px,2.2vw,26px);flex-wrap:wrap;font-size:16px}
+.kd-nav a{padding-bottom:3px;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.kd-nav a:hover{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-nav a.active{color:var(--seal);border-bottom-color:var(--seal)}
+.kd-lang{display:flex;gap:2px;border:1px solid rgba(33,29,24,.22);border-radius:3px;overflow:hidden}
+.lang-btn{padding:5px 10px;font-size:12px;font-family:'Noto Serif';font-weight:600;border:none;cursor:pointer}
+
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(26px,4vw,50px) clamp(16px,4vw,44px)}
+.muted{color:var(--muted)}
+.section-title{display:flex;align-items:baseline;gap:12px;margin:4px 0 6px;flex-wrap:wrap;justify-content:center}
+.section-title .zh{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--seal);letter-spacing:5px;font-family:'Noto Serif TC',serif;font-weight:700}
+.section-title .vi{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--ink-4);letter-spacing:1px}
+.lead{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 22px;font-size:14.5px;line-height:1.7}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;box-shadow:0 8px 24px rgba(33,29,24,.06)}
+
+/* Form */
+.pt-form{max-width:640px;margin:0 auto 26px;display:grid;gap:16px}
+.pt-row{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media(max-width:560px){.pt-row{grid-template-columns:1fr}}
+.pt-field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:6px;letter-spacing:.03em}
+.pt-field input,.pt-field select{width:100%;padding:11px 13px;font-size:15px;background:var(--input);border:1px solid var(--line);border-radius:6px;color:var(--ink)}
+.pt-field input:focus,.pt-field select:focus{outline:none;border-color:var(--seal)}
+.gender-tg{display:flex;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.gender-tg button{flex:1;padding:11px;font-size:15px;font-weight:600;background:var(--input);color:var(--ink-3)}
+.gender-tg button.active{background:var(--seal);color:#fff}
+.pt-submit{padding:13px 22px;font-size:16px;font-weight:700;color:#fff;background:var(--seal);border-radius:6px}
+.pt-submit:hover{background:#851f14}
+
+/* Result */
+#ptResult{display:none}
+#ptResult.show{display:block}
+.menh-card{text-align:center;margin-bottom:24px}
+.menh-card .mc-cung{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:700;color:var(--seal);font-family:'Noto Serif TC',serif}
+.menh-card .mc-sub{font-size:15px;color:var(--ink-3);margin-top:4px}
+.menh-card .mc-grp{display:inline-block;margin-top:10px;padding:5px 16px;border-radius:999px;font-size:14px;font-weight:600;background:var(--dark);color:#f3ead0}
+
+.h3-sec{font-size:1.15rem;color:var(--seal);margin:28px 0 12px;letter-spacing:.02em;text-align:center;font-family:'Noto Serif TC',serif}
+
+/* La bàn 3x3 */
+.labang{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:520px;margin:0 auto 6px}
+.lb-cell{border-radius:6px;padding:10px 8px;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px solid var(--line)}
+.lb-cell.good{background:rgba(63,122,77,.12);border-color:rgba(63,122,77,.4)}
+.lb-cell.bad{background:rgba(158,48,32,.10);border-color:rgba(158,48,32,.35)}
+.lb-cell.center{background:var(--dark);color:#f3ead0;border-color:var(--seal)}
+.lb-dir{font-size:12px;color:var(--muted);font-weight:600}
+.lb-cell.center .lb-dir{color:var(--dark-soft)}
+.lb-star{font-size:15px;font-weight:700;margin:3px 0 1px}
+.lb-cell.good .lb-star{color:var(--good)}
+.lb-cell.bad .lb-star{color:var(--bad)}
+.lb-tag{font-size:10.5px;color:var(--faint)}
+.lb-cell.center .lb-cung{font-size:22px;font-weight:700;font-family:'Noto Serif TC',serif}
+.lb-cell.center .lb-cc{font-size:11px;color:var(--dark-soft);margin-top:2px}
+.compass-note{text-align:center;font-size:12px;color:var(--faint);margin-bottom:6px}
+
+/* Direction cards */
+.dir-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:6px}
+@media(max-width:620px){.dir-grid{grid-template-columns:1fr}}
+.dir-card{border-radius:6px;padding:14px 16px;border:1px solid var(--line);background:var(--surface)}
+.dir-card.good{border-left:4px solid var(--good)}
+.dir-card.bad{border-left:4px solid var(--bad)}
+.dir-card .dc-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:5px}
+.dir-card .dc-star{font-size:16px;font-weight:700}
+.dir-card.good .dc-star{color:var(--good)}
+.dir-card.bad .dc-star{color:var(--bad)}
+.dir-card .dc-dir{font-size:13px;color:var(--seal);font-weight:600}
+.dir-card .dc-level{font-size:11px;color:var(--faint)}
+.dir-card p{margin:4px 0 0;font-size:13.5px;line-height:1.65;color:var(--ink-2)}
+.dir-card .dc-use{margin-top:6px;font-size:12.5px;color:var(--ink-3)}
+.dir-card .dc-use b{color:var(--ink)}
+
+/* House eval + layout */
+.house-eval{max-width:720px;margin:8px auto 0;text-align:center;padding:16px 18px;border-radius:8px;border:1px solid var(--line)}
+.house-eval.good{background:rgba(63,122,77,.10);border-color:rgba(63,122,77,.4)}
+.house-eval.bad{background:rgba(158,48,32,.09);border-color:rgba(158,48,32,.35)}
+.house-eval .he-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.house-eval.good .he-title{color:var(--good)}
+.house-eval.bad .he-title{color:var(--bad)}
+.house-eval p{margin:2px 0 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.layout-list{max-width:760px;margin:0 auto;display:grid;gap:10px}
+.layout-item{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.layout-item .li-ic{font-size:20px;flex-shrink:0}
+.layout-item .li-body{font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.layout-item .li-body b{color:var(--ink)}
+.layout-item .li-dir{color:var(--good);font-weight:700}
+
+/* AI */
+.ai-box{max-width:820px;margin:26px auto 0;border-top:1px solid var(--line);padding-top:18px;text-align:center}
+.ai-btn{padding:12px 24px;font-size:15px;font-weight:700;color:#fff;background:var(--seal);border-radius:6px}
+.ai-btn:hover{background:#851f14}
+.ai-out{margin-top:16px;text-align:left}
+.ai-out h4{color:var(--seal);margin:15px 0 4px;font-size:14px}
+.ai-out p{margin:8px 0;line-height:1.85;font-size:14.5px;color:var(--ink-2)}
+
+.disclaimer{max-width:760px;margin:30px auto 0;font-size:12.5px;color:var(--muted);line-height:1.7;border-top:1px solid var(--line);padding-top:14px;text-align:center}
+
+.kd-footer{border-top:1px solid rgba(33,29,24,.14);background:rgba(255,255,255,.25);
+  padding:clamp(28px,4vw,44px) clamp(16px,5vw,52px);margin-top:36px}
+.kd-footer .row{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:18px}
+.kd-footer .fbrand{display:flex;align-items:center;gap:12px}
+.kd-footer .fseal{width:36px;height:36px;background:var(--seal);color:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;font-size:23px;border-radius:3px}
+.kd-footer .ftext{font-size:14px;color:var(--ink-4)}
+.kd-footer .flinks{display:flex;gap:20px;font-size:14px;flex-wrap:wrap}
+.kd-footer .flinks a{color:var(--ink-3)}
+.kd-footer .flinks a:hover{color:var(--seal)}
+.kd-footer .fhan{max-width:1120px;margin:18px auto 0;font-size:12px;color:var(--faint);font-family:'Noto Serif TC',serif;letter-spacing:.2em;text-align:center}
+</style>
+<script src="js/i18n.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof HCD !== 'undefined' && HCD.member) HCD.member.renderNavAuth('.kd-nav');
+});
+</script>
+</head>
+<body>
+<header class="kd-header">
+  <a class="kd-brand" href="index.html">
+    <div class="kd-seal">易</div>
+    <div><div class="name">Tử Vi Việt</div><div class="sub">Dịch Kinh 易 經 · Mệnh Lý</div></div>
+  </a>
+  <nav class="kd-nav">
+    <a href="index.html">Gieo Quẻ</a>
+    <a href="bat-tu.html">Bát Tự · Tử Vi</a>
+    <a href="hop-hon.html">Hôn Nhân</a>
+    <a href="hoang-lich.html">Hoàng Lịch</a>
+    <a href="phong-thuy.html" class="active">Phong Thủy</a>
+    <a href="them.html">Thêm</a>
+  </nav>
+  <div class="kd-lang">
+    <button class="lang-btn active" data-lang="vi" style="background:var(--seal);color:var(--surface)" onclick="switchLang('vi')">VI</button>
+    <button class="lang-btn" data-lang="zh" style="background:transparent;color:var(--ink-3)" onclick="switchLang('zh')">中文</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="section-title center"><span class="zh">八宅風水</span><span class="vi">Phong Thủy Nhà Ở · Bát Trạch</span></div>
+  <p class="lead">Nhập năm sinh và giới tính để biết <b>cung phi</b>, thuộc <b>Đông/Tây tứ mệnh</b>, cùng <b>8 hướng tốt–xấu</b> và gợi ý bố trí nhà. Nhập thêm hướng nhà để đánh giá độ hợp.</p>
+
+  <div class="card pt-form">
+    <div class="pt-row">
+      <div class="pt-field">
+        <label>Năm sinh (dương lịch)</label>
+        <input id="ptYear" type="number" min="1920" max="2030" placeholder="VD: 1990" inputmode="numeric">
+      </div>
+      <div class="pt-field">
+        <label>Giới tính</label>
+        <div class="gender-tg" id="ptGender">
+          <button type="button" class="active" data-g="nam">Nam</button>
+          <button type="button" data-g="nu">Nữ</button>
+        </div>
+      </div>
+    </div>
+    <div class="pt-field">
+      <label>Hướng nhà (hướng cửa chính nhìn ra) — tùy chọn</label>
+      <select id="ptHouse">
+        <option value="">— Không xét hướng nhà —</option>
+        <option value="Bắc">Bắc</option>
+        <option value="Đông Bắc">Đông Bắc</option>
+        <option value="Đông">Đông</option>
+        <option value="Đông Nam">Đông Nam</option>
+        <option value="Nam">Nam</option>
+        <option value="Tây Nam">Tây Nam</option>
+        <option value="Tây">Tây</option>
+        <option value="Tây Bắc">Tây Bắc</option>
+      </select>
+    </div>
+    <button class="pt-submit" type="button" onclick="xemPhongThuy()">☯ Xem Phong Thủy</button>
+  </div>
+
+  <div id="ptResult"></div>
+
+  <p class="disclaimer">Phong thủy là tri thức tham khảo giúp bố trí không gian sống hài hòa, không thay thế các yếu tố thực tế về kiến trúc, ánh sáng, thông gió và quyết định cá nhân. Kết quả dựa trên trường phái <b>Bát Trạch (八宅)</b> theo cung phi năm sinh.</p>
+</div>
+
+<footer class="kd-footer">
+  <div class="row">
+    <div class="fbrand"><div class="fseal">易</div><div class="ftext">Tử Vi Việt · 易經 — Trí tuệ biến dịch phương Đông.</div></div>
+    <div class="flinks"><a href="index.html">Gieo Quẻ</a><a href="bat-tu.html">Bát Tự · Tử Vi</a><a href="hop-hon.html">Hôn Nhân</a><a href="hoang-lich.html">Hoàng Lịch</a><a href="phong-thuy.html">Phong Thủy</a></div>
+  </div>
+  <div class="fhan">占 卜 · 易 經 · 八 卦 · 五 行 · 六 十 四 卦</div>
+</footer>
+
+<script>
+// ====================== ENGINE BÁT TRẠCH ======================
+var CUNG={1:'Khảm',2:'Khôn',3:'Chấn',4:'Tốn',6:'Càn',7:'Đoài',8:'Cấn',9:'Ly'};
+var CUNG_CN={'Khảm':'坎','Khôn':'坤','Chấn':'震','Tốn':'巽','Càn':'乾','Đoài':'兌','Cấn':'艮','Ly':'離'};
+var CUNG_WX={'Khảm':'Thủy','Khôn':'Thổ','Chấn':'Mộc','Tốn':'Mộc','Càn':'Kim','Đoài':'Kim','Cấn':'Thổ','Ly':'Hỏa'};
+var WX_CLASS={'Thủy':'wx-thuy','Thổ':'wx-tho','Mộc':'wx-moc','Kim':'wx-kim','Hỏa':'wx-hoa'};
+var EAST=['Khảm','Ly','Chấn','Tốn'], WEST=['Càn','Khôn','Cấn','Đoài'];
+var DIR={'Khảm':'Bắc','Cấn':'Đông Bắc','Chấn':'Đông','Tốn':'Đông Nam','Ly':'Nam','Khôn':'Tây Nam','Đoài':'Tây','Càn':'Tây Bắc'};
+// vị trí trên lưới 3x3 (Bắc trên) theo tên hướng
+var GRID=['Tây Bắc','Bắc','Đông Bắc','Tây','__CENTER__','Đông','Tây Nam','Nam','Đông Nam'];
+var TRIGRAM_OF_DIR={'Bắc':'Khảm','Đông Bắc':'Cấn','Đông':'Chấn','Đông Nam':'Tốn','Nam':'Ly','Tây Nam':'Khôn','Tây':'Đoài','Tây Bắc':'Càn'};
+
+function reduce2(n){ while(n>9){ n=String(n).split('').reduce(function(a,b){return a+(+b);},0); } return n; }
+// hiệu chỉnh năm theo Lập Xuân (~4/2): sinh trước 4/2 tính năm trước
+function adjYear(y,m,d){ if(m && d){ if(m<2||(m===2&&d<4)) return y-1; } return y; }
+function cungPhi(year, gender){
+  var last2=((year%100)+100)%100;
+  var s=reduce2(Math.floor(last2/10)+last2%10);
+  var k;
+  if(year<2000){ k=(gender==='nam')?(10-s):(5+s); }
+  else { k=(gender==='nam')?(9-s):(6+s); }
+  k=reduce2(((k-1)%9+9)%9+1);
+  if(k===5) k=(gender==='nam')?2:8;
+  if(k===0) k=(gender==='nam')?9:6;
+  return k;
+}
+var GOOD={
+  'Sinh Khí':[['Khảm','Tốn'],['Ly','Chấn'],['Càn','Đoài'],['Khôn','Cấn']],
+  'Thiên Y':[['Khảm','Chấn'],['Ly','Tốn'],['Càn','Cấn'],['Khôn','Đoài']],
+  'Diên Niên':[['Khảm','Ly'],['Chấn','Tốn'],['Càn','Khôn'],['Cấn','Đoài']]
+};
+var BAD={
+  'Tuyệt Mệnh':[['Khảm','Khôn'],['Ly','Càn'],['Chấn','Đoài'],['Tốn','Cấn']],
+  'Ngũ Quỷ':[['Khảm','Cấn'],['Ly','Đoài'],['Chấn','Càn'],['Tốn','Khôn']],
+  'Lục Sát':[['Khảm','Càn'],['Ly','Khôn'],['Chấn','Cấn'],['Tốn','Đoài']],
+  'Họa Hại':[['Khảm','Đoài'],['Ly','Cấn'],['Chấn','Khôn'],['Tốn','Càn']]
+};
+function duyen(cung){
+  var res={}; res[cung]='Phục Vị';
+  function apply(map){ for(var star in map){ map[star].forEach(function(pr){ if(pr[0]===cung)res[pr[1]]=star; if(pr[1]===cung)res[pr[0]]=star; }); } }
+  apply(GOOD); apply(BAD);
+  return res; // {trigram: star}
+}
+var STAR_META={
+  'Sinh Khí':{cat:true,level:'Đại cát · Thượng cát',cn:'生氣',ngoi:'Tham Lang',mean:'Hướng tốt nhất: tài lộc, thăng tiến, sinh khí dồi dào, con cái, danh vọng.',use:'Đặt <b>cửa chính</b>, <b>miệng bếp</b> (hướng nấu), <b>bàn làm việc</b> nhìn về hướng này.'},
+  'Thiên Y':{cat:true,level:'Đại cát · Trung cát',cn:'天醫',ngoi:'Cự Môn',mean:'Sức khỏe, trường thọ, bệnh tật tiêu tan, gặp quý nhân, tài chính ổn định.',use:'Đặt <b>đầu giường ngủ</b> quay hướng này; phòng người già/người bệnh.'},
+  'Diên Niên':{cat:true,level:'Đại cát · Thượng cát',cn:'延年',ngoi:'Vũ Khúc',mean:'Hôn nhân hòa thuận, tình cảm bền lâu, quan hệ tốt, tuổi thọ.',use:'Đặt <b>giường vợ chồng</b>, <b>phòng khách</b>, bàn tiếp khách hướng này.'},
+  'Phục Vị':{cat:true,level:'Tiểu cát',cn:'伏位',ngoi:'Tả Phù',mean:'Ổn định, bình an, củng cố; tốt cho học hành, thi cử, tu tập, giữ của.',use:'Đặt <b>bàn thờ</b>, <b>bàn học</b>, két sắt hoặc cửa phụ hướng này.'},
+  'Tuyệt Mệnh':{cat:false,level:'Đại hung',cn:'絕命',ngoi:'Phá Quân',mean:'Xấu nhất: bệnh nặng, tai họa, hao người hao của, tuyệt tự.',use:'Nên đặt <b>WC</b>, <b>nhà kho</b>, hoặc <b>bếp</b> để "trấn hung"; tránh cửa, giường, bàn thờ.'},
+  'Ngũ Quỷ':{cat:false,level:'Đại hung',cn:'五鬼',ngoi:'Liêm Trinh',mean:'Thị phi, mất của, cãi vã, tiểu nhân quấy phá, dễ hỏa hoạn.',use:'Nên đặt <b>WC</b>, <b>nhà kho</b>; tránh phòng ngủ, cửa chính.'},
+  'Lục Sát':{cat:false,level:'Hung',cn:'六煞',ngoi:'Văn Khúc',mean:'Kiện tụng, thị phi tình cảm, hao tài, trắc trở công việc.',use:'Nên đặt <b>bếp</b> hoặc <b>WC</b>; tránh giường, bàn làm việc.'},
+  'Họa Hại':{cat:false,level:'Hung nhẹ',cn:'禍害',ngoi:'Lộc Tồn',mean:'Cãi vã vặt, bực bội, mệt mỏi, hao tổn nhỏ, dễ nản lòng.',use:'Nên đặt <b>WC</b>, <b>nhà kho</b>, lối đi; tránh phòng ngủ chính.'}
+};
+var GOODSET={'Sinh Khí':1,'Thiên Y':1,'Diên Niên':1,'Phục Vị':1};
+
+// ====================== RENDER ======================
+var curGender='nam', lastPT=null;
+document.getElementById('ptGender').addEventListener('click',function(e){
+  var b=e.target.closest('button'); if(!b)return;
+  curGender=b.getAttribute('data-g');
+  Array.prototype.forEach.call(this.children,function(x){x.classList.toggle('active',x===b);});
+});
+
+function xemPhongThuy(){
+  var y=parseInt(document.getElementById('ptYear').value,10);
+  var house=document.getElementById('ptHouse').value;
+  var box=document.getElementById('ptResult');
+  if(!y||y<1920||y>2030){ box.className=''; box.innerHTML='<div class="card" style="text-align:center;color:var(--seal)">Vui lòng nhập năm sinh hợp lệ (1920–2030).</div>'; box.classList.add('show'); return; }
+  var k=cungPhi(y,curGender), cung=CUNG[k], wx=CUNG_WX[cung], grp=EAST.indexOf(cung)>=0?'Đông tứ mệnh':'Tây tứ mệnh';
+  var d=duyen(cung); // {trigram:star}
+  // map hướng -> star
+  var dirStar={}; for(var tri in d){ dirStar[DIR[tri]]=d[tri]; }
+  lastPT={year:y,gender:curGender,k:k,cung:cung,wx:wx,grp:grp,dirStar:dirStar,house:house};
+
+  var h='';
+  // Cung mệnh card
+  h+='<div class="menh-card">'
+   +'<div class="mc-cung tc">'+CUNG_CN[cung]+' · Cung '+cung+'</div>'
+   +'<div class="mc-sub">Ngũ hành <b class="'+WX_CLASS[wx]+'">'+wx+'</b> · Cung phi số '+k+'</div>'
+   +'<div class="mc-grp">'+grp+'</div>'
+   +'</div>';
+
+  // La bàn 3x3
+  h+='<div class="h3-sec">☰ La Bàn Bát Trạch — 8 Hướng</div>';
+  h+='<div class="labang">';
+  GRID.forEach(function(cellDir){
+    if(cellDir==='__CENTER__'){
+      h+='<div class="lb-cell center"><div class="lb-dir">Cung mệnh</div><div class="lb-cung tc">'+CUNG_CN[cung]+'</div><div class="lb-cc">'+cung+' · '+wx+'</div></div>';
+      return;
+    }
+    var star=dirStar[cellDir], good=GOODSET[star]?true:false;
+    h+='<div class="lb-cell '+(good?'good':'bad')+'"><div class="lb-dir">'+cellDir+'</div><div class="lb-star">'+star+'</div><div class="lb-tag">'+STAR_META[star].level.split(' · ')[0]+'</div></div>';
+  });
+  h+='</div><div class="compass-note">Xanh = hướng tốt · Đỏ = hướng xấu (Bắc ở trên)</div>';
+
+  // 4 hướng tốt
+  h+='<div class="h3-sec" style="color:var(--good)">✔ 4 Hướng Tốt</div><div class="dir-grid">';
+  ['Sinh Khí','Thiên Y','Diên Niên','Phục Vị'].forEach(function(star){
+    var dir=Object.keys(dirStar).filter(function(dd){return dirStar[dd]===star;})[0];
+    var m=STAR_META[star];
+    h+='<div class="dir-card good"><div class="dc-head"><span class="dc-star">'+star+' <span class="tc" style="font-size:13px;color:var(--muted)">'+m.cn+'</span></span><span class="dc-dir">'+dir+'</span></div><div class="dc-level">'+m.level+' · sao '+m.ngoi+'</div><p>'+m.mean+'</p><div class="dc-use">→ '+m.use+'</div></div>';
+  });
+  h+='</div>';
+
+  // 4 hướng xấu
+  h+='<div class="h3-sec" style="color:var(--bad)">✘ 4 Hướng Xấu</div><div class="dir-grid">';
+  ['Tuyệt Mệnh','Ngũ Quỷ','Lục Sát','Họa Hại'].forEach(function(star){
+    var dir=Object.keys(dirStar).filter(function(dd){return dirStar[dd]===star;})[0];
+    var m=STAR_META[star];
+    h+='<div class="dir-card bad"><div class="dc-head"><span class="dc-star">'+star+' <span class="tc" style="font-size:13px;color:var(--muted)">'+m.cn+'</span></span><span class="dc-dir">'+dir+'</span></div><div class="dc-level">'+m.level+' · sao '+m.ngoi+'</div><p>'+m.mean+'</p><div class="dc-use">→ '+m.use+'</div></div>';
+  });
+  h+='</div>';
+
+  // Đánh giá hướng nhà
+  if(house){
+    var hs=dirStar[house], good=GOODSET[hs]?true:false, m=STAR_META[hs];
+    h+='<div class="h3-sec">🏠 Đánh Giá Hướng Nhà</div>';
+    h+='<div class="house-eval '+(good?'good':'bad')+'"><div class="he-title">Hướng '+house+' — '+hs+' ('+m.level+')</div>'
+      +'<p>'+(good
+        ? 'Hướng nhà <b>hợp</b> với cung '+cung+' của bạn. '+m.mean
+        : 'Hướng nhà <b>không hợp</b> (thuộc hướng xấu). '+m.mean+' Có thể hóa giải bằng bố trí nội thất, đặt bếp/WC hợp lý và chọn hướng cửa phòng, giường, bàn làm việc về các hướng tốt bên trên.')
+      +'</p></div>';
+  }
+
+  // Gợi ý bố trí
+  var dSinh=Object.keys(dirStar).filter(function(dd){return dirStar[dd]==='Sinh Khí';})[0];
+  var dThienY=Object.keys(dirStar).filter(function(dd){return dirStar[dd]==='Thiên Y';})[0];
+  var dDien=Object.keys(dirStar).filter(function(dd){return dirStar[dd]==='Diên Niên';})[0];
+  var dPhuc=Object.keys(dirStar).filter(function(dd){return dirStar[dd]==='Phục Vị';})[0];
+  var dTuyet=Object.keys(dirStar).filter(function(dd){return dirStar[dd]==='Tuyệt Mệnh';})[0];
+  var dNguQuy=Object.keys(dirStar).filter(function(dd){return dirStar[dd]==='Ngũ Quỷ';})[0];
+  h+='<div class="h3-sec">🧭 Gợi Ý Bố Trí Nhà</div><div class="layout-list">';
+  var items=[
+    ['🚪','Cửa chính','đón khí vào nhà, nên mở về hướng <b class="li-dir">'+dSinh+'</b> (Sinh Khí) để hút tài lộc; hoặc '+dDien+' / '+dThienY+'.'],
+    ['🔥','Bếp','theo nguyên tắc "tọa hung hướng cát": đặt bếp ở vùng xấu (VD '+dTuyet+') nhưng <b>miệng bếp/hướng nấu</b> quay về <b class="li-dir">'+dThienY+'</b> hoặc '+dSinh+'.'],
+    ['🛏️','Giường ngủ','đầu giường quay về <b class="li-dir">'+dThienY+'</b> (sức khỏe) hoặc '+dDien+' (vợ chồng hòa thuận).'],
+    ['💼','Bàn làm việc','ngồi nhìn về <b class="li-dir">'+dSinh+'</b> để tăng vận sự nghiệp, minh mẫn.'],
+    ['🕯️','Bàn thờ','đặt tọa cát hướng cát, ưu tiên hướng <b class="li-dir">'+dPhuc+'</b> (Phục Vị) hoặc '+dThienY+'.'],
+    ['🚽','WC / nhà kho','nên đặt vào hướng xấu <b>'+dTuyet+'</b> hoặc '+dNguQuy+' để "trấn" hung khí.']
+  ];
+  items.forEach(function(it){ h+='<div class="layout-item"><div class="li-ic">'+it[0]+'</div><div class="li-body"><b>'+it[1]+':</b> '+it[2]+'</div></div>'; });
+  h+='</div>';
+
+  // AI
+  h+='<div class="ai-box"><button class="ai-btn" type="button" id="ptAiBtn" onclick="luanGiaiPhongThuy()">✨ Luận giải chi tiết bằng AI</button><div class="ai-out" id="ptAiOut"></div></div>';
+
+  box.innerHTML=h; box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function renderAI(t){
+  var esc=String(t).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});
+  esc=esc.replace(/^\s*#{1,4}\s*(.+)$/gm,'<h4>$1</h4>');
+  esc=esc.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  return esc.split(/\n{2,}/).map(function(b){b=b.trim();if(!b)return '';if(b.indexOf('<h4')===0)return b;return '<p>'+b.replace(/\n/g,'<br>')+'</p>';}).join('');
+}
+function luanGiaiPhongThuy(){
+  var out=document.getElementById('ptAiOut'), btn=document.getElementById('ptAiBtn');
+  if(!lastPT){ out.textContent='Chưa có kết quả.'; return; }
+  if(!(window.HCD&&HCD.supabase)){ out.textContent='Lỗi: chưa nạp Supabase.'; return; }
+  btn.disabled=true; var old=btn.textContent; btn.textContent='Đang luận giải… (10-30s)';
+  out.innerHTML='<p class="muted">AI đang phân tích phong thủy nhà ở, vui lòng đợi…</p>';
+  HCD.supabase.functions.invoke('phongthuy-luangiai',{body:lastPT}).then(function(res){
+    btn.disabled=false; btn.textContent=old;
+    if(res.error){
+      var msg=((res.error&&res.error.message)||String(res.error)); var ctx=res.error&&res.error.context;
+      if(ctx&&typeof ctx.text==='function'){ ctx.text().then(function(t){var m=msg;try{var jj=JSON.parse(t);if(jj&&jj.error)m=jj.error;}catch(_){}out.innerHTML='<p style="color:var(--seal)">Lỗi luận giải: '+m+'</p>';}); }
+      else out.innerHTML='<p style="color:var(--seal)">Lỗi luận giải: '+msg+'</p>';
+      return;
+    }
+    var d=res.data||{};
+    if(d.error){ out.innerHTML='<p style="color:var(--seal)">'+d.error+'</p>'; return; }
+    out.innerHTML=renderAI(d.text||'(không có nội dung)');
+  }).catch(function(e){ btn.disabled=false; btn.textContent=old; out.innerHTML='<p style="color:var(--seal)">Lỗi: '+(e.message||e)+'</p>'; });
+}
+</script>
+</body>
+</html>
