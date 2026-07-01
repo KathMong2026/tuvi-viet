@@ -237,6 +237,66 @@
     }
   };
 
+  // ── Turnstile chống bot cho các hàm AI (tự đính kèm cf_token) ──
+  var AI_FNS = ['luan-giai', 'phongthuy-luangiai', 'huyenkhong-luangiai', 'chitay-luangiai', 'hoi-dap'];
+  var TURNSTILE_SITEKEY = '0x4AAAAAADuEY5glSLmq3ayL';
+  var _tsLoad = null, _tsWidget = null;
+  function loadTurnstile() {
+    if (_tsLoad) return _tsLoad;
+    _tsLoad = new Promise(function (resolve) {
+      if (global.turnstile) { resolve(true); return; }
+      var s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      s.async = true; s.defer = true;
+      s.onload = function () { resolve(true); };
+      s.onerror = function () { resolve(false); }; // fail-open: không tải được thì bỏ qua token
+      (document.head || document.body).appendChild(s);
+    });
+    return _tsLoad;
+  }
+  function ensureWidget() {
+    if (_tsWidget != null || !global.turnstile) return;
+    var el = document.getElementById('cf-turnstile-holder');
+    if (!el) { el = document.createElement('div'); el.id = 'cf-turnstile-holder'; el.style.display = 'none'; document.body.appendChild(el); }
+    try { _tsWidget = global.turnstile.render(el, { sitekey: TURNSTILE_SITEKEY }); } catch (e) { _tsWidget = null; }
+  }
+  function getTurnstileToken() {
+    return loadTurnstile().then(function (ok) {
+      if (!ok || !global.turnstile) return null;
+      try { ensureWidget(); } catch (e) { return null; }
+      if (_tsWidget == null) return null;
+      return new Promise(function (resolve) {
+        try {
+          try { global.turnstile.reset(_tsWidget); } catch (e) {}
+          try { global.turnstile.execute(_tsWidget); } catch (e) {}
+          var n = 0;
+          var iv = setInterval(function () {
+            n++;
+            var tok = '';
+            try { tok = global.turnstile.getResponse(_tsWidget); } catch (e) {}
+            if (tok) { clearInterval(iv); resolve(tok); }
+            else if (n > 40) { clearInterval(iv); resolve(null); } // ~8s timeout, fail-open phía client
+          }, 200);
+        } catch (e) { resolve(null); }
+      });
+    });
+  }
+  // Bọc functions.invoke: tự thêm cf_token cho các hàm AI
+  if (sb.functions && typeof sb.functions.invoke === 'function') {
+    var _origInvoke = sb.functions.invoke.bind(sb.functions);
+    sb.functions.invoke = function (fn, opts) {
+      opts = opts || {};
+      if (AI_FNS.indexOf(fn) >= 0) {
+        return getTurnstileToken().then(function (tok) {
+          opts.body = opts.body || {};
+          if (tok) opts.body.cf_token = tok;
+          return _origInvoke(fn, opts);
+        });
+      }
+      return _origInvoke(fn, opts);
+    };
+  }
+
   // ── Xuất ra global ──
   global.HCD = global.HCD || {};
   global.HCD.supabase = sb;
