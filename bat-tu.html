@@ -908,8 +908,10 @@ function runFortune(){
 
   // Chân Thái Dương Thời correction
   var effectiveLongitude = getEffectiveLongitude();
-  var clockHourMiddle = h * 2 + 1;
-  if (clockHourMiddle > 23) clockHourMiddle = 23;
+  // Điểm GIỮA canh giờ (Tý 23-01h → 0h, Sửu 01-03h → 2h, ... Ngọ 11-13h → 12h).
+  // LƯU Ý: trước đây dùng h*2+1 (điểm CUỐI canh) → hiệu chỉnh dương vài phút là
+  // nhảy sang canh kế tiếp → lệch cung Mệnh & sai Cục toàn bộ lá số.
+  var clockHourMiddle = h * 2;
 
   var tsCorrection = calcTrueSolarHour(clockHourMiddle, 0, effectiveLongitude, {year:y, month:m, day:d});
   var correctedBranch = hourToBranch(tsCorrection.hour);
