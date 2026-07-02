@@ -19,6 +19,12 @@ create table if not exists public.tuvi_profiles (
   birth_hour   text,
   birth_place  text,
   solar        boolean default true,
+  display_name text, -- added 2026-07: align with client code
+  email        text, -- added 2026-07: align with client code
+  birth_year   int,  -- added 2026-07: align with client code
+  birth_month  int,  -- added 2026-07: align with client code
+  birth_day    int,  -- added 2026-07: align with client code
+  longitude    numeric, -- added 2026-07: align with client code
   created_at   timestamptz default now(),
   updated_at   timestamptz default now()
 );
@@ -33,6 +39,8 @@ create table if not exists public.tuvi_horoscopes (
   palaces      jsonb,
   great_years  jsonb,
   annual_years jsonb,
+  data         jsonb, -- added 2026-07: align with client code
+  notes        text,  -- added 2026-07: align with client code
   created_at   timestamptz default now()
 );
 create index if not exists idx_tuvi_horo_user  on public.tuvi_horoscopes(user_id);

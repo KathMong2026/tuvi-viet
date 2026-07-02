@@ -263,7 +263,8 @@ function getJianChu(date){
 
 function getNaYin(stem,branch){
   var NAYIN=['Hải Trung Kim','Lô Trung Hỏa','Đại Lâm Mộc','Lộ Bàng Thổ','Kiếm Phong Kim','Sơn Đầu Hỏa','Giản Hạ Thủy','Thành Đầu Thổ','Bạch Lạp Kim','Dương Liễu Mộc','Tuyền Trung Thủy','Ốc Thượng Thổ','Tích Lịch Hỏa','Tùng Bách Mộc','Trường Lưu Thủy','Sa Thạch Kim','Sơn Hạ Hỏa','Bình Địa Mộc','Bích Thượng Thổ','Kim Bạc Kim','Phúc Đăng Hỏa','Thiên Hà Thủy','Đại Dịch Thổ','Thoa Xuyến Kim','Tang Đố Mộc','Đại Khê Thủy','Sa Trung Thổ','Thiên Thượng Hỏa','Thạch Lựu Mộc','Đại Hải Thủy'];
-  return NAYIN[(stem*6+branch)%60];
+  var idx=((6*stem-5*branch)%60+60)%60;
+  return NAYIN[Math.floor(idx/2)];
 }
 
 function get28Stars(date){
@@ -345,7 +346,7 @@ function render(){
   var s9=get9Stars(date);
 
   var days=['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
-  var lunarStr='Tháng '+date.getMonth()+' ngày '+date.getDate();
+  var solarStr='Tháng '+(date.getMonth()+1)+' ngày '+date.getDate()+' (dương lịch)';
 
   var wxColorOrder={Mộc:'var(--jade-0)',Hỏa:'var(--vermilion-0)',Thổ:'var(--gold-0)',Kim:'var(--ink-3)',Thủy:'var(--ink-1)'};
   var wxFill={Mộc:'14',Hỏa:'92',Thổ:'49',Kim:'54',Thủy:'32'};
@@ -370,7 +371,7 @@ function render(){
   html+='<button class="alm-today-btn" onclick="goToday()">Hôm Nay</button></div>';
 
   html+='<div class="alm-date-str">'+dateStr+' · '+days[date.getDay()]+'</div>';
-  html+='<div class="alm-lunar-str">'+HS_C[yearHS]+EB_C[yearEB]+'('+yearAnimal+') niên · '+HS_C[dp.stem]+HS_C[dp.branch]+' nhật</div>';
+  html+='<div class="alm-lunar-str">'+HS_C[yearHS]+EB_C[yearEB]+'('+yearAnimal+') niên · '+HS_C[dp.stem]+EB_C[dp.branch]+' nhật</div>';
 
   // MAIN GRID
   html+='<div style="margin-top:40px;display:grid;gap:28px">';
@@ -379,7 +380,7 @@ function render(){
   html+='<div><div class="frame-double"><div class="frame-double-inner"></div><span class="corner-bl"></span><span class="corner-br"></span>';
   html+='<div class="alm-year-str">'+HS_C[yearHS]+EB_C[yearEB]+'('+yearAnimal+') niên</div>';
   html+='<div class="alm-big-day">'+date.getDate()+'</div>';
-  html+='<div class="alm-month-day">Tháng '+date.getMonth()+' ngày '+date.getDate()+'</div>';
+  html+='<div class="alm-month-day">Tháng '+(date.getMonth()+1)+' ngày '+date.getDate()+' (dương lịch)</div>';
   
   // Badges
   html+='<div class="alm-badges">';

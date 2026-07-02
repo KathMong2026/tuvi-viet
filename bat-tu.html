@@ -445,12 +445,8 @@ input,select{font-family:inherit}
 (function(global) {
   'use strict';
 
+  // 30 nạp âm chuẩn theo thứ tự lục thập hoa giáp (mỗi nạp âm ứng với 2 cặp can-chi liên tiếp)
   var NAYIN_TABLE = [
-    'Hải Trung Kim','Lô Trung Hỏa','Đại Lâm Mộc','Lộ Bàng Thổ','Kiếm Phong Kim','Sơn Đầu Hỏa',
-    'Giản Hạ Thủy','Thành Đầu Thổ','Bạch Lạp Kim','Dương Liễu Mộc','Tuyền Trung Thủy','Ốc Thượng Thổ',
-    'Tích Lịch Hỏa','Tùng Bách Mộc','Trường Lưu Thủy','Sa Thạch Kim','Sơn Hạ Hỏa','Bình Địa Mộc',
-    'Bích Thượng Thổ','Kim Bạc Kim','Phúc Đăng Hỏa','Thiên Hà Thủy','Đại Dịch Thổ','Thoa Xuyến Kim',
-    'Tang Đố Mộc','Đại Khê Thủy','Sa Trung Thổ','Thiên Thượng Hỏa','Thạch Lựu Mộc','Đại Hải Thủy',
     'Hải Trung Kim','Lô Trung Hỏa','Đại Lâm Mộc','Lộ Bàng Thổ','Kiếm Phong Kim','Sơn Đầu Hỏa',
     'Giản Hạ Thủy','Thành Đầu Thổ','Bạch Lạp Kim','Dương Liễu Mộc','Tuyền Trung Thủy','Ốc Thượng Thổ',
     'Tích Lịch Hỏa','Tùng Bách Mộc','Trường Lưu Thủy','Sa Thạch Kim','Sơn Hạ Hỏa','Bình Địa Mộc',
@@ -546,8 +542,9 @@ input,select{font-family:inherit}
   }
 
   function getNayin(stem, branch) {
-    var idx = (stem * 6 + branch) % 60;
-    return NAYIN_TABLE[idx] || '';
+    // Chỉ số lục thập hoa giáp 0..59 từ (can, chi), mỗi nạp âm ứng với 2 hoa giáp liên tiếp
+    var idx = ((6 * stem - 5 * branch) % 60 + 60) % 60;
+    return NAYIN_TABLE[Math.floor(idx / 2)] || '';
   }
 
   function generateBaziReport(name, gender, year, month, day, hour) {
@@ -631,16 +628,12 @@ input,select{font-family:inherit}
   function calcTuViIztro(year, month, day, hourBranch, gender) {
     var g = (gender === 'male') ? '男' : '女';
     var dateStr = year + '-' + month + '-' + day;
+    var astro;
     try {
-      var astro = iztro.astro.bySolar(dateStr, hourBranch, g, true, 'vi-VN');
+      astro = iztro.astro.bySolar(dateStr, hourBranch, g, true, 'vi-VN');
     } catch(e) {
-      // Fallback: try with index 0-based
-      try {
-        astro = iztro.astro.bySolar(dateStr, hourBranch, g, true, 'vi-VN');
-      } catch(e2) {
-        console.error('iztro error:', e2);
-        return null;
-      }
+      console.error('iztro error:', e);
+      return null;
     }
     if (!astro) return null;
 
@@ -1082,13 +1075,12 @@ function renderBatu(r){
         birthDay: r.birth.day,
         birthHour: r.birth.hour,
         gender: r.gender,
-        longitude: r.birth.longitude || 105.85,
-        solarHour: r.birth.solarHour || null,
+        longitude: (typeof getEffectiveLongitude === 'function' ? getEffectiveLongitude() : 105.85),
+        solarHour: (r.trueSolarTime && typeof r.trueSolarTime.hour === 'number') ? r.trueSolarTime.hour : null,
         baziPillars: r.pillars,
         dayMaster: r.dayMaster,
-        wuxingCounts: r.wuxingCounts,
-        dayunData: r.daiVan ? r.daiVan.cycles : null,
-        luanText: r.luanText || ''
+        wuxingCounts: r.wuxingCount,
+        dayunData: r.daiVan ? r.daiVan.cycles : null
       };
     });
   }
@@ -1162,8 +1154,8 @@ function renderTuvi(r, zw){
         birthDay: r.birth.day,
         birthHour: r.birth.hour,
         gender: r.gender,
-        longitude: r.birth.longitude || 105.85,
-        solarHour: r.birth.solarHour || null,
+        longitude: (typeof getEffectiveLongitude === 'function' ? getEffectiveLongitude() : 105.85),
+        solarHour: (r.trueSolarTime && typeof r.trueSolarTime.hour === 'number') ? r.trueSolarTime.hour : null,
         ziweiData: zw || null
       };
     });
@@ -1276,8 +1268,10 @@ function renderVerdict(r, zw) {
     wxSummary.push(wx + wp[wx] + (wp[wx] >= 40 ? ' cực vượng' : wp[wx] >= 20 ? ' vượng' : ' yếu'));
   });
 
-  // Bát Tự analysis (tiếng Việt)
-  var baziAnalysis = 'Nhật chủ ' + dmName + ' <b>' + HC.WX_CN[dm.stem] + '</b> sinh tháng Ngọ, Hỏa vượng Kim tù, thân nhược (nền tảng hơi mỏng). Ngũ hành: ' + wxSummary.join(', ') + '. Cách cục: 【' + baziPattern + '】. Dụng thần lấy ' + r.yongShen + ' (trợ thân) và Thủy (điều hầu chế Hỏa), Kỵ thần là Hỏa. Cục này thuộc «' + baziPattern + '», cần ' + r.yongShen + ' Thủy phù trợ mới gánh nổi Quan.';
+  // Bát Tự analysis (tiếng Việt) — sinh động theo report r
+  var monthEB = HC.EB[r.pillars[1].branch];
+  var isWeak = dmStrength.indexOf('Thân nhược') >= 0;
+  var baziAnalysis = 'Nhật chủ ' + dmName + ' <b>' + HC.WX_CN[dm.stem] + '</b> sinh tháng ' + monthEB + ', nhật chủ ' + dmElem + ' ' + (isWeak ? 'thân nhược (nền tảng hơi mỏng)' : 'thân cường (khí thế vững vàng)') + '. Ngũ hành: ' + wxSummary.join(', ') + '. Cách cục: 【' + baziPattern + '】. Dụng thần lấy ' + r.yongShen + (isWeak ? ' (sinh phù trợ thân)' : ' (tiết tú lưu thông)') + ', Kỵ thần là ' + r.kyThan + '. Cục này thuộc «' + baziPattern + '», cần ' + r.yongShen + ' phù trợ để mệnh cục cân bằng.';
 
   // Tử Vi analysis (tiếng Việt)
   var tuviAnalysis = 'Mệnh cung chủ tinh ' + menhMainStars + ', thuộc cách «' + tuviPattern + '», tính cương nghị quả cảm, ưa phá cũ lập mới. Ngũ hành cục là ' + zw.cucName + '.';
@@ -1291,7 +1285,16 @@ function renderVerdict(r, zw) {
   } else {
     dvAnalysis += 'vận thế bình ổn. ';
   }
-  dvAnalysis += 'Lưu niên ' + lnGZ + ' Hỏa thế rất vượng, là Kỵ thần, làm nặng thêm Quan tinh khắc thân, năm nay dễ đối mặt áp lực công việc và trách nhiệm. Tuy nhiên đại vận ' + dvGZ + ' chống đỡ vững, có thể giảm nhẹ khốn khó. Nhìn chung đại vận này nền khá ổn, lưu niên tuy có thách thức nhưng không phải không vượt qua được, nên tiến bước vững vàng.';
+  var lnElem = HC.WX[lnStem];
+  dvAnalysis += 'Lưu niên ' + lnGZ + ' thiên can thuộc ' + lnElem + ', ';
+  if (lnElem === r.kyThan) {
+    dvAnalysis += 'là Kỵ thần, năm nay dễ đối mặt áp lực công việc và trách nhiệm. Tuy nhiên đại vận ' + dvGZ + ' chống đỡ vững, có thể giảm nhẹ khốn khó. ';
+  } else if (lnElem === r.yongShen || lnElem === HC.WX_GEN[r.yongShen]) {
+    dvAnalysis += 'thuận với Dụng thần ' + r.yongShen + ', năm nay vận thế hanh thông, nên nắm bắt cơ hội. ';
+  } else {
+    dvAnalysis += 'không xung không phá, năm nay vận thế bình hòa, tiến thoái tùy cơ. ';
+  }
+  dvAnalysis += 'Nhìn chung đại vận này nền khá ổn, lưu niên tuy có thách thức nhưng không phải không vượt qua được, nên tiến bước vững vàng.';
 
   // === BUILD HTML ===
   var html = '';
@@ -1301,8 +1304,16 @@ function renderVerdict(r, zw) {
   // Bát Tự
   html += '<div class="verdict-subhead">Bát Tự mệnh bàn</div>';
   html += '<div class="verdict-row"><span class="vr-label">Nhật Chủ</span><span class="vr-value">' + HC.HS_CN[dm.stem] + HC.EB_CN[dm.branch] + ' · ' + dmStrength + '</span></div>';
-  html += '<div class="verdict-row"><span class="vr-label">Dụng Thần</span><span class="vr-value">' + r.yongShen + ' · ' + HC.WX_GEN[r.yongShen] + ' · kiêm Thủy điều hầu · Kỵ ' + r.kyThan + '</span></div>';
-  html += '<div class="verdict-row"><span class="vr-label">Phương vị hỷ</span><span class="vr-value">Tây · màu trắng tinh</span></div>';
+  html += '<div class="verdict-row"><span class="vr-label">Dụng Thần</span><span class="vr-value">' + r.yongShen + ' · hỷ ' + HC.WX_GEN[r.yongShen] + ' · Kỵ ' + r.kyThan + '</span></div>';
+  // Phương vị / màu sắc theo hành Dụng thần
+  var WX_DIR_COLOR = {
+    'Kim': 'Tây · màu trắng',
+    'Mộc': 'Đông · màu xanh lục',
+    'Thủy': 'Bắc · màu đen, xanh dương',
+    'Hỏa': 'Nam · màu đỏ',
+    'Thổ': 'Trung ương, Đông Bắc · màu vàng nâu'
+  };
+  html += '<div class="verdict-row"><span class="vr-label">Phương vị hỷ</span><span class="vr-value">' + (WX_DIR_COLOR[r.yongShen] || '—') + '</span></div>';
   html += '<div class="verdict-row"><span class="vr-label">Đại vận hiện</span><span class="vr-value">Đại vận thứ ' + (dvIdx + 1) + ' · ' + dvGZ + '</span></div>';
   html += '<div class="verdict-row"><span class="vr-label">Lưu niên</span><span class="vr-value">' + lnGZ + '</span></div>';
 
@@ -1324,7 +1335,7 @@ function renderVerdict(r, zw) {
   // CTA
   html += '<div class="verdict-divider"></div>';
   html += '<div class="verdict-cta">Trên đây chỉ là điểm nhanh mệnh bàn. Nếu muốn chuyên sâu, hãy đặt 【Bát Tự · Tử Vi song bàn tường giải】 — do đường sư phân tích từng mục theo mệnh bàn của bạn, bao gồm: tính tình tài năng, sự nghiệp cách cục, tài vận, tình duyên hôn nhân, lục thân, sức khỏe, học nghiệp thi cử, nhân tế quý nhân, thập niên đại vận, lưu niên cát hung, dụng thần khai vận, khu xu kỵ chỉ — tổng cộng 12 phương diện, và sẽ phán đoán rõ rệt về việc bạn quan tâm nhất.</div>';
-  html += '<a class="verdict-cta-link" href="/samples/mingshu/both-zh-TW.html" target="_blank">Xem mẫu bàn giao →</a>';
+  html += '<a class="verdict-cta-link" href="giai-nghia.html" target="_blank">Xem mẫu bàn giao →</a>';
   html += '<div class="verdict-disclaimer">※ Phân tích trên đây dựa trên mệnh bàn tốc đọc, phân tích chi tiết xin xem bên dưới.</div></div>';
 
   // Wizard card
@@ -1393,9 +1404,9 @@ var DB=[];
   CUNG_NAMES_REF.forEach(function(cn,i){DB.push({cat:'12 Cung',key:cn,val:CUNG_CN_REF[i]+' ('+cn+') — '+['Bản ngã, tính cách','Cha mẹ, trưởng bối','Phúc phận, tinh thần','Nhà cửa, bất động sản','Công danh, sự nghiệp','Bạn bè, cấp dưới','Di chuyển, bên ngoài','Sức khỏe, bệnh tật','Tiền bạc, tài chính','Con cái, hưởng thụ','Hôn nhân, phối ngẫu','Anh em, đồng nghiệp'][i]})});
   // Cuc
   ['Thủy nhị cục','Mộc tam cục','Kim tứ cục','Thổ ngũ cục','Hỏa lục cục'].forEach(function(c, i){DB.push({cat:'Ngũ Hành Cục',key:c,val:'Cục số '+(i+2)+' — '+c})});
-  // Nayin
+  // Nayin (bảng 30 phần tử: nạp âm thứ i ứng với hoa giáp 2i và 2i+1)
   HC.NAYIN_TABLE.forEach(function(n,i){
-    var s=i%10,b=Math.floor(i/6)%12;
+    var jz=2*i, s=jz%10, b=jz%12;
     DB.push({cat:'Nạp Âm',key:n,val:HC.HS_CN[s]+HC.EB_CN[b]+' '+HC.HS[s]+' '+HC.EB[b]+' — '+n+' ('+HC.WX_CN[s]+HC.WX[s]+')'});
   });
 })();
@@ -1440,7 +1451,64 @@ document.addEventListener('DOMContentLoaded', function() {
     HCD.member.renderNavAuth('.kd-nav');
     HCD.member.autoFill('#fy','#fm','#fd','#fh','#fg','#ftz');
   }
+  loadSavedChartFromProfile();
 });
+
+// ==============================
+// XEM LÁ SỐ ĐÃ LƯU (từ profile.html: location.hash === '#saved'
+// + sessionStorage['hcd-view-chart'] chứa id lá số hoặc JSON payload)
+// ==============================
+function loadSavedChartFromProfile() {
+  if (window.location.hash !== '#saved') return;
+  var stored = sessionStorage.getItem('hcd-view-chart');
+  if (!stored) return;
+  sessionStorage.removeItem('hcd-view-chart');
+
+  function setSelect(id, val) {
+    if (val === undefined || val === null || val === '') return;
+    var el = document.querySelector(id);
+    if (!el) return;
+    if (el.tagName === 'SELECT') {
+      for (var i = 0; i < el.options.length; i++) {
+        if (el.options[i].value === String(val)) { el.value = String(val); return; }
+      }
+      return; // không khớp option nào → giữ mặc định
+    }
+    el.value = val;
+  }
+
+  function applyChart(c) {
+    if (!c) return;
+    // Payload lưu từ renderSaveButton là dạng phẳng (birthYear, birthMonth, ...);
+    // phòng cả trường hợp payload.birth = {year, month, day, hour}.
+    var b = c.birth || {};
+    var year = c.birthYear || b.year, month = c.birthMonth || b.month;
+    var day = c.birthDay || b.day;
+    var hour = (c.birthHour !== undefined && c.birthHour !== null) ? c.birthHour : b.hour;
+    setSelect('#fy', year); setSelect('#fm', month); setSelect('#fd', day);
+    setSelect('#fh', hour); setSelect('#ftz', c.longitude);
+    if (c.name) { var fn = document.getElementById('fn'); if (fn) fn.value = c.name; }
+    var g = (c.gender === 'male' || c.gender === 'nam') ? 'nam' : 'nu';
+    var btns = document.querySelectorAll('#fg button[data-g]');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('on', btns[i].getAttribute('data-g') === g);
+    }
+    if (year && month && day) {
+      try { runFortune(); } catch (e) { console.error('Auto-run saved chart error:', e); }
+    }
+  }
+
+  var payload = null;
+  try { payload = JSON.parse(stored); } catch (e) { payload = null; }
+  if (payload && typeof payload === 'object') {
+    applyChart(payload);
+  } else if (typeof HCD !== 'undefined' && HCD.firebase && HCD.firebase.getChart) {
+    // sessionStorage chứa id lá số (profile.html viewChart lưu id)
+    HCD.firebase.getChart(stored).then(applyChart).catch(function (e) {
+      console.error('Load saved chart error:', e);
+    });
+  }
+}
 </script>
 </body>
 </html>

@@ -202,8 +202,20 @@
           }
           el.value = val;
         }
+        // Giới tính: #fg là nhóm <button data-g="nam|nu"> (không phải input) —
+        // gán .value vô tác dụng, phải set class 'on' cho nút đúng.
+        function setGender(id, val) {
+          if (!id || !val) return;
+          var el = document.querySelector(id); if (!el) return;
+          if (el.tagName === 'SELECT' || el.tagName === 'INPUT') { el.value = val; return; }
+          var btns = el.querySelectorAll('button[data-g]');
+          if (!btns.length) return;
+          for (var i = 0; i < btns.length; i++) {
+            btns[i].classList.toggle('on', btns[i].getAttribute('data-g') === String(val));
+          }
+        }
         set(yId, p.birthYear); set(mId, p.birthMonth); set(dId, p.birthDay);
-        set(hId, p.birthHour); set(gId, p.gender); set(locId, p.longitude);
+        set(hId, p.birthHour); setGender(gId, p.gender); set(locId, p.longitude);
         return true;
       }).catch(function () { return false; });
     },

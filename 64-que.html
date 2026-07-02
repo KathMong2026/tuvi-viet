@@ -282,7 +282,7 @@ function showTry(hex) {
   document.getElementById('tryLines').innerHTML = buildLines(hex.bin);
   document.getElementById('tryTri').innerHTML = '<span>Thượng · ' + hex.up + '</span><span>Hạ · ' + hex.lo + '</span>';
   document.getElementById('tryHint').textContent = 'Chạm hào để thử biến';
-  document.getElementById('tryLink').href = '#gua-' + hex.n;
+  document.getElementById('tryLink').href = '#cell-' + hex.n;
 }
 
 function toggleTryLine(idx) {
@@ -305,7 +305,7 @@ function toggleTryLine(idx) {
   var grid = document.getElementById('hexGrid');
   var html = '';
   HEX_DATA.forEach(function(h) {
-    html += '<a class="xjt-hex-cell" href="#gua-' + h.n + '" onclick="showTry(findHex(' + h.n + '));return true" id="cell-' + h.n + '">';
+    html += '<a class="xjt-hex-cell" href="#cell-' + h.n + '" onclick="showTry(findHex(' + h.n + '));return true" id="cell-' + h.n + '">';
     html += '<div class="hex-num">' + (h.n < 10 ? '0' : '') + h.n + '</div>';
     html += '<div style="display:inline-flex;flex-direction:column;align-items:center;padding:6px 12px">';
     html += buildLines(h.bin);

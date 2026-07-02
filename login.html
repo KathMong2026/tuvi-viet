@@ -284,14 +284,24 @@ input,select{font-family:inherit}
 
     setLoading('btnRegister', 'regSpinner', true);
     HCD.firebase.registerWithEmail(email, pw)
-      .then(function(result) {
-        // Tự động tạo profile
+      .then(function(user) {
+        // Tự động tạo profile — lỗi ở bước này KHÔNG được làm hỏng luồng đăng ký
+        // (vd: chưa có session vì cần xác nhận email → updateProfile sẽ reject)
         return HCD.firebase.updateProfile({
           displayName: email.split('@')[0],
           email: email
-        });
+        }).catch(function(profileErr) {
+          console.warn('Không cập nhật được hồ sơ sau đăng ký:', profileErr);
+        }).then(function() { return user; });
       })
-      .then(function() {
+      .then(function(user) {
+        var confirmed = user && (user.email_confirmed_at || user.confirmed_at);
+        if (user && !confirmed) {
+          // Đăng ký thành công nhưng cần xác nhận email
+          setLoading('btnRegister', 'regSpinner', false);
+          showMsg('registerMsg', 'success', 'Đăng ký thành công! Vui lòng kiểm tra hộp thư để xác nhận email trước khi đăng nhập.');
+          return;
+        }
         var redirect = getSafeRedirect();
         window.location.href = redirect;
       })

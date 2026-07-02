@@ -7,12 +7,8 @@
 (function(global) {
   'use strict';
 
+  // 30 nạp âm chuẩn theo thứ tự lục thập hoa giáp (mỗi nạp âm ứng với 2 cặp can-chi liên tiếp)
   var NAYIN_TABLE = [
-    'Hải Trung Kim','Lô Trung Hỏa','Đại Lâm Mộc','Lộ Bàng Thổ','Kiếm Phong Kim','Sơn Đầu Hỏa',
-    'Giản Hạ Thủy','Thành Đầu Thổ','Bạch Lạp Kim','Dương Liễu Mộc','Tuyền Trung Thủy','Ốc Thượng Thổ',
-    'Tích Lịch Hỏa','Tùng Bách Mộc','Trường Lưu Thủy','Sa Thạch Kim','Sơn Hạ Hỏa','Bình Địa Mộc',
-    'Bích Thượng Thổ','Kim Bạc Kim','Phúc Đăng Hỏa','Thiên Hà Thủy','Đại Dịch Thổ','Thoa Xuyến Kim',
-    'Tang Đố Mộc','Đại Khê Thủy','Sa Trung Thổ','Thiên Thượng Hỏa','Thạch Lựu Mộc','Đại Hải Thủy',
     'Hải Trung Kim','Lô Trung Hỏa','Đại Lâm Mộc','Lộ Bàng Thổ','Kiếm Phong Kim','Sơn Đầu Hỏa',
     'Giản Hạ Thủy','Thành Đầu Thổ','Bạch Lạp Kim','Dương Liễu Mộc','Tuyền Trung Thủy','Ốc Thượng Thổ',
     'Tích Lịch Hỏa','Tùng Bách Mộc','Trường Lưu Thủy','Sa Thạch Kim','Sơn Hạ Hỏa','Bình Địa Mộc',
@@ -108,8 +104,9 @@
   }
 
   function getNayin(stem, branch) {
-    var idx = (stem * 6 + branch) % 60;
-    return NAYIN_TABLE[idx] || '';
+    // Chỉ số lục thập hoa giáp 0..59 từ (can, chi), mỗi nạp âm ứng với 2 hoa giáp liên tiếp
+    var idx = ((6 * stem - 5 * branch) % 60 + 60) % 60;
+    return NAYIN_TABLE[Math.floor(idx / 2)] || '';
   }
 
   function generateBaziReport(name, gender, year, month, day, hour) {

@@ -421,8 +421,15 @@ function genR(name,gender,y,m,d,h){
   return{pillars:ps,birth:{y:y,m:m,d:d,h:h},dayMaster:{stem:dm.stem,element:de,strength:wc[de]>=3?'Thân cường':'Thân nhược'},wuxingCount:wc,topElement:mx};
 }
 
+// Quy đổi chỉ số canh giờ (select hour-m/hour-f: Tý=0..Hợi=11, Tý muộn=12)
+// sang giờ đồng hồ 0-23 cho Lunar.Solar.fromYmdHms (khớp cách bat-tu.html dùng h*2).
+function canhToClockHour(c){
+  if(c===0) return 0;    // Tý sớm (0-1h)
+  if(c===12) return 23;  // Tý muộn (23-24h)
+  return c*2;            // Sửu=2h, Dần=4h, Mão=6h, ...
+}
 function hopHon(){
-  var gv=function(p){return{year:parseInt(document.getElementById('year-'+p).value),month:parseInt(document.getElementById('month-'+p).value),day:parseInt(document.getElementById('day-'+p).value),hour:parseInt(document.getElementById('hour-'+p).value),gender:document.getElementById('gender-'+p).querySelector('.active').dataset.g};};
+  var gv=function(p){return{year:parseInt(document.getElementById('year-'+p).value),month:parseInt(document.getElementById('month-'+p).value),day:parseInt(document.getElementById('day-'+p).value),hour:canhToClockHour(parseInt(document.getElementById('hour-'+p).value)),gender:document.getElementById('gender-'+p).querySelector('.active').dataset.g};};
   var m=gv('m'),f=gv('f');
   if(!m.year||!m.month||!m.day||!f.year||!f.month||!f.day){alert('Vui lòng nhập đầy đủ thông tin cho cả hai người!');return;}
   var mR=genR('',(m.gender==='nam'?'male':'female'),m.year,m.month,m.day,m.hour);

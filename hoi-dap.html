@@ -131,7 +131,7 @@ a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer;b
 </footer>
 
 <script>
-var history = [];      // { role:'user'|'assistant', content:string }
+var chatHistory = [];      // { role:'user'|'assistant', content:string }
 var busy = false;
 
 function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
@@ -177,7 +177,7 @@ function sendQuestion(pre){
   busy=true; document.getElementById('sendBtn').disabled=true;
   var tb=typingBubble();
 
-  HCD.supabase.functions.invoke('hoi-dap',{body:{question:q,history:history}}).then(function(res){
+  HCD.supabase.functions.invoke('hoi-dap',{body:{question:q,history:chatHistory}}).then(function(res){
     busy=false; document.getElementById('sendBtn').disabled=false;
     if(res.error){
       var msg=((res.error&&res.error.message)||String(res.error));
@@ -191,16 +191,16 @@ function sendQuestion(pre){
     var ans=d.text||'(không có nội dung)';
     tb.innerHTML=renderAI(ans)+sourcesHtml(d.sources);
     scrollDown();
-    history.push({role:'user',content:q});
-    history.push({role:'assistant',content:ans});
-    if(history.length>12) history=history.slice(-12);
+    chatHistory.push({role:'user',content:q});
+    chatHistory.push({role:'assistant',content:ans});
+    if(chatHistory.length>12) chatHistory=chatHistory.slice(-12);
   }).catch(function(e){
     busy=false; document.getElementById('sendBtn').disabled=false;
     tb.innerHTML='<p style="color:var(--seal)">Lỗi: '+esc(e.message||e)+'</p>'; scrollDown();
   });
 }
 function clearChat(){
-  history=[];
+  chatHistory=[];
   var log=document.getElementById('chatLog');
   log.innerHTML='<div class="msg ai"><div class="av">易</div><div class="bubble"><p>Đã xóa hội thoại. Bạn muốn hỏi điều gì tiếp theo?</p></div></div>';
   var chips=document.getElementById('suggestChips'); if(chips) chips.style.display='flex';
