@@ -48,6 +48,7 @@ var I18N = (function() {
     'batu.pillar.month': { vi: 'Tháng', zh: '月' },
     'batu.pillar.day': { vi: 'Ngày', zh: '日' },
     'batu.pillar.hour': { vi: 'Giờ', zh: '時' },
+    'batu.pillar.pillar': { vi: 'Trụ', zh: '柱' },
     'batu.dm.badge': { vi: 'Nhật Chủ', zh: '日主' },
     'batu.overview.strength': { vi: 'Thân cường nhược', zh: '身強弱' },
     'batu.overview.yong': { vi: 'Dụng Thần · Hỷ Kỵ', zh: '用神 · 喜忌' },
